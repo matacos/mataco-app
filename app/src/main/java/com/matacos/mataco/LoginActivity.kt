@@ -23,85 +23,61 @@ import android.widget.TextView
 
 import java.util.ArrayList
 import android.Manifest.permission.READ_CONTACTS
+import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
+import android.util.Log
+import android.widget.Toast
+import com.matacos.mataco.apiController.APIController
+import com.matacos.mataco.apiController.ServiceVolley
 
 import kotlinx.android.synthetic.main.activity_login.*
+import java.lang.Integer.parseInt
 
-/**
- * A login screen that offers login via email/password.
- */
-class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
-    private val REQUEST_READ_CONTACTS = 0
+
+class LoginActivity : AppCompatActivity(){
+
+    private val TAG: String = LoginActivity::class.java.simpleName
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d(TAG, "onCreate")
+
         setContentView(R.layout.activity_login)
         // Set up the login form.
-        populateAutoComplete()
-        password.setOnEditorActionListener(TextView.OnEditorActionListener { _, id, _ ->
-            if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
-                attemptLogin()
-                return@OnEditorActionListener true
-            }
-            false
-        })
 
-        email_sign_in_button.setOnClickListener { attemptLogin() }
-    }
-
-    private fun populateAutoComplete() {
-        if (!mayRequestContacts()) {
-            return
-        }
-
-        loaderManager.initLoader(0, null, this)
-    }
-
-    private fun mayRequestContacts(): Boolean {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            return true
-        }
-        if (checkSelfPermission(READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
-            return true
-        }
-        if (shouldShowRequestPermissionRationale(READ_CONTACTS)) {
-            Snackbar.make(email, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
-                    .setAction(android.R.string.ok,
-                            { requestPermissions(arrayOf(READ_CONTACTS), REQUEST_READ_CONTACTS) })
-        } else {
-            requestPermissions(arrayOf(READ_CONTACTS), REQUEST_READ_CONTACTS)
-        }
-        return false
-    }
-
-    /**
-     * Callback received when a permissions request has been completed.
-     */
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>,
-                                            grantResults: IntArray) {
-        if (requestCode == REQUEST_READ_CONTACTS) {
-            if (grantResults.size == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                populateAutoComplete()
-            }
+        user_sign_in_button.setOnClickListener {
+            Log.d(TAG, "clicked user_sign_in_button")
+            attemptLogin()
         }
     }
 
+
+    override fun onStart() {
+        super.onStart()
+        Log.d(TAG, "onStart")
+        val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
+        if(preferences.getBoolean("logged_in", false)){
+            val intent = Intent(this, OfertaAcademicaActivity::class.java)
+            this.startActivity(intent)
+        }
+    }
 
     /**
      * Attempts to sign in or register the account specified by the login form.
-     * If there are form errors (invalid email, missing fields, etc.), the
+     * If there are form errors (invalid user, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
     private fun attemptLogin() {
-
+        Log.d(TAG, "attemptLogin")
         // Reset errors.
-        email.error = null
+        user.error = null
         password.error = null
 
         // Store values at the time of the login attempt.
-        val emailStr = email.text.toString()
+        val userStr = user.text.toString()
         val passwordStr = password.text.toString()
 
         var cancel = false
@@ -114,14 +90,14 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             cancel = true
         }
 
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(emailStr)) {
-            email.error = getString(R.string.error_field_required)
-            focusView = email
+        // Check for a valid user address.
+        if (TextUtils.isEmpty(userStr)) {
+            user.error = getString(R.string.error_field_required)
+            focusView = user
             cancel = true
-        } else if (!isEmailValid(emailStr)) {
-            email.error = getString(R.string.error_invalid_email)
-            focusView = email
+        } else if (!isUserValid(userStr)) {
+            user.error = getString(R.string.error_invalid_user)
+            focusView = user
             cancel = true
         }
 
@@ -133,16 +109,59 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true)
+
+            val service = ServiceVolley()
+            val apiController = APIController(service)
+
+            //TODO: Change this path
+            val path = "cities"
+
+            apiController.get(path) { response ->
+                Log.d(TAG, response.toString())
+                if (response != null) {
+                    Log.d(TAG, "startActivity: OfertaAcademicaActivity")
+
+                    //TODO: Si agregamos el tema de que se mande el errorJSONObject, deberíamos verificar el statusCode antes de seguir
+
+                    val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
+                    val editPreferences = preferences.edit()
+                    //TODO: Add the user and password? and token into the sharedPreferences
+                    //editPreferences.putString("user", userStr).apply()
+                    //editPreferences.putString("password", passwordStr).apply()
+                    //editPreferences.putString("auth_token", response.getString("auth_token").apply()
+                    editPreferences.putBoolean("logged_in", true).apply()
+
+                    showProgress(false)
+
+                    val intent = Intent(this, OfertaAcademicaActivity::class.java)
+                    this.startActivity(intent)
+                }
+
+                else {
+                    showProgress(false)
+                    Toast.makeText(this, "Error de inicio de sesión", Toast.LENGTH_SHORT).show()
+                }
+
+            }
+
         }
     }
 
-    private fun isEmailValid(email: String): Boolean {
-        //TODO: Replace this with your own logic
-        return email.contains("@")
+
+    private fun isUserValid(user: String): Boolean {
+        Log.d(TAG, "isUserValid")
+        var numeric = true
+
+        try {
+            parseInt(user)
+        } catch (e: NumberFormatException) {
+            numeric = false
+        }
+        return numeric
     }
 
     private fun isPasswordValid(password: String): Boolean {
-        //TODO: Replace this with your own logic
+        Log.d(TAG, "isPasswordValid")
         return password.length > 4
     }
 
@@ -151,6 +170,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private fun showProgress(show: Boolean) {
+        Log.d(TAG, "showProgress")
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
         // for very easy animations. If available, use these APIs to fade-in
         // the progress spinner.
@@ -178,48 +198,4 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
     }
 
-    override fun onCreateLoader(i: Int, bundle: Bundle?): Loader<Cursor> {
-        return CursorLoader(this,
-                // Retrieve data rows for the device user's 'profile' contact.
-                Uri.withAppendedPath(ContactsContract.Profile.CONTENT_URI,
-                        ContactsContract.Contacts.Data.CONTENT_DIRECTORY), ProfileQuery.PROJECTION,
-
-                // Select only email addresses.
-                ContactsContract.Contacts.Data.MIMETYPE + " = ?", arrayOf(ContactsContract.CommonDataKinds.Email
-                .CONTENT_ITEM_TYPE),
-
-                // Show primary email addresses first. Note that there won't be
-                // a primary email address if the user hasn't specified one.
-                ContactsContract.Contacts.Data.IS_PRIMARY + " DESC")
-    }
-
-    override fun onLoadFinished(cursorLoader: Loader<Cursor>, cursor: Cursor) {
-        val emails = ArrayList<String>()
-        cursor.moveToFirst()
-        while (!cursor.isAfterLast) {
-            emails.add(cursor.getString(ProfileQuery.ADDRESS))
-            cursor.moveToNext()
-        }
-
-        addEmailsToAutoComplete(emails)
-    }
-
-    override fun onLoaderReset(cursorLoader: Loader<Cursor>) {
-
-    }
-
-    private fun addEmailsToAutoComplete(emailAddressCollection: List<String>) {
-        //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
-        val adapter = ArrayAdapter(this@LoginActivity,
-                android.R.layout.simple_dropdown_item_1line, emailAddressCollection)
-
-        email.setAdapter(adapter)
-    }
-
-    object ProfileQuery {
-        val PROJECTION = arrayOf(
-                ContactsContract.CommonDataKinds.Email.ADDRESS,
-                ContactsContract.CommonDataKinds.Email.IS_PRIMARY)
-        val ADDRESS = 0
-    }
 }

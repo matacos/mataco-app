@@ -32,6 +32,7 @@ import com.matacos.mataco.apiController.APIController
 import com.matacos.mataco.apiController.ServiceVolley
 
 import kotlinx.android.synthetic.main.activity_login.*
+import org.json.JSONObject
 import java.lang.Integer.parseInt
 
 
@@ -60,7 +61,7 @@ class LoginActivity : AppCompatActivity(){
         Log.d(TAG, "onStart")
         val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
         if(preferences.getBoolean("logged_in", false)){
-            val intent = Intent(this, OfertaAcademicaActivity::class.java)
+            val intent = Intent(this, SubjectsActivity::class.java)
             this.startActivity(intent)
         }
     }
@@ -73,11 +74,11 @@ class LoginActivity : AppCompatActivity(){
     private fun attemptLogin() {
         Log.d(TAG, "attemptLogin")
         // Reset errors.
-        user.error = null
+        username.error = null
         password.error = null
 
         // Store values at the time of the login attempt.
-        val userStr = user.text.toString()
+        val usernameStr = username.text.toString()
         val passwordStr = password.text.toString()
 
         var cancel = false
@@ -91,13 +92,13 @@ class LoginActivity : AppCompatActivity(){
         }
 
         // Check for a valid user address.
-        if (TextUtils.isEmpty(userStr)) {
-            user.error = getString(R.string.error_field_required)
-            focusView = user
+        if (TextUtils.isEmpty(usernameStr)) {
+            username.error = getString(R.string.error_field_required)
+            focusView = username
             cancel = true
-        } else if (!isUserValid(userStr)) {
-            user.error = getString(R.string.error_invalid_user)
-            focusView = user
+        } else if (!isUsernameValid(usernameStr)) {
+            username.error = getString(R.string.error_invalid_user)
+            focusView = username
             cancel = true
         }
 
@@ -110,50 +111,64 @@ class LoginActivity : AppCompatActivity(){
             // perform the user login attempt.
             showProgress(true)
 
-            val service = ServiceVolley()
-            val apiController = APIController(service)
+            //TODO: Uncomment this
+            /*
+                       val service = ServiceVolley()
+                       val apiController = APIController(service)
 
-            //TODO: Change this path
-            val path = "cities"
 
-            apiController.get(path) { response ->
-                Log.d(TAG, response.toString())
-                if (response != null) {
-                    Log.d(TAG, "startActivity: OfertaAcademicaActivity")
 
-                    //TODO: Si agregamos el tema de que se mande el errorJSONObject, deberíamos verificar el statusCode antes de seguir
+                                 val path = "login"
+                                  val params = JSONObject()
+                                  params.put("username", usernameStr)
+                                  params.put("password", passwordStr)
 
-                    val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
-                    val editPreferences = preferences.edit()
-                    //TODO: Add the user and password? and token into the sharedPreferences
-                    //editPreferences.putString("user", userStr).apply()
-                    //editPreferences.putString("password", passwordStr).apply()
-                    //editPreferences.putString("auth_token", response.getString("auth_token").apply()
-                    editPreferences.putBoolean("logged_in", true).apply()
+                                  apiController.post(path, params) { response ->
+                                      Log.d(TAG, response.toString())
+                                      if (response != null) {
+                                          Log.d(TAG, "startActivity: SubjectsActivity")
 
-                    showProgress(false)
+                                          //TODO: Si agregamos el tema de que se mande el errorJSONObject, deberíamos verificar el statusCode antes de seguir
 
-                    val intent = Intent(this, OfertaAcademicaActivity::class.java)
-                    this.startActivity(intent)
-                }
+                                          val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
+                                          val editPreferences = preferences.edit()
 
-                else {
-                    showProgress(false)
-                    Toast.makeText(this, "Error de inicio de sesión", Toast.LENGTH_SHORT).show()
-                }
+                                          editPreferences.putString("username", usernameStr).apply()
+                                          editPreferences.putString("password", passwordStr).apply()
+                                          editPreferences.putString("auth_token", response.getString("auth_token")).apply()
+                                          editPreferences.putBoolean("logged_in", true).apply()
 
-            }
+                                          showProgress(false)
+
+                                          val intent = Intent(this, SubjectsActivity::class.java)
+                                          this.startActivity(intent)
+                                      }
+
+                                      else {
+                                          showProgress(false)
+                                          Toast.makeText(this, "Error de inicio de sesión", Toast.LENGTH_SHORT).show()
+                                      }
+
+                                  }*/
+
+            val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
+            val editPreferences = preferences.edit()
+            editPreferences.putBoolean("logged_in", true).apply()
+            showProgress(false)
+
+            val intent = Intent(this, SubjectsActivity::class.java)
+            this.startActivity(intent)
 
         }
     }
 
 
-    private fun isUserValid(user: String): Boolean {
-        Log.d(TAG, "isUserValid")
+    private fun isUsernameValid(username: String): Boolean {
+        Log.d(TAG, "isUsernameValid")
         var numeric = true
 
         try {
-            parseInt(user)
+            parseInt(username)
         } catch (e: NumberFormatException) {
             numeric = false
         }

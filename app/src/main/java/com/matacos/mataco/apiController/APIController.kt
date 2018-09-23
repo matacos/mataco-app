@@ -8,4 +8,7 @@ class APIController constructor(serviceInjection: ServiceInterface): ServiceInte
     override fun get(path: String, completionHandler: (response: JSONObject?) -> Unit) {
         service.get(path, completionHandler)
     }
+    override fun post(path: String, params: JSONObject,completionHandler: (response: JSONObject?) -> Unit) {
+        service.post(path,params , completionHandler)
+    }
 }

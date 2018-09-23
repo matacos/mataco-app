@@ -9,7 +9,7 @@
     tools:openDrawer="start">
 
     <include
-        layout="@layout/app_bar_oferta_academica"
+        layout="@layout/app_bar_subjects"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
@@ -19,7 +19,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header_oferta_academica"
-        app:menu="@menu/activity_oferta_academica_drawer" />
+        app:headerLayout="@layout/nav_header_subjects"
+        app:menu="@menu/activity_subjects_drawer" />
 
 </android.support.v4.widget.DrawerLayout>

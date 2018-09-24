@@ -33,7 +33,7 @@ class ServiceVolley : ServiceInterface {
     }
 
     override fun post(path: String, params: JSONObject, completionHandler: (response: JSONObject?) -> Unit) {
-        val jsonObjReq = object : JsonObjectRequest(Method.GET, basePath + path, params,
+        val jsonObjReq = object : JsonObjectRequest(Method.POST, basePath + path, params,
                 Response.Listener<JSONObject> { response ->
                     Log.d(TAG, "/post request OK! Response: $response")
                     completionHandler(response)

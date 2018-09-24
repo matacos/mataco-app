@@ -1,6 +1,7 @@
 package com.matacos.mataco
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
@@ -120,9 +121,13 @@ class SubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         val service = ServiceVolley()
         val apiController = APIController(service)
 
-        val path = "materias?carrera=1"
+        val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
+        val token = preferences.getString("token", "")
+        val careerIds = preferences.getStringSet("career_ids", null)
 
-        apiController.get(path) { response ->
+        var path = "api/materias?carrera=" + careerIds?.joinToString()
+
+        apiController.get(path, token) { response ->
             Log.d(TAG, response.toString())
             if (response != null) {
                 val jSONSubjects= response.getJSONArray("subjects")
@@ -140,39 +145,5 @@ class SubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             }
 
         }
-
-        /*subjects.add(Subject("Introduccion a los sistemas inteligentes", "12","71"))
-        subjects.add(Subject("Modelos y Optimizacon II", "13","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "14","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "15","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "16","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "17","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "18","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "19","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "20","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "21","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "22","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "23","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "24","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "25","72"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "26","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "27","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "28","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "29","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "31","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "32","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "33","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "34","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "35","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "36","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "37","71"))
-        subjects.add(Subject("Administración y Control de Proyectos Informáticos II", "38","71"))*/
-
-//        subjects.sort()
-
-//        displayedSubjects.addAll(subjects)
-
-//        subjects_recycler_view.adapter!!.notifyDataSetChanged()
-
     }
 }

@@ -24,4 +24,7 @@
     <string name="name">Name</string>
     <string name="code">Code</string>
     <string name="department">Department</string>
+    <string name="total_slots">Total Slots</string>
+    <string name="professors">Professors</string>
+    <string name="title_activity_courses">Catedras</string>
 </resources>

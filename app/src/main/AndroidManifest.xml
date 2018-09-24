@@ -25,7 +25,11 @@
             android:name=".SubjectsActivity"
             android:label="@string/title_activity_subjects"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".CoursesActivity"></activity>
+        <activity
+            android:name=".CoursesActivity"
+            android:label="@string/title_activity_courses"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

@@ -2,7 +2,6 @@ package com.matacos.mataco
 
 import android.content.Context
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
@@ -56,13 +55,13 @@ class SubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_search_subjects, menu)
-        val searchItem = menu.findItem(R.id.search_subjects)
+        menuInflater.inflate(R.menu.menu_search, menu)
+        val searchItem = menu.findItem(R.id.search)
         if (searchItem != null) {
             Log.d(TAG, "searchItem != null")
             val searchView = searchItem.actionView as SearchView
             val editext = searchView.findViewById<EditText>(android.support.v7.appcompat.R.id.search_src_text)
-            editext.hint = "Buscar ciudad..."
+            editext.hint = "Buscar materia..."
 
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
@@ -85,7 +84,7 @@ class SubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                             }
                         }
                     } else {
-                        displayedSubjects.addAll(subjects)
+                        displayedSubjects.addAll(subjects.distinct())
                     }
                     subjects_recycler_view.adapter!!.notifyDataSetChanged()
                     return true
@@ -116,20 +115,25 @@ class SubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
     private fun loadData() {
         Log.d(TAG, "loadData")
 
-        /*
+
         val service = ServiceVolley()
         val apiController = APIController(service)
 
-        val path = "materias"
 
-        apiController.get(path) { response ->
+        val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
+        val token = preferences.getString("token", "")
+        val careerIds = preferences.getStringSet("career_ids", null)
+
+        val path = "api/materias?carrera=" + careerIds?.joinToString()
+
+        apiController.get(path, token) { response ->
             Log.d(TAG, response.toString())
             if (response != null) {
-                val jSONSubjects= response.getJSONArray("materias")
+                val jSONSubjects= response.getJSONArray("subjects")
                 for (i in 0 until jSONSubjects.length()) {
-                    subjects.add(Subject(jSONSubjects.getJSONObject(i).getString("nombre"),
-                            jSONSubjects.getJSONObject(i).getString("codigo"),
-                            jSONSubjects.getJSONObject(i).getString("departamento")
+                    subjects.add(Subject(jSONSubjects.getJSONObject(i).getString("name"),
+                            jSONSubjects.getJSONObject(i).getString("code"),
+                            jSONSubjects.getJSONObject(i).getString("department_code")
                     ))
                 }
                 subjects.sort()
@@ -139,40 +143,6 @@ class SubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                 subjects_recycler_view.adapter!!.notifyDataSetChanged()
             }
 
-        }*/
-
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "12","71"))
-        subjects.add(Subject("Modelos y Optimizacon II", "13","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "14","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "15","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "16","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "17","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "18","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "19","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "20","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "21","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "22","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "23","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "24","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "25","72"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "26","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "27","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "28","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "29","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "31","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "32","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "33","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "34","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "35","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "36","71"))
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "37","71"))
-        subjects.add(Subject("Administración y Control de Proyectos Informáticos II", "38","71"))
-
-        subjects.sort()
-
-        displayedSubjects.addAll(subjects)
-
-        subjects_recycler_view.adapter!!.notifyDataSetChanged()
-
+        }
     }
 }

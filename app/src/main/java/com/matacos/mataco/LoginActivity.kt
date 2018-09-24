@@ -106,18 +106,28 @@ class LoginActivity : AppCompatActivity() {
             apiController.post(path, params) { response ->
                 Log.d(TAG, response.toString())
                 if (response != null) {
-                    Log.d(TAG, "startActivity: SubjectsActivity")
+
 
                     val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
                     val editPreferences = preferences.edit()
 
+                    //editPreferences.putBoolean("logged_in", true).apply()
                     editPreferences.putString("username", usernameStr).apply()
                     editPreferences.putString("password", passwordStr).apply()
                     editPreferences.putString("token", response.getString("token")).apply()
-                    editPreferences.putBoolean("logged_in", true).apply()
+
+                    val careers = response.getJSONObject("user").getJSONObject("rolesDescriptions").getJSONObject("students").getJSONArray("enrollments")
+                    val careerIds = HashSet<String>()
+                    for (i in 0 until careers.length()) {
+                        Log.d(TAG, "AA: " + "career $i: " + careers.getJSONObject(i).getString("id"))
+                        careerIds.add(careers.getJSONObject(i).getString("id"))
+                    }
+                    Log.d(TAG, "CareerIds: " + careerIds.toString())
+                    editPreferences.putStringSet("career_ids", careerIds).apply()
 
                     showProgress(false)
 
+                    Log.d(TAG, "startActivity: SubjectsActivity")
                     val intent = Intent(this, SubjectsActivity::class.java)
                     this.startActivity(intent)
 

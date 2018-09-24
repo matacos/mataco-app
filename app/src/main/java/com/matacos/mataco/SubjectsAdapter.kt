@@ -26,12 +26,12 @@ class SubjectsAdapter(val context: Context, val subjectsList: ArrayList<Subject>
             Log.d(TAG, "onClick: clicked on: " + subjectsList[position].name)
 
            val editPreferences = preferences.edit()
-           editPreferences.putString("subject", subjectsList[position].department + "." + subjectsList[position].code)
+           editPreferences.putString("subject_department", subjectsList[position].department)
+           editPreferences.putString("subject_code", subjectsList[position].code)
            editPreferences.apply()
            Log.d(TAG, "startActivity: CoursesActivity")
            val intent = Intent(context, CoursesActivity::class.java)
            context.startActivity(intent)
-
        }
     }
 
@@ -52,7 +52,5 @@ class SubjectsAdapter(val context: Context, val subjectsList: ArrayList<Subject>
         val name = itemView.findViewById<TextView>(R.id.name)!!
         val department_code = itemView.findViewById<TextView>(R.id.department_code)!!
         val parentLayout = itemView.findViewById<android.support.constraint.ConstraintLayout>(R.id.subject_parent_layout)!!
-
     }
-
 }

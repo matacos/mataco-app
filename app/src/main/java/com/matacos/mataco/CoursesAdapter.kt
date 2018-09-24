@@ -21,10 +21,10 @@ class CoursesAdapter(val context: Context, val coursesList: ArrayList<Course>, v
         holder.total_slots.text = "Cupos ${coursesList[position].totalSlots}"
         holder.professors.text = coursesList[position].professors
         holder.classroomCampus.text = "Sede ${coursesList[position].classroomCampus}"
-        holder.button.setOnClickListener {
-            Log.d(TAG, "onClick: clicked on button")
+        holder.button_sign_up.setOnClickListener {
+            Log.d(TAG, "onClick: clicked on button_sign_up")
 
-            Toast.makeText(context, "Clicked Button", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Clicked Sign Up Button", Toast.LENGTH_SHORT).show()
 
         }
 
@@ -51,7 +51,7 @@ class CoursesAdapter(val context: Context, val coursesList: ArrayList<Course>, v
         val professors = itemView.findViewById<TextView>(R.id.professors)!!
         val classroomCampus = itemView.findViewById<TextView>(R.id.classroom_campus)!!
         val time_slots_recycler_view = itemView.findViewById<RecyclerView>(R.id.time_slots_recycler_view)!!
-        val button = itemView.findViewById<Button>(R.id.button)!!
+        val button_sign_up = itemView.findViewById<Button>(R.id.button_sign_up)!!
         val parentLayout = itemView.findViewById<android.support.constraint.ConstraintLayout>(R.id.courses_parent_layout)!!
 
     }

@@ -19,6 +19,7 @@ import kotlinx.android.synthetic.main.activity_subjects.*
 import kotlinx.android.synthetic.main.app_bar_subjects.*
 import kotlinx.android.synthetic.main.content_courses.*
 import kotlinx.android.synthetic.main.content_subjects.*
+import java.sql.Time
 
 class CoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -78,9 +79,9 @@ class CoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                         val search = newText.toLowerCase()
                         courses.forEach {
                             Log.d(TAG, "courses.forEach")
-                            val course = it.department.toLowerCase()+"."+it.code
-                            if (course.contains(search) || it.name.toLowerCase().contains(search)) {
-                                Log.d(TAG, "course.contains(search)")
+                            val professor = it.professors.toLowerCase()
+                            if (professor.contains(search)) {
+                                Log.d(TAG, "professor.contains(search)")
                                 displayedCourses.add(it)
                             }
                         }
@@ -135,20 +136,44 @@ class CoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 /*                    val editPreferences = preferences.edit()
                     editPreferences.putString("token", response.getString("token")).apply()*/
 
+                    Log.d(TAG, "parsing data")
                     val jSONCourses= response.getJSONArray("courses")
+                    Log.d(TAG, "parsing data 1")
                     for (j in 0 until jSONCourses.length()) {
-                        courses.add(Course(jSONCourses.getJSONObject(j).getString("name"),
-                                jSONCourses.getJSONObject(j).getString("department_code"),
-                                jSONCourses.getJSONObject(j).getString("subject_code"),
+                        Log.d(TAG, "parsing data 2")
+                        var professors = ""
+                        for (k in 0 until jSONCourses.getJSONObject(j).getJSONArray("professors").length()) {
+                            val professor = jSONCourses.getJSONObject(j).getJSONArray("professors").getJSONObject(k)
+                            professors += "${professor.getString("name")} ${professor.getString("surname")}, "
+                        }
+                        val timeSlots = ArrayList<TimeSlot>()
+                        timeSlots.add(TimeSlot("Aula", "Sede", "Desde", "Hasta", "Dia", "Tipo"))
+                        for (k in 0 until jSONCourses.getJSONObject(j).getJSONArray("time_slots").length()) {
+                            val timeSlot = jSONCourses.getJSONObject(j).getJSONArray("time_slots").getJSONObject(k)
+                            Log.d(TAG, "parsing data 3")
+                            timeSlots.add(TimeSlot(  timeSlot.getString("classroom_code"),
+                                                    timeSlot.getString("classroom_campus"),
+                                    timeSlot.getString("beginning"),
+                                    timeSlot.getString("ending"),
+                                    timeSlot.getString("day_of_week"),
+                                    timeSlot.getString("description")))
+                        }
+
+                        Log.d(TAG, "parsing data 4")
+                        courses.add(Course(jSONCourses.getJSONObject(j).getString("course"),
                                 jSONCourses.getJSONObject(j).getString("total_slots"),
-                                jSONCourses.getJSONObject(j).getJSONArray("professors").toString()
+                                professors,
+                                timeSlots[0].classroomCampus,
+                                timeSlots
                         ))
+                        Log.d(TAG, "parsing data 5")
                     }
                     courses.sort()
-
+                    Log.d(TAG, "parsing data 6")
                     displayedCourses.addAll(courses.distinct())
-
-                    subjects_recycler_view.adapter!!.notifyDataSetChanged()
+                    Log.d(TAG, "parsing data 7")
+                    courses_recycler_view.adapter!!.notifyDataSetChanged()
+                    Log.d(TAG, "parsing data 8")
                 }
 
 

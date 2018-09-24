@@ -27,4 +27,11 @@
     <string name="total_slots">Total Slots</string>
     <string name="professors">Professors</string>
     <string name="title_activity_courses">Catedras</string>
+    <string name="number">Number</string>
+    <string name="classroom_campus">Classroom Campus</string>
+    <string name="classroom_code">Code</string>
+    <string name="beginning">Beginning</string>
+    <string name="ending">Ending</string>
+    <string name="day_of_week">Day of Week</string>
+    <string name="description">Description</string>
 </resources>

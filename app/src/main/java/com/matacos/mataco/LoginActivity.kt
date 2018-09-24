@@ -156,7 +156,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun isPasswordValid(password: String): Boolean {
         Log.d(TAG, "isPasswordValid")
-        return password.length > 1
+        return password.length >= 1
     }
 
     /**

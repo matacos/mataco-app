@@ -76,17 +76,87 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/number" />
 
+
+            <TextView
+                android:id="@+id/classroom_code_header"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/classroom_code_header"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toStartOf="@+id/description_header"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintHorizontal_weight="2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/professors" />
+
+            <TextView
+                android:id="@+id/description_header"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:maxLines="2"
+                android:text="@string/description_header"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toStartOf="@+id/day_of_week_header"
+                app:layout_constraintHorizontal_weight="3.5"
+                app:layout_constraintStart_toEndOf="@+id/classroom_code_header"
+                app:layout_constraintTop_toBottomOf="@+id/professors" />
+
+            <TextView
+                android:id="@+id/day_of_week_header"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/day_of_week_header"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toStartOf="@+id/beginning_header"
+                app:layout_constraintHorizontal_weight="0.6"
+                app:layout_constraintStart_toEndOf="@+id/description_header"
+                app:layout_constraintTop_toBottomOf="@+id/professors" />
+
+            <TextView
+                android:id="@+id/beginning_header"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/beginning_header"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toStartOf="@+id/ending_header"
+                app:layout_constraintHorizontal_weight="1.2"
+                app:layout_constraintStart_toEndOf="@+id/day_of_week_header"
+                app:layout_constraintTop_toBottomOf="@+id/professors" />
+
+            <TextView
+                android:id="@+id/ending_header"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/ending_header"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_weight="1.2"
+                app:layout_constraintStart_toEndOf="@+id/beginning_header"
+                app:layout_constraintTop_toBottomOf="@+id/professors" />
+
             <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:id="@+id/time_slots_recycler_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/professors"
+                app:layout_constraintTop_toBottomOf="@+id/classroom_code_header"
                 tools:context=".SubjectsActivity" />
 
             <Button

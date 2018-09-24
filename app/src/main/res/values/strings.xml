@@ -35,4 +35,9 @@
     <string name="day_of_week">Day of Week</string>
     <string name="description">Description</string>
     <string name="button_sign_up">Inscribite</string>
+    <string name="classroom_code_header">Aula</string>
+    <string name="description_header">Tipo</string>
+    <string name="day_of_week_header">Dia</string>
+    <string name="beginning_header">Desde</string>
+    <string name="ending_header">Hasta</string>
 </resources>

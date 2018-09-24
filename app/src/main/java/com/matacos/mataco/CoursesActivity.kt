@@ -155,7 +155,6 @@ class CoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                         }
                         professors = professors.trim().trimEnd(',')
                         val timeSlots = ArrayList<TimeSlot>()
-                        timeSlots.add(TimeSlot("Aula", "Sede", "Desde", "Hasta", "Dia", "Tipo"))
                         for (k in 0 until jSONCourses.getJSONObject(j).getJSONArray("time_slots").length()) {
                             val timeSlot = jSONCourses.getJSONObject(j).getJSONArray("time_slots").getJSONObject(k)
                             Log.d(TAG, "parsing data 3")
@@ -171,7 +170,7 @@ class CoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                         courses.add(Course(jSONCourses.getJSONObject(j).getString("course"),
                                 jSONCourses.getJSONObject(j).getString("total_slots"),
                                 professors,
-                                timeSlots[1].classroomCampus,
+                                timeSlots[0].classroomCampus,
                                 timeSlots
                         ))
                         Log.d(TAG, "parsing data 5")

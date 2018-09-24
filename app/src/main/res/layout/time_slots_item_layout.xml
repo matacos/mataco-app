@@ -12,18 +12,18 @@
         android:id="@+id/classroom_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/classroom_code"
         android:textSize="13sp"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/description"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/description"
@@ -36,9 +36,9 @@
         android:maxLines="2"
         android:text="@string/description"
         android:textSize="13sp"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/day_of_week"
-        app:layout_constraintHorizontal_weight="3"
         app:layout_constraintStart_toEndOf="@+id/classroom_code"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -52,9 +52,9 @@
         android:layout_marginTop="8dp"
         android:text="DOW"
         android:textSize="13sp"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/beginning"
-        app:layout_constraintHorizontal_weight="2"
         app:layout_constraintStart_toEndOf="@+id/description"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -68,9 +68,9 @@
         android:layout_marginTop="8dp"
         android:text="DD"
         android:textSize="13sp"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/ending"
-        app:layout_constraintHorizontal_weight="2"
         app:layout_constraintStart_toEndOf="@+id/day_of_week"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -84,9 +84,9 @@
         android:layout_marginTop="8dp"
         android:text="HT"
         android:textSize="13sp"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_weight="2"
         app:layout_constraintStart_toEndOf="@+id/beginning"
         app:layout_constraintTop_toTopOf="parent" />
 

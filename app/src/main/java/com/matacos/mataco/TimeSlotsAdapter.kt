@@ -10,6 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 
 import android.widget.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class TimeSlotsAdapter(val context: Context, val timeSlotsList: ArrayList<TimeSlot>): RecyclerView.Adapter<TimeSlotsAdapter.TimeSlotsViewHolder>() {
 
@@ -20,8 +22,15 @@ class TimeSlotsAdapter(val context: Context, val timeSlotsList: ArrayList<TimeSl
         holder.classroom_code.text = timeSlotsList[position].classroomCode
         holder.description.text = timeSlotsList[position].description
         holder.day_of_week.text = timeSlotsList[position].dayOfWeek
-        holder.beginning.text = timeSlotsList[position].beginning
-        holder.ending.text = timeSlotsList[position].ending
+        holder.beginning.text = formatDate(timeSlotsList[position].beginning)
+        holder.ending.text = formatDate(timeSlotsList[position].ending)
+    }
+
+    fun formatDate(date: String): String {
+        Log.d(TAG, "formatDate")
+        val realDate: Date = SimpleDateFormat("HH:mm:ss", Locale.US).parse(date)
+        val format = SimpleDateFormat("HH:mm", Locale.US)
+        return format.format(realDate)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TimeSlotsViewHolder {

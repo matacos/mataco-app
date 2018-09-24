@@ -32,6 +32,13 @@ class CoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         setContentView(R.layout.activity_courses)
         setSupportActionBar(toolbar)
 
+        val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
+
+        val department = preferences.getString("subject_department", "")
+        val code = preferences.getString("subject_code", "")
+        val name = preferences.getString("subject_name", "")
+
+        supportActionBar?.title = "$department.$code $name"
 
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)

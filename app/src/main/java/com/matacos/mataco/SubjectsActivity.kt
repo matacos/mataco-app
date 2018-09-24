@@ -62,7 +62,7 @@ class SubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             Log.d(TAG, "searchItem != null")
             val searchView = searchItem.actionView as SearchView
             val editext = searchView.findViewById<EditText>(android.support.v7.appcompat.R.id.search_src_text)
-            editext.hint = "Buscar ciudad..."
+            editext.hint = "Buscar materia..."
 
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
@@ -116,20 +116,20 @@ class SubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
     private fun loadData() {
         Log.d(TAG, "loadData")
 
-        /*
+
         val service = ServiceVolley()
         val apiController = APIController(service)
 
-        val path = "materias"
+        val path = "materias?carrera=1"
 
         apiController.get(path) { response ->
             Log.d(TAG, response.toString())
             if (response != null) {
-                val jSONSubjects= response.getJSONArray("materias")
+                val jSONSubjects= response.getJSONArray("subjects")
                 for (i in 0 until jSONSubjects.length()) {
-                    subjects.add(Subject(jSONSubjects.getJSONObject(i).getString("nombre"),
-                            jSONSubjects.getJSONObject(i).getString("codigo"),
-                            jSONSubjects.getJSONObject(i).getString("departamento")
+                    subjects.add(Subject(jSONSubjects.getJSONObject(i).getString("name"),
+                            jSONSubjects.getJSONObject(i).getString("code"),
+                            jSONSubjects.getJSONObject(i).getString("department_code")
                     ))
                 }
                 subjects.sort()
@@ -139,9 +139,9 @@ class SubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                 subjects_recycler_view.adapter!!.notifyDataSetChanged()
             }
 
-        }*/
+        }
 
-        subjects.add(Subject("Introduccion a los sistemas inteligentes", "12","71"))
+        /*subjects.add(Subject("Introduccion a los sistemas inteligentes", "12","71"))
         subjects.add(Subject("Modelos y Optimizacon II", "13","71"))
         subjects.add(Subject("Introduccion a los sistemas inteligentes", "14","71"))
         subjects.add(Subject("Introduccion a los sistemas inteligentes", "15","71"))
@@ -166,13 +166,13 @@ class SubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         subjects.add(Subject("Introduccion a los sistemas inteligentes", "35","71"))
         subjects.add(Subject("Introduccion a los sistemas inteligentes", "36","71"))
         subjects.add(Subject("Introduccion a los sistemas inteligentes", "37","71"))
-        subjects.add(Subject("Administración y Control de Proyectos Informáticos II", "38","71"))
+        subjects.add(Subject("Administración y Control de Proyectos Informáticos II", "38","71"))*/
 
-        subjects.sort()
+//        subjects.sort()
 
-        displayedSubjects.addAll(subjects)
+//        displayedSubjects.addAll(subjects)
 
-        subjects_recycler_view.adapter!!.notifyDataSetChanged()
+//        subjects_recycler_view.adapter!!.notifyDataSetChanged()
 
     }
 }

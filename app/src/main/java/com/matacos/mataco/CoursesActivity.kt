@@ -143,7 +143,7 @@ class CoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             val department = preferences.getString("subject_department", "")
             val code = preferences.getString("subject_code", "")
             //val path = "api/cursos?cod_departamento=$department&cod_materia=$code"
-            val path = "api/cursos?cod_departamento=75&cod_materia=06"
+            val path = "api/cursos?cod_departamento=75&cod_materia=07"
             apiController.get(path, token) { response ->
                 Log.d(TAG, response.toString())
                 if (response != null) {
@@ -152,9 +152,10 @@ class CoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
                     val jSONCourses= response.getJSONArray("courses")
 
-                    val semester = jSONCourses.getJSONObject(0).getString("semester")
+//                    val semester = jSONCourses.getJSONObject(0).getString("semester")
                     val screenTitle = findViewById<TextView>(R.id.screen_title)
-                    screenTitle.text = "Oferta Académica Cuatrimestre ${semester.substring(0,1)} de ${semester.substring(2)}"
+//                    screenTitle.text = "Oferta Académica Cuatrimestre ${semester.substring(0,1)} de ${semester.substring(2)}"
+                    screenTitle.text = "Oferta Académica Cuatrimestre 2 de 2018"
 
                     val departmentCode = jSONCourses.getJSONObject(0).getString("department_code")
                     val subjectCode = jSONCourses.getJSONObject(0).getString("subject_code")

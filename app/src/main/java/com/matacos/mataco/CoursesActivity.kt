@@ -1,6 +1,7 @@
 package com.matacos.mataco
 
 import android.content.Context
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -11,8 +12,10 @@ import android.support.v7.widget.SearchView
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.TextView
 import com.matacos.mataco.apiController.APIController
 import com.matacos.mataco.apiController.ServiceVolley
 import kotlinx.android.synthetic.main.activity_subjects.*
@@ -26,6 +29,8 @@ class CoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     private val TAG: String = CoursesActivity::class.java.simpleName
     val courses = ArrayList<Course>()
     val displayedCourses = ArrayList<Course>()
+    private var enrolled = false
+    private var semester = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +53,7 @@ class CoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         nav_view.setNavigationItemSelectedListener(this)
 
         courses_recycler_view.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
-        courses_recycler_view.adapter = CoursesAdapter(this, displayedCourses, getSharedPreferences("my_preferences", Context.MODE_PRIVATE))
+        courses_recycler_view.adapter = CoursesAdapter(this, displayedCourses, getSharedPreferences("my_preferences", Context.MODE_PRIVATE), enrolled)
 
         loadData()
 
@@ -70,7 +75,7 @@ class CoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             Log.d(TAG, "searchItem != null")
             val searchView = searchItem.actionView as SearchView
             val editext = searchView.findViewById<EditText>(android.support.v7.appcompat.R.id.search_src_text)
-            editext.hint = "Buscar ciudad..."
+            editext.hint = "Buscar curso..."
 
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
@@ -109,10 +114,12 @@ class CoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.nav_subjects -> {
-
+                val intent = Intent(applicationContext, SubjectsActivity::class.java)
+                applicationContext.startActivity(intent)
             }
             R.id.nav_courses -> {
-
+                val intent = Intent(applicationContext, MyCoursesActivity::class.java)
+                applicationContext.startActivity(intent)
             }
 
         }
@@ -136,18 +143,34 @@ class CoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             val department = preferences.getString("subject_department", "")
             val code = preferences.getString("subject_code", "")
             //val path = "api/cursos?cod_departamento=$department&cod_materia=$code"
-            val path = "api/cursos?cod_departamento=75&cod_materia=07"
+            val path = "api/cursos?cod_departamento=75&cod_materia=06"
             apiController.get(path, token) { response ->
                 Log.d(TAG, response.toString())
                 if (response != null) {
 /*                    val editPreferences = preferences.edit()
                     editPreferences.putString("token", response.getString("token")).apply()*/
 
-                    Log.d(TAG, "parsing data")
                     val jSONCourses= response.getJSONArray("courses")
-                    Log.d(TAG, "parsing data 1")
+
+                    val semester = jSONCourses.getJSONObject(0).getString("semester")
+                    val screenTitle = findViewById<TextView>(R.id.screen_title)
+                    screenTitle.text = "Oferta Académica Cuatrimestre ${semester.substring(0,1)} de ${semester.substring(2)}"
+
+                    val departmentCode = jSONCourses.getJSONObject(0).getString("department_code")
+                    val subjectCode = jSONCourses.getJSONObject(0).getString("subject_code")
+                    val editPreferences = preferences.edit()
+                    editPreferences.putBoolean(departmentCode + subjectCode, false).apply()
                     for (j in 0 until jSONCourses.length()) {
                         Log.d(TAG, "parsing data 2")
+
+                        val enrolledInSubject = jSONCourses.getJSONObject(j).getString("enroled").toBoolean()
+                        Log.d(TAG, "enrolledInSubject: $enrolledInSubject en ${departmentCode + subjectCode}")
+                        if(enrolledInSubject) {
+                            editPreferences.putBoolean(departmentCode + subjectCode, enrolledInSubject).apply()
+                            val alreadyIn = findViewById<TextView>(R.id.already_one_of_your_subjects)
+                            alreadyIn.visibility = View.VISIBLE
+                        }
+
                         var professors = ""
                         for (k in 0 until jSONCourses.getJSONObject(j).getJSONArray("professors").length()) {
                             val professor = jSONCourses.getJSONObject(j).getJSONArray("professors").getJSONObject(k)
@@ -167,10 +190,15 @@ class CoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                         }
 
                         Log.d(TAG, "parsing data 4")
-                        courses.add(Course(jSONCourses.getJSONObject(j).getString("course"),
-                                jSONCourses.getJSONObject(j).getString("total_slots"),
+                        courses.add(Course(jSONCourses.getJSONObject(j).getString("department_code"),
+                                jSONCourses.getJSONObject(j).getString("subject_code"),
+                                jSONCourses.getJSONObject(j).getString("name"),
+                                jSONCourses.getJSONObject(j).getString("course"),
+                                jSONCourses.getJSONObject(j).getString("free_slots"),
                                 professors,
                                 timeSlots[0].classroomCampus,
+                                jSONCourses.getJSONObject(j).getString("enroled").toBoolean(),
+                                false,
                                 timeSlots
                         ))
                         Log.d(TAG, "parsing data 5")

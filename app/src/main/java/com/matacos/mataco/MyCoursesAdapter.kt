@@ -16,7 +16,7 @@ import com.matacos.mataco.apiController.ServiceVolley
 
 class MyCoursesAdapter(val context: Context, val coursesList: ArrayList<Course>, val preferences: SharedPreferences): RecyclerView.Adapter<MyCoursesAdapter.MyCoursesViewHolder>() {
 
-    private val TAG: String = CoursesAdapter::class.java.simpleName
+    private val TAG: String = MyCoursesAdapter::class.java.simpleName
 
     override fun onBindViewHolder(holder: MyCoursesViewHolder, position: Int) {
         Log.d(TAG, "onBindViewHolder")

@@ -14,6 +14,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.TextView
 import com.matacos.mataco.apiController.APIController
 import com.matacos.mataco.apiController.ServiceVolley
 import kotlinx.android.synthetic.main.activity_subjects.*
@@ -22,7 +23,7 @@ import kotlinx.android.synthetic.main.content_my_courses.*
 
 class MyCoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    private val TAG: String = CoursesActivity::class.java.simpleName
+    private val TAG: String = MyCoursesActivity::class.java.simpleName
     val courses = ArrayList<Course>()
     val displayedCourses = ArrayList<Course>()
 
@@ -133,6 +134,11 @@ class MyCoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
                 Log.d(TAG, "parsing data")
                 val jSONCourses= response.getJSONArray("courseInscriptions")
+
+                val semester = jSONCourses.getJSONObject(0).getJSONObject("course").getString("semester")
+                val screenTitle = findViewById<TextView>(R.id.screen_title)
+                screenTitle.text = "Oferta Académica Cuatrimestre ${semester.substring(0,1)} de ${semester.substring(2)}"
+
                 Log.d(TAG, "parsing data 1")
                 for (j in 0 until jSONCourses.length()) {
                     val jSONCourse = jSONCourses.getJSONObject(j).getJSONObject("course")

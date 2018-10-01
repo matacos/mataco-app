@@ -1,7 +1,9 @@
 package com.matacos.mataco
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -10,8 +12,11 @@ import android.view.View
 import android.view.ViewGroup
 
 import android.widget.*
+import com.matacos.mataco.apiController.APIController
+import com.matacos.mataco.apiController.ServiceVolley
+import org.json.JSONObject
 
-class CoursesAdapter(val context: Context, val coursesList: ArrayList<Course>, val preferences: SharedPreferences): RecyclerView.Adapter<CoursesAdapter.CoursesViewHolder>() {
+class CoursesAdapter(val context: Context, val coursesList: ArrayList<Course>, val preferences: SharedPreferences, val enrolled: Boolean): RecyclerView.Adapter<CoursesAdapter.CoursesViewHolder>() {
 
     private val TAG: String = CoursesAdapter::class.java.simpleName
 
@@ -21,11 +26,24 @@ class CoursesAdapter(val context: Context, val coursesList: ArrayList<Course>, v
         holder.total_slots.text = "Cupos ${coursesList[position].totalSlots}"
         holder.professors.text = coursesList[position].professors
         holder.classroomCampus.text = "Sede ${coursesList[position].classroomCampus}"
-        holder.button_sign_up.setOnClickListener {
-            Log.d(TAG, "onClick: clicked on button_sign_up")
+        val inscripto = preferences.getBoolean(coursesList[position].department_code + coursesList[position].subject_code, false)
+        Log.d(TAG, "Inscripto en adapter: $inscripto")
 
-            Toast.makeText(context, "Clicked Sign Up Button", Toast.LENGTH_SHORT).show()
+        if (inscripto) {
+            holder.button_sign_up.setTextColor(Color.parseColor("#808080"))
+            holder.button_sign_up.setBackgroundColor(Color.parseColor("#cdcdcd"))
+        }else {
+            if (coursesList[position].totalSlots.toInt() <= 0){
+                holder.button_sign_up.setText("Inscribirse como condicional")
+            }
+            holder.button_sign_up.setOnClickListener {
+                Log.d(TAG, "onClick: clicked on button_sign_up")
 
+                postData(coursesList[position].number)
+                notifyDataSetChanged()
+                val intent = Intent(context, SubjectsActivity::class.java)
+                context.startActivity(intent)
+            }
         }
 
         holder.time_slots_recycler_view.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
@@ -56,4 +74,21 @@ class CoursesAdapter(val context: Context, val coursesList: ArrayList<Course>, v
 
     }
 
+    private fun postData(course: String){
+        Log.d(TAG, "postData")
+
+        val service = ServiceVolley()
+        val apiController = APIController(service)
+        val token = preferences.getString("token", "")
+        val username = preferences.getString("username", "")
+        val path = "api/cursadas"
+        val params = JSONObject()
+        params.put("student", username)
+        params.put("course", course)
+        Log.d(TAG, "Params: ${params}")
+
+        apiController.post(path, token, params){ response ->
+            Log.d(TAG, response.toString())
+        }
+    }
 }

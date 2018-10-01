@@ -1,6 +1,7 @@
 package com.matacos.mataco
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -102,10 +103,12 @@ class SubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.nav_subjects -> {
-
+                val intent = Intent(applicationContext, SubjectsActivity::class.java)
+                applicationContext.startActivity(intent)
             }
             R.id.nav_courses -> {
-
+                val intent = Intent(applicationContext, MyCoursesActivity::class.java)
+                applicationContext.startActivity(intent)
             }
 
         }

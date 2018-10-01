@@ -135,9 +135,10 @@ class MyCoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 Log.d(TAG, "parsing data")
                 val jSONCourses= response.getJSONArray("courseInscriptions")
 
-                val semester = jSONCourses.getJSONObject(0).getJSONObject("course").getString("semester")
+//                val semester = jSONCourses.getJSONObject(0).getJSONObject("course").getString("semester")
                 val screenTitle = findViewById<TextView>(R.id.screen_title)
-                screenTitle.text = "Oferta Académica Cuatrimestre ${semester.substring(0,1)} de ${semester.substring(2)}"
+//                screenTitle.text = "Oferta Académica Cuatrimestre ${semester.substring(0,1)} de ${semester.substring(2)}"
+                screenTitle.text = "Cuatrimestre 2 de 2018"
 
                 Log.d(TAG, "parsing data 1")
                 for (j in 0 until jSONCourses.length()) {

@@ -67,7 +67,7 @@ class ServiceVolley : ServiceInterface {
                     completionHandler(response)
                 },
                 Response.ErrorListener { error ->
-                    VolleyLog.e(TAG, "/post request fail! Error: ${error.message}")
+                    Log.d(TAG, "/post request fail! Error: ${error.message}")
                     completionHandler(null)
                 }) {
             @Throws(AuthFailureError::class)

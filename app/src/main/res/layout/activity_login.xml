@@ -31,6 +31,24 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mataco"
+                android:textSize="20sp"
+                android:layout_gravity="center_horizontal"
+                />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sistema de Gestión de Alumnos"
+                android:textSize="16sp"
+                android:layout_gravity="center_horizontal"
+                />
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -75,4 +93,6 @@
 
         </LinearLayout>
     </ScrollView>
+
+
 </LinearLayout>

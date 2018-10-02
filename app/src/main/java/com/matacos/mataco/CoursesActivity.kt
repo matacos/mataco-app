@@ -142,8 +142,8 @@ class CoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             Log.d(TAG, "BB: Here2")
             val department = preferences.getString("subject_department", "")
             val code = preferences.getString("subject_code", "")
-            //val path = "api/cursos?cod_departamento=$department&cod_materia=$code"
-            val path = "api/cursos?cod_departamento=75&cod_materia=07"
+            val path = "api/cursos?cod_departamento=$department&cod_materia=$code"
+//            val path = "api/cursos?cod_departamento=75&cod_materia=07"
             apiController.get(path, token) { response ->
                 Log.d(TAG, response.toString())
                 if (response != null) {

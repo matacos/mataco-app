@@ -15,9 +15,12 @@ import android.view.MenuItem
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.google.gson.Gson
 import com.matacos.mataco.apiController.APIController
 import com.matacos.mataco.apiController.ServiceVolley
 import com.matacos.mataco.clases.Course
+import com.matacos.mataco.clases.CourseInscriptions
+import com.matacos.mataco.clases.Courses
 import com.matacos.mataco.clases.TimeSlot
 import kotlinx.android.synthetic.main.activity_subjects.*
 import kotlinx.android.synthetic.main.app_bar_subjects.*
@@ -80,7 +83,7 @@ class MyCoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                         val search = newText.toLowerCase()
                         courses.forEach {
                             Log.d(TAG, "courses.forEach")
-                            val professor = it.professors.toLowerCase()
+                            val professor = it.professors().toLowerCase()
                             if (professor.contains(search)) {
                                 Log.d(TAG, "professor.contains(search)")
                                 displayedCourses.add(it)
@@ -120,9 +123,14 @@ class MyCoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     private fun loadData() {
         Log.d(TAG, "loadData")
 
+        //TODO: Add request for the semester
+        //val semester = jSONCourses.getJSONObject(0).getString("semester")
+        val screenTitle = findViewById<TextView>(R.id.screen_title)
+        //screenTitle.text = "Oferta Académica Cuatrimestre ${semester.substring(0,1)} de ${semester.substring(2)}"
+        screenTitle.text = "Cuatrimestre 2 de 2018"
+
         val service = ServiceVolley()
         val apiController = APIController(service)
-
         val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
         val token = preferences.getString("token", "")
         val username = preferences.getString("username", "")
@@ -133,57 +141,24 @@ class MyCoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             if (response != null) {
 /*                    val editPreferences = preferences.edit()
                     editPreferences.putString("token", response.getString("token")).apply()*/
-
-                Log.d(TAG, "parsing data")
-                val jSONCourses= response.getJSONArray("courseInscriptions")
-
-//                val semester = jSONCourses.getJSONObject(0).getJSONObject("course").getString("semester")
-                val screenTitle = findViewById<TextView>(R.id.screen_title)
-//                screenTitle.text = "Oferta Académica Cuatrimestre ${semester.substring(0,1)} de ${semester.substring(2)}"
-                screenTitle.text = "Cuatrimestre 2 de 2018"
-
-                Log.d(TAG, "parsing data 1")
-                for (j in 0 until jSONCourses.length()) {
-                    val jSONCourse = jSONCourses.getJSONObject(j).getJSONObject("course")
-                    Log.d(TAG, "parsing data 2")
-                    var professors = ""
-                    for (k in 0 until jSONCourse.getJSONArray("professors").length()) {
-                        val professor = jSONCourse.getJSONArray("professors").getJSONObject(k)
-                        professors += "${professor.getString("name")} ${professor.getString("surname")}, "
-                    }
-                    professors = professors.trim().trimEnd(',')
-                    val timeSlots = ArrayList<TimeSlot>()
-                    for (k in 0 until jSONCourse.getJSONArray("time_slots").length()) {
-                        val timeSlot = jSONCourse.getJSONArray("time_slots").getJSONObject(k)
-                        Log.d(TAG, "parsing data 3")
-                        timeSlots.add(TimeSlot(timeSlot.getString("classroom_code"),
-                                timeSlot.getString("classroom_campus"),
-                                timeSlot.getString("beginning"),
-                                timeSlot.getString("ending"),
-                                timeSlot.getString("day_of_week"),
-                                timeSlot.getString("description")))
-                    }
-
-                    Log.d(TAG, "parsing data 4")
-                    courses.add(Course(jSONCourse.getString("department_code"),
-                            jSONCourse.getString("subject_code"),
-                            jSONCourse.getString("name"),
-                            jSONCourse.getString("course"),
-                            jSONCourse.getString("free_slots"),
-                            professors,
-                            timeSlots[0].classroomCampus,
-                            true,
-                            jSONCourses.getJSONObject(j).getString("accepted").toBoolean(),
-                            timeSlots
-                    ))
-                    Log.d(TAG, "parsing data 5")
+                Log.d(TAG, "Parsing 1")
+                val gson = Gson()
+                Log.d(TAG, "Parsing 2")
+                val coursesSubjects = gson.fromJson(response.toString(), CourseInscriptions::class.java)
+                Log.d(TAG, "Parsing 3")
+                for (course in coursesSubjects.courses) {
+                    Log.d(TAG, "Parsing 4")
+                    courses.add(course.course)
+                    Log.d(TAG, "Parsing 5")
                 }
+                Log.d(TAG, "Parsing 6")
                 courses.sort()
-                Log.d(TAG, "parsing data 6")
+                Log.d(TAG, "Parsing 7")
+                Log.d(TAG, courses.toString())
+                Log.d(TAG, "Parsing 8")
                 displayedCourses.addAll(courses.distinct())
-                Log.d(TAG, "parsing data 7")
+                Log.d(TAG, "Parsing 9")
                 my_courses_recycler_view.adapter!!.notifyDataSetChanged()
-                Log.d(TAG, "parsing data 8")
             }
 
 

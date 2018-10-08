@@ -1,15 +1,16 @@
 package com.matacos.mataco.clases
 
 import android.util.Log
+import com.google.gson.annotations.SerializedName
 import java.text.SimpleDateFormat
 import java.util.*
 
-data class TimeSlot(val classroomCode: String,
-                    val classroomCampus: String,
-                    val beginning: String,
-                    val ending: String,
-                    val dayOfWeek: String,
-                    val description: String) : Comparable<TimeSlot> {
+data class TimeSlot(@SerializedName("classroom_code") val classroomCode: String,
+                    @SerializedName("classroom_campus") val classroomCampus: String,
+                    @SerializedName("beginning") val beginning: String,
+                    @SerializedName("ending") val ending: String,
+                    @SerializedName("day_of_week") val dayOfWeek: String,
+                    @SerializedName("description") val description: String) : Comparable<TimeSlot> {
     override operator fun compareTo(other: TimeSlot): Int {
         val thisTimeSlot = this.dayOfWeek + this.beginning
         val otherTimeSlot = other.dayOfWeek + other.beginning

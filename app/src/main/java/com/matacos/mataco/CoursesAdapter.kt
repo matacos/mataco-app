@@ -17,7 +17,7 @@ import com.matacos.mataco.apiController.ServiceVolley
 import com.matacos.mataco.clases.Course
 import org.json.JSONObject
 
-class CoursesAdapter(val context: Context, val coursesList: ArrayList<Course>, val preferences: SharedPreferences, val enrolled: Boolean): RecyclerView.Adapter<CoursesAdapter.CoursesViewHolder>() {
+class CoursesAdapter(val context: Context, val coursesList: ArrayList<Course>, val preferences: SharedPreferences): RecyclerView.Adapter<CoursesAdapter.CoursesViewHolder>() {
 
     private val TAG: String = CoursesAdapter::class.java.simpleName
 
@@ -25,7 +25,7 @@ class CoursesAdapter(val context: Context, val coursesList: ArrayList<Course>, v
         Log.d(TAG, "onBindViewHolder")
         holder.number.text = coursesList[position].number()
         holder.total_slots.text = coursesList[position].totalSlots()
-        holder.professors.text = coursesList[position].professors
+        holder.professors.text = coursesList[position].professors()
         holder.classroomCampus.text = coursesList[position].classroomCampus()
         val inscripto = preferences.getBoolean(coursesList[position].department_code + coursesList[position].subject_code, false)
         Log.d(TAG, "Inscripto en adapter: $inscripto")
@@ -49,7 +49,6 @@ class CoursesAdapter(val context: Context, val coursesList: ArrayList<Course>, v
             } else{
                 holder.button_sign_up.setText("Inscribirse")
             }
-
         }
 
         holder.time_slots_recycler_view.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)

@@ -9,10 +9,8 @@ import android.view.ViewGroup
 
 import android.widget.*
 import com.matacos.mataco.clases.TimeSlot
-import java.text.SimpleDateFormat
-import java.util.*
 
-class TimeSlotsAdapter(val context: Context, val timeSlotsList: ArrayList<TimeSlot>): RecyclerView.Adapter<TimeSlotsAdapter.TimeSlotsViewHolder>() {
+class TimeSlotsAdapter(val context: Context, val timeSlotsList: List<TimeSlot>): RecyclerView.Adapter<TimeSlotsAdapter.TimeSlotsViewHolder>() {
 
     private val TAG: String = TimeSlotsAdapter::class.java.simpleName
 

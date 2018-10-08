@@ -1,16 +1,17 @@
 package com.matacos.mataco.clases
 
-data class Course(val department_code: String,
-                  val subject_code: String,
-                  val subject_name: String,
-                  val number: String,
-                  val totalSlots: String,
-                  val professors: String,
-                  val classroomCampus: String,
-                  val enrolled: Boolean,
-                  val accepted: Boolean,
-                  val timeSlots: ArrayList<TimeSlot>
-                  ): Comparable<Course> {
+import com.google.gson.annotations.SerializedName
+
+data class Course(@SerializedName("department_code") val department_code: String,
+                  @SerializedName("subject_code") val subject_code: String,
+                  @SerializedName("subject_name") val subject_name: String,
+                  @SerializedName("course") val number: String,
+                  @SerializedName("free_slots") val totalSlots: String,
+                  @SerializedName("professors") val professors: List<Professor>,
+                  @SerializedName("enroled") val enrolled: Boolean = false,
+                  @SerializedName("time_slots") val timeSlots: List<TimeSlot>,
+                  val classroomCampus: String = "Paseo Colon",
+                  val accepted: Boolean = true): Comparable<Course> {
 
     override operator fun compareTo(other: Course): Int {
         val thisSubject = this.number
@@ -23,7 +24,12 @@ data class Course(val department_code: String,
     }
 
     fun professors(): String {
-        return "Cátedra ${this.number} - ${this.professors}"
+        var professors = ""
+        for (professor in this.professors) {
+            professors += "${professor.toString()}, "
+        }
+        professors = professors.trim().trimEnd(',')
+        return "Cátedra ${this.number} - ${professors}"
     }
 
     fun classroomCampus(): String {

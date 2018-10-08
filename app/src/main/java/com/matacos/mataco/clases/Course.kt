@@ -11,9 +11,30 @@ data class Course(val department_code: String,
                   val accepted: Boolean,
                   val timeSlots: ArrayList<TimeSlot>
                   ): Comparable<Course> {
+
     override operator fun compareTo(other: Course): Int {
-        var thisSubject = this.number
-        var otherSubjet =  this.number
+        val thisSubject = this.number
+        val otherSubjet =  this.number
         return thisSubject.compareTo(otherSubjet)
     }
+
+    fun subject(): String {
+        return "${this.department_code}.${this.subject_code}"
+    }
+
+    fun professors(): String {
+        return "Cátedra ${this.number} - ${this.professors}"
+    }
+
+    fun classroomCampus(): String {
+        return "Sede ${this.classroomCampus}"
+    }
+
+    fun state(): String {
+        return "Estado: " + if(this.accepted) "Regular" else "Condicional"
+    }
 }
+
+
+
+

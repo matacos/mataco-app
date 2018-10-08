@@ -21,13 +21,13 @@ class MyCoursesAdapter(val context: Context, val coursesList: ArrayList<Course>,
 
     override fun onBindViewHolder(holder: MyCoursesViewHolder, position: Int) {
         Log.d(TAG, "onBindViewHolder")
-        holder.code.text = coursesList[position].department_code + '.' + coursesList[position].subject_code
+        holder.code.text = coursesList[position].subject()
         holder.name.text = coursesList[position].subject_name
-        holder.professors.text = "Cátedra ${coursesList[position].number} - ${coursesList[position].professors}"
-        holder.classroomCampus.text = "Sede ${coursesList[position].classroomCampus}"
-        holder.status.text = "Estado: " + if(coursesList[position].accepted) "Regular" else "Condicional"
+        holder.professors.text = coursesList[position].professors()
+        holder.classroomCampus.text = coursesList[position].classroomCampus()
+        holder.status.text = coursesList[position].state()
         holder.button_drop_out.setOnClickListener {
-            Log.d(TAG, "onClick: clicked on button_sign_up")
+            Log.d(TAG, "onClick: clicked on button_drop_out")
 
             deleteData(coursesList[position].number)
             notifyDataSetChanged()

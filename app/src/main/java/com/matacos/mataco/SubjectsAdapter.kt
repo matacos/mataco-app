@@ -8,11 +8,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
-import com.matacos.mataco.apiController.APIController
-import com.matacos.mataco.apiController.ServiceVolley
+import com.matacos.mataco.clases.Subject
 
 class SubjectsAdapter(val context: Context, val subjectsList: ArrayList<Subject>, val preferences: SharedPreferences): RecyclerView.Adapter<SubjectsAdapter.SubjectsViewHolder>() {
 
@@ -21,7 +18,7 @@ class SubjectsAdapter(val context: Context, val subjectsList: ArrayList<Subject>
     override fun onBindViewHolder(holder: SubjectsViewHolder, position: Int) {
         Log.d(TAG, "onBindViewHolder")
         holder.name.text = subjectsList[position].name
-        holder.department_code.text = subjectsList[position].department + "." + subjectsList[position].code
+        holder.department_code.text = subjectsList[position].subject()
        holder.parentLayout.setOnClickListener {
             Log.d(TAG, "onClick: clicked on: " + subjectsList[position].name)
 

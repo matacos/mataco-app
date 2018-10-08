@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.*
 import com.matacos.mataco.apiController.APIController
 import com.matacos.mataco.apiController.ServiceVolley
+import com.matacos.mataco.clases.Course
 import org.json.JSONObject
 
 class CoursesAdapter(val context: Context, val coursesList: ArrayList<Course>, val preferences: SharedPreferences, val enrolled: Boolean): RecyclerView.Adapter<CoursesAdapter.CoursesViewHolder>() {

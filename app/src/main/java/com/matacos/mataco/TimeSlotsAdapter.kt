@@ -1,8 +1,6 @@
 package com.matacos.mataco
 
 import android.content.Context
-import android.content.SharedPreferences
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import android.widget.*
+import com.matacos.mataco.clases.TimeSlot
 import java.text.SimpleDateFormat
 import java.util.*
 

@@ -2,9 +2,7 @@ package com.matacos.mataco
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
@@ -16,8 +14,10 @@ import android.view.MenuItem
 import android.support.v7.widget.SearchView
 import android.widget.EditText
 import android.widget.LinearLayout
+import com.google.gson.Gson
 import com.matacos.mataco.apiController.APIController
 import com.matacos.mataco.apiController.ServiceVolley
+import com.matacos.mataco.clases.Subject
 import kotlinx.android.synthetic.main.activity_subjects.*
 import kotlinx.android.synthetic.main.app_bar_subjects.*
 import kotlinx.android.synthetic.main.content_subjects.*
@@ -134,12 +134,18 @@ class SubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         apiController.get(path, token) { response ->
             Log.d(TAG, response.toString())
             if (response != null) {
+
+
+
+
+
                 val jSONSubjects= response.getJSONArray("subjects")
                 for (i in 0 until jSONSubjects.length()) {
-                    subjects.add(Subject(jSONSubjects.getJSONObject(i).getString("name"),
-                            jSONSubjects.getJSONObject(i).getString("code"),
-                            jSONSubjects.getJSONObject(i).getString("department_code")
-                    ))
+                    val gson = Gson()
+                    Log.d(TAG, "Before parsing: "+jSONSubjects.getJSONObject(i).toString())
+                    val subject = gson.fromJson(jSONSubjects.getJSONObject(i).toString(), Subject::class.java)
+                    Log.d(TAG, "After parsing: "+subject.toString())
+                    subjects.add(subject)
                 }
                 subjects.sort()
 

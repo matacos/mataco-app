@@ -17,6 +17,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.matacos.mataco.apiController.APIController
 import com.matacos.mataco.apiController.ServiceVolley
+import com.matacos.mataco.clases.Course
+import com.matacos.mataco.clases.TimeSlot
 import kotlinx.android.synthetic.main.activity_subjects.*
 import kotlinx.android.synthetic.main.app_bar_subjects.*
 import kotlinx.android.synthetic.main.content_my_courses.*
@@ -154,7 +156,7 @@ class MyCoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                     for (k in 0 until jSONCourse.getJSONArray("time_slots").length()) {
                         val timeSlot = jSONCourse.getJSONArray("time_slots").getJSONObject(k)
                         Log.d(TAG, "parsing data 3")
-                        timeSlots.add(TimeSlot(  timeSlot.getString("classroom_code"),
+                        timeSlots.add(TimeSlot(timeSlot.getString("classroom_code"),
                                 timeSlot.getString("classroom_campus"),
                                 timeSlot.getString("beginning"),
                                 timeSlot.getString("ending"),

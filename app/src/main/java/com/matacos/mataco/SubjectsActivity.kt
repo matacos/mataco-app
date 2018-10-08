@@ -18,6 +18,7 @@ import com.google.gson.Gson
 import com.matacos.mataco.apiController.APIController
 import com.matacos.mataco.apiController.ServiceVolley
 import com.matacos.mataco.clases.Subject
+import com.matacos.mataco.clases.Subjects
 import kotlinx.android.synthetic.main.activity_subjects.*
 import kotlinx.android.synthetic.main.app_bar_subjects.*
 import kotlinx.android.synthetic.main.content_subjects.*
@@ -135,16 +136,10 @@ class SubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             Log.d(TAG, response.toString())
             if (response != null) {
 
+                val gson = Gson()
+                val gsonSubjects = gson.fromJson(response.toString(), Subjects::class.java)
 
-
-
-
-                val jSONSubjects= response.getJSONArray("subjects")
-                for (i in 0 until jSONSubjects.length()) {
-                    val gson = Gson()
-                    Log.d(TAG, "Before parsing: "+jSONSubjects.getJSONObject(i).toString())
-                    val subject = gson.fromJson(jSONSubjects.getJSONObject(i).toString(), Subject::class.java)
-                    Log.d(TAG, "After parsing: "+subject.toString())
+                for (subject in gsonSubjects.subjects) {
                     subjects.add(subject)
                 }
                 subjects.sort()

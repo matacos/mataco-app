@@ -33,7 +33,17 @@ data class Course(val department_code: String,
     fun state(): String {
         return "Estado: " + if(this.accepted) "Regular" else "Condicional"
     }
+
+    fun totalSlots(): String {
+        return "Cupos ${this.totalSlots}"
+    }
+
+    fun number(): String {
+        return "Cátedra ${this.number}"
+    }
 }
+
+
 
 
 

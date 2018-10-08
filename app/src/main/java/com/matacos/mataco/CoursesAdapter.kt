@@ -23,28 +23,33 @@ class CoursesAdapter(val context: Context, val coursesList: ArrayList<Course>, v
 
     override fun onBindViewHolder(holder: CoursesViewHolder, position: Int) {
         Log.d(TAG, "onBindViewHolder")
-        holder.number.text = "Cátedra ${coursesList[position].number}"
-        holder.total_slots.text = "Cupos ${coursesList[position].totalSlots}"
+        holder.number.text = coursesList[position].number()
+        holder.total_slots.text = coursesList[position].totalSlots()
         holder.professors.text = coursesList[position].professors
-        holder.classroomCampus.text = "Sede ${coursesList[position].classroomCampus}"
+        holder.classroomCampus.text = coursesList[position].classroomCampus()
         val inscripto = preferences.getBoolean(coursesList[position].department_code + coursesList[position].subject_code, false)
         Log.d(TAG, "Inscripto en adapter: $inscripto")
 
+        holder.button_sign_up.setOnClickListener {
+            Log.d(TAG, "onClick: clicked on button_sign_up")
+
+            postData(coursesList[position].number)
+            notifyDataSetChanged()
+            val intent = Intent(context, SubjectsActivity::class.java)
+            context.startActivity(intent)
+        }
+
         if (inscripto) {
-            holder.button_sign_up.setTextColor(Color.parseColor("#808080"))
-            holder.button_sign_up.setBackgroundColor(Color.parseColor("#cdcdcd"))
+            holder.button_sign_up.setEnabled(false)
+            //holder.button_sign_up.setTextColor(Color.parseColor("#808080"))
+            //holder.button_sign_up.setBackgroundColor(Color.parseColor("#cdcdcd"))
         }else {
             if (coursesList[position].totalSlots.toInt() <= 0){
                 holder.button_sign_up.setText("Inscribirse como condicional")
+            } else{
+                holder.button_sign_up.setText("Inscribirse")
             }
-            holder.button_sign_up.setOnClickListener {
-                Log.d(TAG, "onClick: clicked on button_sign_up")
 
-                postData(coursesList[position].number)
-                notifyDataSetChanged()
-                val intent = Intent(context, SubjectsActivity::class.java)
-                context.startActivity(intent)
-            }
         }
 
         holder.time_slots_recycler_view.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)

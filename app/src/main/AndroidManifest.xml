@@ -24,17 +24,16 @@
         <activity
             android:name=".SubjectsActivity"
             android:label="@string/title_activity_subjects"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".CoursesActivity"
             android:label="@string/title_activity_courses"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".MyCoursesActivity"
             android:label="@string/title_activity_my_courses"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".ExamSubjectsActivity"></activity>
     </application>
 
 </manifest>

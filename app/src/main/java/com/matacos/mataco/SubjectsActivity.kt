@@ -111,6 +111,10 @@ class SubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                 val intent = Intent(applicationContext, MyCoursesActivity::class.java)
                 applicationContext.startActivity(intent)
             }
+            R.id.nav_exam_subjects -> {
+                val intent = Intent(applicationContext, ExamSubjectsActivity::class.java)
+                applicationContext.startActivity(intent)
+            }
 
         }
 

@@ -12,6 +12,10 @@
             android:id="@+id/nav_courses"
             android:icon="@drawable/ic_menu_courses"
             android:title="Mis Inscripciones" />
+        <item
+            android:id="@+id/nav_exam_subjects"
+            android:icon="@drawable/ic_menu_exam_subjects"
+            android:title="Oferta Exámenes" />
 
     </group>
 

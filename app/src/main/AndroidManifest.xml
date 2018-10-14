@@ -33,7 +33,10 @@
             android:name=".MyCoursesActivity"
             android:label="@string/title_activity_my_courses"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".ExamSubjectsActivity"></activity>
+        <activity
+            android:name=".ExamSubjectsActivity"
+            android:label="@string/title_activity_exam_subjects"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

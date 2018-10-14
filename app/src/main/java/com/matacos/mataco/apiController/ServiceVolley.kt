@@ -6,6 +6,7 @@ import com.android.volley.Response
 import com.android.volley.VolleyLog
 import com.android.volley.toolbox.JsonObjectRequest
 import org.json.JSONObject
+import java.util.*
 
 class ServiceVolley : ServiceInterface {
     private val TAG: String = ServiceVolley::class.java.simpleName
@@ -20,7 +21,11 @@ class ServiceVolley : ServiceInterface {
                     completionHandler(response)
                 },
                 Response.ErrorListener { error ->
-                    VolleyLog.e(TAG, "/get request fail! Error: ${error.message}")
+                    VolleyLog.e(TAG, "/get request fail! Error: $error")
+                    if (error.networkResponse != null && error.networkResponse.data != null) {
+                        Log.e(TAG, "Response statusCode: " + error.networkResponse.statusCode);
+                        Log.e(TAG, "Response data: " + Arrays.toString(error.networkResponse.data));
+                    }
                     completionHandler(null)
                 }) {
             @Throws(AuthFailureError::class)
@@ -43,7 +48,11 @@ class ServiceVolley : ServiceInterface {
                     completionHandler(response)
                 },
                 Response.ErrorListener { error ->
-                    VolleyLog.e(TAG, "/get request fail! Error: ${error.message}")
+                    VolleyLog.e(TAG, "/get request fail! Error: $error")
+                    if (error.networkResponse != null && error.networkResponse.data != null) {
+                        Log.e(TAG, "Response statusCode: " + error.networkResponse.statusCode);
+                        Log.e(TAG, "Response data: " + Arrays.toString(error.networkResponse.data));
+                    }
                     completionHandler(null)
                 }) {
             @Throws(AuthFailureError::class)
@@ -67,7 +76,11 @@ class ServiceVolley : ServiceInterface {
                     completionHandler(response)
                 },
                 Response.ErrorListener { error ->
-                    Log.d(TAG, "/post request fail! Error: ${error.message}")
+                    Log.d(TAG, "/post request fail! Error: $error")
+                    if (error.networkResponse != null && error.networkResponse.data != null) {
+                        Log.e(TAG, "Response statusCode: " + error.networkResponse.statusCode);
+                        Log.e(TAG, "Response data: " + Arrays.toString(error.networkResponse.data));
+                    }
                     completionHandler(null)
                 }) {
             @Throws(AuthFailureError::class)
@@ -90,7 +103,11 @@ class ServiceVolley : ServiceInterface {
                     completionHandler(response)
                 },
                 Response.ErrorListener { error ->
-                    Log.d(TAG, "/post request fail! Error: ${error.message}")
+                    Log.d(TAG, "/post request fail! Error: $error")
+                    if (error.networkResponse != null && error.networkResponse.data != null) {
+                        Log.e(TAG, "Response statusCode: " + error.networkResponse.statusCode);
+                        Log.e(TAG, "Response data: " + Arrays.toString(error.networkResponse.data));
+                    }
                     completionHandler(null)
                 }) {
             @Throws(AuthFailureError::class)

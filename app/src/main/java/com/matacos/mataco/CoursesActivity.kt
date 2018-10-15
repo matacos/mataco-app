@@ -138,19 +138,9 @@ class CoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     private fun verifyEnrollment(courses: ArrayList<Course>) {
         Log.d(TAG, "verifyEnrollment")
         val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
-        val editPreferences = preferences.edit()
-        val departmentCode = preferences.getString("subject_department", "")
-        val subjectCode = preferences.getString("subject_code", "")
-
-        editPreferences.putBoolean(departmentCode + subjectCode, false).apply()
-        for(course in courses) {
-            val enrolledInSubject = course.enrolled
-            Log.d(TAG, "enrolledInSubject: $enrolledInSubject en ${departmentCode + subjectCode}")
-            if (enrolledInSubject) {
-                editPreferences.putBoolean(departmentCode + subjectCode, enrolledInSubject).apply()
-                val alreadyIn = findViewById<TextView>(R.id.already_one_of_your_subjects)
-                alreadyIn.visibility = View.VISIBLE
-            }
+        val enroled = preferences.getBoolean("subject_enroled", false)
+        if (enroled) {
+            already_one_of_your_subjects.visibility = View.VISIBLE
         }
     }
 

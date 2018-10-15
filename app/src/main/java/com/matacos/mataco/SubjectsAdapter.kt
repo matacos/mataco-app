@@ -26,6 +26,7 @@ class SubjectsAdapter(val context: Context, val subjectsList: ArrayList<Subject>
            editPreferences.putString("subject_department", subjectsList[position].department)
            editPreferences.putString("subject_code", subjectsList[position].code)
            editPreferences.putString("subject_name", subjectsList[position].name)
+           editPreferences.putBoolean("subject_enroled", subjectsList[position].enroled)
            editPreferences.apply()
            Log.d(TAG, "startActivity: CoursesActivity")
            val intent = Intent(context, CoursesActivity::class.java)

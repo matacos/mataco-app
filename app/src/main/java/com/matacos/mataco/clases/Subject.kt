@@ -4,7 +4,9 @@ import com.google.gson.annotations.SerializedName
 
 data class Subject(@SerializedName("name") val name: String,
                    @SerializedName("code") val code: String,
-                   @SerializedName("department_code") val department: String): Comparable<Subject> {
+                   @SerializedName("department_code") val department: String,
+                   @SerializedName("enroled") val enroled: Boolean,
+                   @SerializedName("approved") val approved: Boolean): Comparable<Subject> {
 
     override operator fun compareTo(other: Subject): Int {
         val thisSubject = this.name + this.department + this.code

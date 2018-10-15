@@ -30,11 +30,11 @@
     <string name="title_activity_courses">Catedras</string>
     <string name="number">Number</string>
     <string name="classroom_campus">Classroom Campus</string>
-    <string name="classroom_code">Code</string>
+    <string name="classroom_code">400</string>
     <string name="beginning">Beginning</string>
     <string name="ending">Hasta</string>
     <string name="day_of_week">Day of Week</string>
-    <string name="description">Description</string>
+    <string name="description">Teorico-Práctica Obligatoria</string>
     <string name="button_sign_up">Inscribirse</string>
     <string name="button_drop_out">Desinscribirse</string>
     <string name="classroom_code_header">Aula</string>

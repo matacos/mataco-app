@@ -10,7 +10,7 @@ data class Course(@SerializedName("department_code") val department_code: String
                   @SerializedName("professors") val professors: List<Professor>,
                   @SerializedName("enroled") val enrolled: Boolean = false,
                   @SerializedName("time_slots") val timeSlots: List<TimeSlot>,
-                  val classroomCampus: String = "Paseo Colon",
+                  var classroomCampus: String = "Paseo Colon",
                   val accepted: Boolean = true): Comparable<Course> {
 
     override operator fun compareTo(other: Course): Int {
@@ -33,7 +33,7 @@ data class Course(@SerializedName("department_code") val department_code: String
     }
 
     fun classroomCampus(): String {
-        return "Sede ${this.classroomCampus}"
+        return "Sede: ${this.classroomCampus}"
     }
 
     fun state(): String {

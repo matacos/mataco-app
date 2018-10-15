@@ -28,8 +28,8 @@ class ExamSubjectsAdapter(val context: Context, val examSubjectsList: ArrayList<
             editPreferences.putString("subject_name", examSubjectsList[position].name)
             editPreferences.apply()
             Log.d(TAG, "startActivity: ExamsActivity")
-            //val intent = Intent(context, ExamsActivity::class.java)
-            //context.startActivity(intent)
+            val intent = Intent(context, ExamsActivity::class.java)
+            context.startActivity(intent)
         }
     }
 

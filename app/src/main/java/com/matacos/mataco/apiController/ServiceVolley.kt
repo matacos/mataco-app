@@ -31,7 +31,7 @@ class ServiceVolley : ServiceInterface {
             @Throws(AuthFailureError::class)
             override fun getHeaders(): Map<String, String> {
                 val headers = HashMap<String, String>()
-                headers.put("Content-Type", "application/json")
+                headers.put("Content-Type", " ")
                 return headers
             }
         }
@@ -40,7 +40,7 @@ class ServiceVolley : ServiceInterface {
     }
 
     override fun get(path: String, token: String, completionHandler: (response: JSONObject?) -> Unit) {
-        Log.d(TAG, "get(with token)")
+        Log.d(TAG, "get(with token): "+token)
         val definitePath = basePath + path
         val jsonObjReq = object : JsonObjectRequest(Method.GET, definitePath, null,
                 Response.Listener<JSONObject> { response ->

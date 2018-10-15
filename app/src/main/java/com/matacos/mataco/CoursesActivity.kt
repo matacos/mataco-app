@@ -137,10 +137,11 @@ class CoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
     private fun verifyEnrollment(courses: ArrayList<Course>) {
         Log.d(TAG, "verifyEnrollment")
-        val departmentCode = courses.get(0).department_code
-        val subjectCode = courses.get(0).subject_code
         val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
         val editPreferences = preferences.edit()
+        val departmentCode = preferences.getString("subject_department", "")
+        val subjectCode = preferences.getString("subject_code", "")
+
         editPreferences.putBoolean(departmentCode + subjectCode, false).apply()
         for(course in courses) {
             val enrolledInSubject = course.enrolled
@@ -150,6 +151,13 @@ class CoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 val alreadyIn = findViewById<TextView>(R.id.already_one_of_your_subjects)
                 alreadyIn.visibility = View.VISIBLE
             }
+        }
+    }
+
+    private fun addClassroomCampus() {
+        Log.d(TAG, "addClassroomCampus")
+        for(course in courses) {
+            course.classroomCampus = course.timeSlots[0].classroomCampus
         }
     }
 
@@ -182,6 +190,7 @@ class CoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 }
                 courses.sort()
                 verifyEnrollment(courses)
+                addClassroomCampus()
                 displayedCourses.addAll(courses.distinct())
                 courses_recycler_view.adapter!!.notifyDataSetChanged()
             }

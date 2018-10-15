@@ -42,8 +42,7 @@ class ExamsAdapter(val context: Context, val examsList: ArrayList<Exam>, val pre
 
             postData(examsList[position].id)
             notifyDataSetChanged()
-            val intent = Intent(context, SubjectsActivity::class.java)
-            context.startActivity(intent)
+
         }*/
     }
 
@@ -80,21 +79,24 @@ class ExamsAdapter(val context: Context, val examsList: ArrayList<Exam>, val pre
         val examiner: TextView = itemView.findViewById(R.id.examiner)
     }
 
-    private fun postData(exam: String){
+    private fun postData(id: String){
         Log.d(TAG, "postData")
 
         val service = ServiceVolley()
         val apiController = APIController(service)
         val token = preferences.getString("token", "")
         val username = preferences.getString("username", "")
-        val path = "api/cursadas"
+        val path = "api/finales"
         val params = JSONObject()
         params.put("student", username)
-        params.put("exam", exam)
+        params.put("id", id)
+        params.put("status", status)
         Log.d(TAG, "Params: ${params}")
 
         apiController.post(path, token, params){ response ->
             Log.d(TAG, response.toString())
+            val intent = Intent(context, SubjectsActivity::class.java)
+            context.startActivity(intent)
         }
     }
 }

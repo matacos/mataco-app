@@ -29,10 +29,9 @@ class MyCoursesAdapter(val context: Context, val coursesList: ArrayList<Course>,
         holder.button_drop_out.setOnClickListener {
             Log.d(TAG, "onClick: clicked on button_drop_out")
 
-            deleteData(coursesList[position].number)
-            notifyDataSetChanged()
-            val intent = Intent(context, MyCoursesActivity::class.java)
-            context.startActivity(intent)
+            deleteData(coursesList[position].number, position)
+            /*val intent = Intent(context, MyCoursesActivity::class.java)
+            context.startActivity(intent)*/
         }
 
         holder.time_slots_recycler_view.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
@@ -63,7 +62,7 @@ class MyCoursesAdapter(val context: Context, val coursesList: ArrayList<Course>,
         val parentLayout = itemView.findViewById<android.support.constraint.ConstraintLayout>(R.id.courses_parent_layout)!!
     }
 
-    private fun deleteData(course: String){
+    private fun deleteData(course: String, position: Int){
         Log.d(TAG, "deleteData")
 
         val service = ServiceVolley()
@@ -74,6 +73,9 @@ class MyCoursesAdapter(val context: Context, val coursesList: ArrayList<Course>,
 
         apiController.delete(path, token){ response ->
             Log.d(TAG, response.toString())
+
+            coursesList.removeAt(position)
+            notifyDataSetChanged()
         }
     }
 }

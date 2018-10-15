@@ -18,7 +18,7 @@ data class Exam(@SerializedName("examiner") val examiner: Examiner,
     }
 
     fun classroomCampus(): String {
-        return "Sede ${this.classroomCampus}"
+        return "Sede: ${this.classroomCampus}"
     }
 
     fun id(): String {

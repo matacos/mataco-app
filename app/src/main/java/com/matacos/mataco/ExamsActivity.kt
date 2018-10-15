@@ -2,11 +2,11 @@ package com.matacos.mataco
 
 import android.content.Context
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.SearchView
 import android.util.Log
@@ -21,23 +21,24 @@ import com.matacos.mataco.apiController.APIController
 import com.matacos.mataco.apiController.ServiceVolley
 import com.matacos.mataco.clases.Course
 import com.matacos.mataco.clases.Courses
-import com.matacos.mataco.clases.Subjects
-import com.matacos.mataco.clases.TimeSlot
+import com.matacos.mataco.clases.Exam
+import com.matacos.mataco.clases.Exams
 import kotlinx.android.synthetic.main.activity_subjects.*
 import kotlinx.android.synthetic.main.app_bar_subjects.*
 import kotlinx.android.synthetic.main.content_courses.*
+import kotlinx.android.synthetic.main.content_exams.*
 
-class CoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class ExamsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    private val TAG: String = CoursesActivity::class.java.simpleName
-    val courses = ArrayList<Course>()
-    val displayedCourses = ArrayList<Course>()
+    private val TAG: String = ExamsActivity::class.java.simpleName
+    var exams = ArrayList<Exam>()
+    var displayedExams = ArrayList<Exam>()
     private var enrolled = false
     private var semester = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_courses)
+        setContentView(R.layout.activity_exams)
         setSupportActionBar(toolbar)
 
         val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
@@ -55,8 +56,8 @@ class CoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         nav_view.setNavigationItemSelectedListener(this)
 
-        courses_recycler_view.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
-        courses_recycler_view.adapter = CoursesAdapter(this, displayedCourses, getSharedPreferences("my_preferences", Context.MODE_PRIVATE))
+        exams_recycler_view.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
+        exams_recycler_view.adapter = ExamsAdapter(this, displayedExams, getSharedPreferences("my_preferences", Context.MODE_PRIVATE))
 
         loadData()
 
@@ -70,7 +71,7 @@ class CoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+/*    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_search, menu)
         val searchItem = menu.findItem(R.id.search)
@@ -78,7 +79,7 @@ class CoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             Log.d(TAG, "searchItem != null")
             val searchView = searchItem.actionView as SearchView
             val editext = searchView.findViewById<EditText>(android.support.v7.appcompat.R.id.search_src_text)
-            editext.hint = "Buscar curso..."
+            editext.hint = "Buscar examen..."
 
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
@@ -88,16 +89,16 @@ class CoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
                 override fun onQueryTextChange(newText: String?): Boolean {
                     Log.d(TAG, "onQueryTextChange")
-                    displayedCourses.clear()
+                    displayedExams.clear()
                     if (newText!!.isNotEmpty()) {
                         Log.d(TAG, "newText!!.isNotEmpty()")
                         val search = newText.toLowerCase()
-                        courses.forEach {
-                            Log.d(TAG, "courses.forEach")
+                        exams.forEach {
+                            Log.d(TAG, "exams.forEach")
                             val professor = it.professors().toLowerCase()
                             if (professor.contains(search)) {
                                 Log.d(TAG, "professor.contains(search)")
-                                displayedCourses.add(it)
+                                displayedExams.add(it)
                             }
                         }
                     } else {
@@ -110,7 +111,7 @@ class CoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             })
         }
         return super.onCreateOptionsMenu(menu)
-    }
+    }*/
 
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -135,10 +136,10 @@ class CoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         return true
     }
 
-    private fun verifyEnrollment(courses: ArrayList<Course>) {
+/*    private fun verifyEnrollment(exams: ArrayList<Exam>) {
         Log.d(TAG, "verifyEnrollment")
-        val departmentCode = courses.get(0).department_code
-        val subjectCode = courses.get(0).subject_code
+        val departmentCode = exams.get(0).department_code
+        val subjectCode = exams.get(0).subject_code
         val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
         val editPreferences = preferences.edit()
         editPreferences.putBoolean(departmentCode + subjectCode, false).apply()
@@ -151,6 +152,16 @@ class CoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 alreadyIn.visibility = View.VISIBLE
             }
         }
+    }*/
+
+    private fun filterExams(exams:ArrayList<Exam>):ArrayList<Exam>{
+        val filteredExams = ArrayList<Exam>()
+        for (exam in exams){
+            if (!exam.enroled){
+                filteredExams.add(exam)
+            }
+        }
+        return filteredExams
     }
 
     private fun loadData() {
@@ -158,9 +169,9 @@ class CoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         //TODO: Add request for the semester
         //val semester = jSONCourses.getJSONObject(0).getString("semester")
-        val screenTitle = findViewById<TextView>(R.id.screen_title)
+        //val screenTitle = findViewById<TextView>(R.id.screen_title)
         //screenTitle.text = "Oferta Académica Cuatrimestre ${semester.substring(0,1)} de ${semester.substring(2)}"
-        screenTitle.text = "Oferta Académica Cuatrimestre 2 de 2018"
+        //screenTitle.text = "Oferta de Exámenes"
 
         val service = ServiceVolley()
         val apiController = APIController(service)
@@ -168,7 +179,7 @@ class CoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         val token = preferences.getString("token", "")
         val department = preferences.getString("subject_department", "")
         val code = preferences.getString("subject_code", "")
-        val path = "api/cursos?cod_departamento=$department&cod_materia=$code"
+        val path = "api/finales?cod_departamento=$department&cod_materia=$code"
 
         apiController.get(path, token) { response ->
             Log.d(TAG, response.toString())
@@ -176,14 +187,14 @@ class CoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 /*                    val editPreferences = preferences.edit()
                     editPreferences.putString("token", response.getString("token")).apply()*/
                 val gson = Gson()
-                val coursesSubjects = gson.fromJson(response.toString(), Courses::class.java)
-                for (course in coursesSubjects.courses) {
-                    courses.add(course)
+                val examsGson = gson.fromJson(response.toString(), Exams::class.java)
+                for (exam in examsGson.exams) {
+                    exams.add(exam)
                 }
-                courses.sort()
-                verifyEnrollment(courses)
-                displayedCourses.addAll(courses.distinct())
-                courses_recycler_view.adapter!!.notifyDataSetChanged()
+                exams.sort()
+                //verifyEnrollment(courses)
+                displayedExams.addAll(filterExams(exams))
+                exams_recycler_view.adapter!!.notifyDataSetChanged()
             }
 
 

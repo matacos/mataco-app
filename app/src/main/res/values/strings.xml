@@ -32,7 +32,7 @@
     <string name="classroom_campus">Classroom Campus</string>
     <string name="classroom_code">Code</string>
     <string name="beginning">Beginning</string>
-    <string name="ending">Ending</string>
+    <string name="ending">Hasta</string>
     <string name="day_of_week">Day of Week</string>
     <string name="description">Description</string>
     <string name="button_sign_up">Inscribirse</string>
@@ -46,4 +46,10 @@
     <string name="already_one_of_your_subjects">Ya te inscribiste en esta materia</string>
     <string name="course_content_title">Oferta Académica</string>
     <string name="title_activity_exam_subjects">Exámenes</string>
+    <string name="title_activity_exams">Exámenes</string>
+    <string name="instance">Instancia</string>
+    <string name="date">Fecha</string>
+    <string name="id">Course ID</string>
+    <string name="spinner_header">Estado</string>
+    <string name="professor">Profesor</string>
 </resources>

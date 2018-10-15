@@ -171,13 +171,13 @@ class LoginActivity : AppCompatActivity() {
         val shortAnimTime = resources.getInteger(android.R.integer.config_shortAnimTime).toLong()
 
 
-        login_progress.visibility = if (show) View.VISIBLE else View.GONE
+        login_progress.visibility = if (show) View.VISIBLE else View.INVISIBLE
         login_progress.animate()
                 .setDuration(shortAnimTime)
                 .alpha((if (show) 1 else 0).toFloat())
                 .setListener(object : AnimatorListenerAdapter() {
                     override fun onAnimationEnd(animation: Animator) {
-                        login_progress.visibility = if (show) View.VISIBLE else View.GONE
+                        login_progress.visibility = if (show) View.VISIBLE else View.INVISIBLE
                     }
                 })
 

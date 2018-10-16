@@ -2,6 +2,7 @@ package com.matacos.mataco
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -21,8 +22,6 @@ import com.matacos.mataco.apiController.APIController
 import com.matacos.mataco.apiController.ServiceVolley
 import com.matacos.mataco.clases.Course
 import com.matacos.mataco.clases.Courses
-import com.matacos.mataco.clases.Subjects
-import com.matacos.mataco.clases.TimeSlot
 import kotlinx.android.synthetic.main.activity_subjects.*
 import kotlinx.android.synthetic.main.app_bar_subjects.*
 import kotlinx.android.synthetic.main.content_courses.*
@@ -32,8 +31,6 @@ class CoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     private val TAG: String = CoursesActivity::class.java.simpleName
     val courses = ArrayList<Course>()
     val displayedCourses = ArrayList<Course>()
-    private var enrolled = false
-    private var semester = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -135,18 +132,25 @@ class CoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         return true
     }
 
-    private fun verifyEnrollment(courses: ArrayList<Course>) {
+    private fun verifyEnrollment() {
         Log.d(TAG, "verifyEnrollment")
-        val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
-        val enroled = preferences.getBoolean("subject_enroled", false)
+        val preferences: SharedPreferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
+        val enroled: Boolean = preferences.getBoolean("subject_enroled", false)
         if (enroled) {
             already_one_of_your_subjects.visibility = View.VISIBLE
         }
     }
 
+    private fun addEmptyListText() {
+        Log.d(TAG, "verifyEnrollment")
+        if (courses.isEmpty()) {
+            no_available_courses.visibility = View.VISIBLE
+        }
+    }
+
     private fun addClassroomCampus() {
         Log.d(TAG, "addClassroomCampus")
-        for(course in courses) {
+        for (course: Course in courses) {
             course.classroomCampus = course.timeSlots[0].classroomCampus
         }
     }
@@ -171,15 +175,14 @@ class CoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         apiController.get(path, token) { response ->
             Log.d(TAG, response.toString())
             if (response != null) {
-/*                    val editPreferences = preferences.edit()
-                    editPreferences.putString("token", response.getString("token")).apply()*/
                 val gson = Gson()
                 val coursesSubjects = gson.fromJson(response.toString(), Courses::class.java)
                 for (course in coursesSubjects.courses) {
                     courses.add(course)
                 }
                 courses.sort()
-                verifyEnrollment(courses)
+                verifyEnrollment()
+                addEmptyListText()
                 addClassroomCampus()
                 displayedCourses.addAll(courses.distinct())
                 courses_recycler_view.adapter!!.notifyDataSetChanged()

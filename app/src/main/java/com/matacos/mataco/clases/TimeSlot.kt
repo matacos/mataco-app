@@ -1,6 +1,5 @@
 package com.matacos.mataco.clases
 
-import android.util.Log
 import com.google.gson.annotations.SerializedName
 import java.text.SimpleDateFormat
 import java.util.*

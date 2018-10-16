@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Mataco</string>
 
     <!-- Strings related to login -->
@@ -31,9 +31,9 @@
     <string name="number">Number</string>
     <string name="classroom_campus">Classroom Campus</string>
     <string name="classroom_code">400</string>
-    <string name="beginning">Beginning</string>
-    <string name="ending">Hasta</string>
-    <string name="day_of_week">Day of Week</string>
+    <string name="beginning">16:00</string>
+    <string name="ending">18:00</string>
+    <string name="day_of_week">lun</string>
     <string name="description">Teorico-Práctica Obligatoria</string>
     <string name="button_sign_up">Inscribirse</string>
     <string name="button_drop_out">Desinscribirse</string>
@@ -51,5 +51,13 @@
     <string name="date">Fecha</string>
     <string name="id">Course ID</string>
     <string name="spinner_header">Estado</string>
-    <string name="professor">Profesor</string>
+    <string name="professor" tools:ignore="Typos">Profesor</string>
+    <string name="no_available_courses">No hay cursos disponibles</string>
+    <string name="no_available_exams">No hay exámenes disponibles</string>
+    <string name="screen_title">Oferta Académica Cuatrimestre 2 de 2018</string>
+    <string name="subtitle">Sistema de Gestión de Alumnos</string>
+    <string name="title">Mataco</string>
+    <string name="nav_subjects">Oferta Académica</string>
+    <string name="nav_courses">Mis Inscripciones</string>
+    <string name="nav_exam_subjects">Oferta Exámenes</string>
 </resources>

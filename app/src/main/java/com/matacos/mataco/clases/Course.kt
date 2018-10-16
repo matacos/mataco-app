@@ -11,11 +11,11 @@ data class Course(@SerializedName("department_code") val department_code: String
                   @SerializedName("enroled") val enrolled: Boolean = false,
                   @SerializedName("time_slots") val timeSlots: List<TimeSlot>,
                   var classroomCampus: String = "Paseo Colon",
-                  val accepted: Boolean = true): Comparable<Course> {
+                  val accepted: Boolean = true) : Comparable<Course> {
 
     override operator fun compareTo(other: Course): Int {
-        val thisSubject = this.number
-        val otherSubjet =  this.number
+        val thisSubject: String = this.number
+        val otherSubjet: String = this.number
         return thisSubject.compareTo(otherSubjet)
     }
 
@@ -25,11 +25,11 @@ data class Course(@SerializedName("department_code") val department_code: String
 
     fun professors(): String {
         var professors = ""
-        for (professor in this.professors) {
-            professors += "${professor.toString()}, "
+        for (professor: Professor in this.professors) {
+            professors += "$professor, "
         }
         professors = professors.trim().trimEnd(',')
-        return "Cátedra ${this.number} - ${professors}"
+        return "Cátedra ${this.number} - $professors"
     }
 
     fun classroomCampus(): String {
@@ -37,7 +37,7 @@ data class Course(@SerializedName("department_code") val department_code: String
     }
 
     fun state(): String {
-        return "Estado: " + if(this.accepted) "Regular" else "Condicional"
+        return "Estado: " + if (this.accepted) "Regular" else "Condicional"
     }
 
     fun totalSlots(): String {

@@ -14,14 +14,10 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
 import android.widget.LinearLayout
-import android.widget.TextView
 import com.google.gson.Gson
 import com.matacos.mataco.apiController.APIController
 import com.matacos.mataco.apiController.ServiceVolley
-import com.matacos.mataco.clases.Course
-import com.matacos.mataco.clases.CourseInscriptions
-import com.matacos.mataco.clases.Courses
-import com.matacos.mataco.clases.TimeSlot
+import com.matacos.mataco.clases.*
 import kotlinx.android.synthetic.main.activity_subjects.*
 import kotlinx.android.synthetic.main.app_bar_subjects.*
 import kotlinx.android.synthetic.main.content_my_courses.*
@@ -129,9 +125,8 @@ class MyCoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
         //TODO: Add request for the semester
         //val semester = jSONCourses.getJSONObject(0).getString("semester")
-        val screenTitle = findViewById<TextView>(R.id.screen_title)
         //screenTitle.text = "Oferta Académica Cuatrimestre ${semester.substring(0,1)} de ${semester.substring(2)}"
-        screenTitle.text = "Cuatrimestre 2 de 2018"
+        screen_title.text = "Cuatrimestre 2 de 2018"
 
         val service = ServiceVolley()
         val apiController = APIController(service)
@@ -143,25 +138,13 @@ class MyCoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         apiController.get(path, token) { response ->
             Log.d(TAG, response.toString())
             if (response != null) {
-/*                    val editPreferences = preferences.edit()
-                    editPreferences.putString("token", response.getString("token")).apply()*/
-                Log.d(TAG, "Parsing 1")
                 val gson = Gson()
-                Log.d(TAG, "Parsing 2")
-                val coursesSubjects = gson.fromJson(response.toString(), CourseInscriptions::class.java)
-                Log.d(TAG, "Parsing 3")
-                for (course in coursesSubjects.courses) {
-                    Log.d(TAG, "Parsing 4")
+                val coursesSubjects: CourseInscriptions = gson.fromJson(response.toString(), CourseInscriptions::class.java)
+                for (course: Courses2 in coursesSubjects.courses) {
                     courses.add(course.course)
-                    Log.d(TAG, "Parsing 5")
                 }
-                Log.d(TAG, "Parsing 6")
                 courses.sort()
-                Log.d(TAG, "Parsing 7")
-                Log.d(TAG, courses.toString())
-                Log.d(TAG, "Parsing 8")
                 displayedCourses.addAll(courses.distinct())
-                Log.d(TAG, "Parsing 9")
                 my_courses_recycler_view.adapter!!.notifyDataSetChanged()
             }
 

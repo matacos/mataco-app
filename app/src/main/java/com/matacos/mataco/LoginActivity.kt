@@ -95,8 +95,8 @@ class LoginActivity : AppCompatActivity() {
             // perform the user login attempt.
             showProgress(true)
 
-            var service = ServiceVolley()
-            var apiController = APIController(service)
+            val service = ServiceVolley()
+            val apiController = APIController(service)
 
             val path = "api/login"
             val params = JSONObject()

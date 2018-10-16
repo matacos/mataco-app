@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.matacos.mataco.clases.Subject
 
-class ExamSubjectsAdapter(val context: Context, val examSubjectsList: ArrayList<Subject>, val preferences: SharedPreferences): RecyclerView.Adapter<ExamSubjectsAdapter.ExamSubjectsViewHolder>() {
+class ExamSubjectsAdapter(val context: Context, val examSubjectsList: ArrayList<Subject>, val preferences: SharedPreferences) : RecyclerView.Adapter<ExamSubjectsAdapter.ExamSubjectsViewHolder>() {
 
     private val TAG: String = ExamSubjectsAdapter::class.java.simpleName
 
@@ -35,10 +35,9 @@ class ExamSubjectsAdapter(val context: Context, val examSubjectsList: ArrayList<
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExamSubjectsViewHolder {
         Log.d(TAG, "onCreateViewHolder")
-        val v = LayoutInflater.from(parent.context).inflate(R.layout.subject_item_layout, parent, false)
+        val v: View = LayoutInflater.from(parent.context).inflate(R.layout.subject_item_layout, parent, false)
         return ExamSubjectsViewHolder(v)
     }
-
 
 
     override fun getItemCount(): Int {
@@ -46,9 +45,9 @@ class ExamSubjectsAdapter(val context: Context, val examSubjectsList: ArrayList<
         return examSubjectsList.size
     }
 
-    class ExamSubjectsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        val name = itemView.findViewById<TextView>(R.id.name)!!
-        val department_code = itemView.findViewById<TextView>(R.id.department_code)!!
-        val parentLayout = itemView.findViewById<android.support.constraint.ConstraintLayout>(R.id.subject_parent_layout)!!
+    class ExamSubjectsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val name: TextView = itemView.findViewById(R.id.name)!!
+        val department_code: TextView = itemView.findViewById(R.id.department_code)!!
+        val parentLayout: android.support.constraint.ConstraintLayout = itemView.findViewById(R.id.subject_parent_layout)!!
     }
 }

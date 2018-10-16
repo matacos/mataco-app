@@ -81,7 +81,7 @@ class ExamSubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationIte
                         val search = newText.toLowerCase()
                         examSubjects.forEach {
                             Log.d(TAG, "subjects.forEach")
-                            val examSubject = it.department.toLowerCase()+"."+it.code
+                            val examSubject = it.department.toLowerCase() + "." + it.code
                             if (examSubject.contains(search) || it.name.toLowerCase().contains(search)) {
                                 Log.d(TAG, "subject.contains(search)")
                                 displayedExamSubjects.add(it)

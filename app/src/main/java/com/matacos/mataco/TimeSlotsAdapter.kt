@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import android.widget.*
 import com.matacos.mataco.clases.TimeSlot
 
-class TimeSlotsAdapter(val context: Context, val timeSlotsList: List<TimeSlot>): RecyclerView.Adapter<TimeSlotsAdapter.TimeSlotsViewHolder>() {
+class TimeSlotsAdapter(val context: Context, val timeSlotsList: List<TimeSlot>) : RecyclerView.Adapter<TimeSlotsAdapter.TimeSlotsViewHolder>() {
 
     private val TAG: String = TimeSlotsAdapter::class.java.simpleName
 
@@ -25,7 +25,7 @@ class TimeSlotsAdapter(val context: Context, val timeSlotsList: List<TimeSlot>):
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TimeSlotsViewHolder {
         Log.d(TAG, "onCreateViewHolder")
-        val v = LayoutInflater.from(parent.context).inflate(R.layout.time_slots_item_layout, parent, false)
+        val v: View = LayoutInflater.from(parent.context).inflate(R.layout.time_slots_item_layout, parent, false)
         return TimeSlotsViewHolder(v)
     }
 
@@ -34,13 +34,12 @@ class TimeSlotsAdapter(val context: Context, val timeSlotsList: List<TimeSlot>):
         return timeSlotsList.size
     }
 
-    class TimeSlotsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        val classroom_code = itemView.findViewById<TextView>(R.id.classroom_code)!!
-        val description = itemView.findViewById<TextView>(R.id.description)!!
-        val day_of_week = itemView.findViewById<TextView>(R.id.day_of_week)!!
-        val beginning = itemView.findViewById<TextView>(R.id.beginning)!!
-        val ending = itemView.findViewById<TextView>(R.id.ending)!!
-        val parentLayout = itemView.findViewById<android.support.constraint.ConstraintLayout>(R.id.time_slots_parent_layout)!!
+    class TimeSlotsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val classroom_code: TextView = itemView.findViewById(R.id.classroom_code)!!
+        val description: TextView = itemView.findViewById(R.id.description)!!
+        val day_of_week: TextView = itemView.findViewById(R.id.day_of_week)!!
+        val beginning: TextView = itemView.findViewById(R.id.beginning)!!
+        val ending: TextView = itemView.findViewById(R.id.ending)!!
 
     }
 

@@ -25,7 +25,7 @@
     <string name="code">Code</string>
     <string name="department">Department</string>
     <string name="total_slots">Total Slots</string>
-    <string name="status">Estado</string>
+    <string name="state">Estado</string>
     <string name="professors">Professors</string>
     <string name="title_activity_courses">Catedras</string>
     <string name="number">Number</string>
@@ -42,6 +42,7 @@
     <string name="day_of_week_header">Dia</string>
     <string name="beginning_header">Desde</string>
     <string name="ending_header">Hasta</string>
+    <string name="state_header">Estado</string>
     <string name="title_activity_my_courses">Mis Inscripciones</string>
     <string name="already_one_of_your_subjects">Ya te inscribiste en esta materia</string>
     <string name="course_content_title">Oferta Académica</string>

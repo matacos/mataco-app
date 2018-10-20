@@ -41,6 +41,10 @@
             android:name=".ExamsActivity"
             android:label="@string/title_activity_exams"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".MyExamsActivity"
+            android:label="@string/title_activity_exams"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

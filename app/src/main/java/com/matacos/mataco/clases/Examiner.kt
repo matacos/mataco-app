@@ -3,7 +3,7 @@ package com.matacos.mataco.clases
 import com.google.gson.annotations.SerializedName
 
 data class Examiner(@SerializedName("name") val name: String,
-                   @SerializedName("surname") val surname: String){
+                    @SerializedName("surname") val surname: String) {
 
 
     override fun toString(): String {

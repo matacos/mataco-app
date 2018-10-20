@@ -7,19 +7,19 @@
         <item
             android:id="@+id/nav_subjects"
             android:icon="@drawable/ic_menu_subjects"
-            android:title="Oferta Académica" />
+            android:title="@string/nav_subjects" />
         <item
             android:id="@+id/nav_courses"
             android:icon="@drawable/ic_menu_courses"
-            android:title="Mis Inscripciones" />
+            android:title="@string/nav_courses" />
         <item
             android:id="@+id/nav_exam_subjects"
             android:icon="@drawable/ic_menu_exam_subjects"
-            android:title="Oferta Exámenes" />
+            android:title="@string/nav_exam_subjects" />
         <item
             android:id="@+id/nav_my_exams"
             android:icon="@drawable/ic_menu_my_exams"
-            android:title="Mis Inscripciones a Exámenes" />
+            android:title="@string/nav_my_exams" />
 
     </group>
 

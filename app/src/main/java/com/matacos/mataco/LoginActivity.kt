@@ -111,7 +111,7 @@ class LoginActivity : AppCompatActivity() {
                     val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
                     val editPreferences = preferences.edit()
 
-                    //editPreferences.putBoolean("logged_in", true).apply()
+                    editPreferences.putBoolean("logged_in", true).apply()
                     editPreferences.putString("username", usernameStr).apply()
                     editPreferences.putString("password", passwordStr).apply()
                     editPreferences.putString("token", response.getString("token")).apply()

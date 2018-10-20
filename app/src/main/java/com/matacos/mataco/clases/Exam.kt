@@ -48,4 +48,8 @@ data class Exam(@SerializedName("examiner") val examiner: Examiner,
     fun date(): String {
         return formatDate(this.date)
     }
+
+    fun title(): String {
+        return "${formatDate(this.date)} - $examiner"
+    }
 }

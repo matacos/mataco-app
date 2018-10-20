@@ -62,4 +62,6 @@
     <string name="nav_courses">Mis Inscripciones</string>
     <string name="nav_exam_subjects">Oferta Exámenes</string>
     <string name="nav_my_exams">Mis Inscripciones a Exámenes</string>
+    <string name="exam_title">01/01/01 Juan Esteban Perez</string>
+    <string name="nav_log_out">Cerrar Sesión</string>
 </resources>

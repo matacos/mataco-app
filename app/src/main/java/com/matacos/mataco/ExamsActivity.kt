@@ -21,6 +21,10 @@ import com.matacos.mataco.clases.Exams
 import kotlinx.android.synthetic.main.activity_subjects.*
 import kotlinx.android.synthetic.main.app_bar_subjects.*
 import kotlinx.android.synthetic.main.content_exams.*
+import android.R.id.edit
+import android.text.method.TextKeyListener.clear
+
+
 
 class ExamsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -82,8 +86,18 @@ class ExamsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                 val intent = Intent(applicationContext, MyExamsActivity::class.java)
                 applicationContext.startActivity(intent)
             }
+            R.id.nav_log_out -> {
+                val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
+                val editPreferences = preferences.edit()
+                editPreferences.clear().apply()
+                val intent = Intent(applicationContext, LoginActivity::class.java)
+                applicationContext.startActivity(intent)
+            }
 
         }
+
+
+
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true

@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.support.constraint.ConstraintLayout
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,7 +12,6 @@ import android.view.ViewGroup
 import android.widget.*
 import com.matacos.mataco.apiController.APIController
 import com.matacos.mataco.apiController.ServiceVolley
-import com.matacos.mataco.clases.Course
 import com.matacos.mataco.clases.Exam
 import org.json.JSONObject
 
@@ -67,7 +65,7 @@ class ExamsAdapter(val context: Context, val examsList: ArrayList<Exam>, val pre
     }
 
     class ExamsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        val id:TextView = itemView.findViewById(R.id.id)!!
+        val id:TextView = itemView.findViewById(R.id.name)!!
         val classroom_code:TextView = itemView.findViewById(R.id.classroom_code)!!
         val date:TextView = itemView.findViewById(R.id.date)!!
         val beginning:TextView = itemView.findViewById(R.id.beginning)!!

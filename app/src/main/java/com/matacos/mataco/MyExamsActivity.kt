@@ -21,7 +21,7 @@ import com.matacos.mataco.apiController.ServiceVolley
 import com.matacos.mataco.clases.*
 import kotlinx.android.synthetic.main.activity_subjects.*
 import kotlinx.android.synthetic.main.app_bar_subjects.*
-import kotlinx.android.synthetic.main.content_my_courses.*
+import kotlinx.android.synthetic.main.content_my_exams.*
 
 class MyExamsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -30,8 +30,9 @@ class MyExamsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     val displayedExams = ArrayList<ExamInscription>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d(TAG, "Entro a activity")
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_my_courses)
+        setContentView(R.layout.activity_my_exams)
         setSupportActionBar(toolbar)
 
         val toggle = ActionBarDrawerToggle(
@@ -41,8 +42,8 @@ class MyExamsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         nav_view.setNavigationItemSelectedListener(this)
 
-        my_courses_recycler_view.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
-        my_courses_recycler_view.adapter = MyExamsAdapter(this, displayedExams, getSharedPreferences("my_preferences", Context.MODE_PRIVATE))
+        my_exams_recycler_view.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
+        my_exams_recycler_view.adapter = MyExamsAdapter(this, displayedExams, getSharedPreferences("my_preferences", Context.MODE_PRIVATE))
 
         loadData()
 
@@ -89,7 +90,7 @@ class MyExamsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                     } else {
                         displayedExams.addAll(exams.distinct())
                     }
-                    my_courses_recycler_view.adapter!!.notifyDataSetChanged()
+                    my_exams_recycler_view.adapter!!.notifyDataSetChanged()
                     return true
                 }
 
@@ -114,6 +115,10 @@ class MyExamsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 val intent = Intent(applicationContext, ExamSubjectsActivity::class.java)
                 applicationContext.startActivity(intent)
             }
+            R.id.nav_my_exams -> {
+                val intent = Intent(applicationContext, MyExamsActivity::class.java)
+                applicationContext.startActivity(intent)
+            }
 
         }
 
@@ -123,12 +128,6 @@ class MyExamsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
     private fun loadData() {
         Log.d(TAG, "loadData")
-
-        //TODO: Add request for the semester
-        //val semester = jSONCourses.getJSONObject(0).getString("semester")
-        val screenTitle = findViewById<TextView>(R.id.screen_title)
-        //screenTitle.text = "Oferta Académica Cuatrimestre ${semester.substring(0,1)} de ${semester.substring(2)}"
-        screenTitle.text = "Cuatrimestre 2 de 2018"
 
         val service = ServiceVolley()
         val apiController = APIController(service)
@@ -159,7 +158,7 @@ class MyExamsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 Log.d(TAG, "Parsing 8")
                 displayedExams.addAll(exams.distinct())
                 Log.d(TAG, "Parsing 9")
-                my_courses_recycler_view.adapter!!.notifyDataSetChanged()
+                my_exams_recycler_view.adapter!!.notifyDataSetChanged()
             }
 
 

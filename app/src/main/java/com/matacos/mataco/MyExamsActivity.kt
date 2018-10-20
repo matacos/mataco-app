@@ -148,6 +148,7 @@ class MyExamsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 Log.d(TAG, "Parsing 3")
                 for (exam in examInscriptions.examInscriptions) {
                     Log.d(TAG, "Parsing 4")
+                    exam.exam.status = exam.state
                     exams.add(exam.exam)
                     Log.d(TAG, "Parsing 5")
                 }

@@ -29,7 +29,7 @@ class MyExamsAdapter(val context: Context, val examsList: ArrayList<ExamInscript
         holder.ending.text = examsList[position].ending()
         holder.examiner.text = examsList[position].examiner.toString()
         holder.classroomCampus.text = examsList[position].classroom_campus
-        holder.state.text = examsList[position].status
+        holder.state.text = examsList[position].status()
         holder.buttonDropOut.setOnClickListener {
             Log.d(TAG, "onClick: clicked on button_drop_out")
 

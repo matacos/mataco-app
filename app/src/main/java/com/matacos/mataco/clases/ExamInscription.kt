@@ -13,7 +13,7 @@ data class ExamInscription(@SerializedName("classroom_code") val classroom_code:
                            @SerializedName("subject_code") val subject_code: String,
                            @SerializedName("subject") val subject: Subject,
                            @SerializedName("examiner") val examiner: Examiner,
-                           val status: String = "Regular"): Comparable<ExamInscription> {//TODO: Parsear de request
+                           var status: String): Comparable<ExamInscription> {
 
     override operator fun compareTo(other: ExamInscription): Int {
         //TODO: Por ahi conviene ordenar por fecha
@@ -48,5 +48,9 @@ data class ExamInscription(@SerializedName("classroom_code") val classroom_code:
 
     fun subject_name(): String{
         return subject.name
+    }
+
+    fun status():String{
+        return status.capitalize()
     }
 }

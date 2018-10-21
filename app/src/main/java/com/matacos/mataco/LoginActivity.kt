@@ -62,27 +62,28 @@ class LoginActivity : AppCompatActivity() {
         password.error = null
 
         // Store values at the time of the login attempt.
-        val usernameStr = username.text.toString()
-        val passwordStr = password.text.toString()
+        val usernameStr = username.text.toString().trim()
+        val passwordStr = password.text.toString().trim()
 
         var cancel = false
         var focusView: View? = null
 
-        // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(passwordStr) && !isPasswordValid(passwordStr)) {
-            password.error = getString(R.string.error_invalid_password)
-            focusView = password
-            cancel = true
-        }
-
         // Check for a valid user address.
         if (TextUtils.isEmpty(usernameStr)) {
-            username.error = getString(R.string.error_field_required)
+            username.error = getString(R.string.error_username_required)
             focusView = username
             cancel = true
         } else if (!isUsernameValid(usernameStr)) {
             username.error = getString(R.string.error_invalid_user)
             focusView = username
+            cancel = true
+        } else if (TextUtils.isEmpty(passwordStr)) {
+            password.error = getString(R.string.error_password_required)
+            focusView = password
+            cancel = true
+        } else if (!isPasswordValid(passwordStr)) {
+            password.error = getString(R.string.error_invalid_password)
+            focusView = password
             cancel = true
         }
 
@@ -111,7 +112,7 @@ class LoginActivity : AppCompatActivity() {
                     val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
                     val editPreferences = preferences.edit()
 
-                    //editPreferences.putBoolean("logged_in", true).apply()
+                    editPreferences.putBoolean("logged_in", true).apply()
                     editPreferences.putString("username", usernameStr).apply()
                     editPreferences.putString("password", passwordStr).apply()
                     editPreferences.putString("token", response.getString("token")).apply()
@@ -133,7 +134,7 @@ class LoginActivity : AppCompatActivity() {
 
                 } else {
                     showProgress(false)
-                    Toast.makeText(this, "Error de inicio de sesión", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Esa combinación de padrón y contraseña no es correcta", Toast.LENGTH_SHORT).show()
                 }
 
             }
@@ -148,9 +149,13 @@ class LoginActivity : AppCompatActivity() {
 
         try {
             parseInt(username)
+            if (!(5<=username.length && username.length<=6)) {
+                numeric = false
+            }
         } catch (e: NumberFormatException) {
             numeric = false
         }
+
         return numeric
     }
 

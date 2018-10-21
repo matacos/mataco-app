@@ -20,7 +20,12 @@
             android:id="@+id/nav_my_exams"
             android:icon="@drawable/ic_menu_my_exams"
             android:title="@string/nav_my_exams" />
-
+        <item
+            android:id="@+id/nav_log_out"
+            android:icon="@drawable/ic_log_out"
+            android:title="@string/nav_log_out" />
     </group>
+
+
 
 </menu>

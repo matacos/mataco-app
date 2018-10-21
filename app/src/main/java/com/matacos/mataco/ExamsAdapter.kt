@@ -22,23 +22,21 @@ class ExamsAdapter(val context: Context, val examsList: ArrayList<Exam>, val pre
 
     override fun onBindViewHolder(holder: ExamsViewHolder, position: Int) {
         Log.d(TAG, "onBindViewHolder")
-        holder.id.text = examsList[position].id()
+        holder.exam_title.text = examsList[position].title()
         holder.classroomCode.text = examsList[position].classroomCode
-        holder.date.text = examsList[position].date()
         holder.beginning.text = examsList[position].beginning()
         holder.ending.text = examsList[position].ending()
         holder.classroomCampus.text = examsList[position].classroomCampus()
-        holder.examiner.text = examsList[position].examiner.toString()
 
         val adapter: ArrayAdapter<CharSequence> = ArrayAdapter(context, android.R.layout.simple_spinner_item, statusList)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         holder.spinner.adapter = adapter
         holder.spinner.onItemSelectedListener = this
-/*        holder.buttonSignUp.setOnClickListener {
+        holder.buttonSignUp.setOnClickListener {
             Log.d(TAG, "onClick: clicked on button_sign_up")
 
             postData(examsList[position].id)
-        }*/
+        }
     }
 
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
@@ -62,29 +60,27 @@ class ExamsAdapter(val context: Context, val examsList: ArrayList<Exam>, val pre
 
 
     class ExamsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val id: TextView = itemView.findViewById(R.id.id)!!
+        val exam_title: TextView = itemView.findViewById(R.id.exam_title)!!
         val classroomCode: TextView = itemView.findViewById(R.id.classroom_code)!!
-        val date: TextView = itemView.findViewById(R.id.date)!!
         val beginning: TextView = itemView.findViewById(R.id.beginning)!!
         val ending: TextView = itemView.findViewById(R.id.ending)!!
         val classroomCampus: TextView = itemView.findViewById(R.id.classroom_campus)!!
         val buttonSignUp: Button = itemView.findViewById(R.id.button_sign_up)!!
-        val spinner: Spinner = itemView.findViewById(R.id.spinner)
-        val examiner: TextView = itemView.findViewById(R.id.examiner)
+        val spinner: Spinner = itemView.findViewById(R.id.spinner)!!
     }
 
-    private fun postData(id: String) {
+    private fun postData(id: Int) {
         Log.d(TAG, "postData")
 
         val service = ServiceVolley()
         val apiController = APIController(service)
         val token = preferences.getString("token", "")
         val username = preferences.getString("username", "")
-        val path = "api/finales"
+        val path = "api/inscripciones_final"
         val params = JSONObject()
         params.put("student", username)
-        params.put("id", id)
-        params.put("status", status)
+        params.put("exam_id", id)
+        params.put("enrolment_type", status)
         Log.d(TAG, "Params: $params")
 
         apiController.post(path, token, params) { response ->

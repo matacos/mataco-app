@@ -17,6 +17,7 @@ import android.widget.LinearLayout
 import com.google.gson.Gson
 import com.matacos.mataco.apiController.APIController
 import com.matacos.mataco.apiController.ServiceVolley
+import com.matacos.mataco.clases.Exam
 import com.matacos.mataco.clases.Subject
 import com.matacos.mataco.clases.Subjects
 import kotlinx.android.synthetic.main.activity_subjects.*
@@ -119,11 +120,27 @@ class ExamSubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationIte
                 val intent = Intent(applicationContext, MyExamsActivity::class.java)
                 applicationContext.startActivity(intent)
             }
-
+            R.id.nav_log_out -> {
+                val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
+                val editPreferences = preferences.edit()
+                editPreferences.clear().apply()
+                val intent = Intent(applicationContext, LoginActivity::class.java)
+                applicationContext.startActivity(intent)
+            }
         }
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    private fun filterExamSubjects(examSubjects: ArrayList<Subject>): ArrayList<Subject> {
+        val filteredExamSubjects = ArrayList<Subject>()
+        for (examSubject: Subject in examSubjects) {
+            if (!examSubject.approved) {
+                filteredExamSubjects.add(examSubject)
+            }
+        }
+        return filteredExamSubjects
     }
 
     private fun loadData() {
@@ -152,7 +169,7 @@ class ExamSubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationIte
                 }
                 examSubjects.sort()
 
-                displayedExamSubjects.addAll(examSubjects)
+                displayedExamSubjects.addAll(filterExamSubjects(examSubjects))
 
                 subjects_recycler_view.adapter!!.notifyDataSetChanged()
             }

@@ -58,42 +58,40 @@ class MyCoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_search, menu)
-        val searchItem = menu.findItem(R.id.search)
-        if (searchItem != null) {
-            Log.d(TAG, "searchItem != null")
-            val searchView = searchItem.actionView as SearchView
-            val editext = searchView.findViewById<EditText>(android.support.v7.appcompat.R.id.search_src_text)
-            editext.hint = "Buscar curso..."
+        val searchItem: MenuItem = menu.findItem(R.id.search)
+        Log.d(TAG, "searchItem != null")
+        val searchView: SearchView = searchItem.actionView as SearchView
+        val editText: EditText = searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text)
+        editText.hint = "Buscar curso..."
 
-            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(query: String?): Boolean {
-                    Log.d(TAG, "onQueryTextSubmit")
-                    return true
-                }
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                Log.d(TAG, "onQueryTextSubmit")
+                return true
+            }
 
-                override fun onQueryTextChange(newText: String?): Boolean {
-                    Log.d(TAG, "onQueryTextChange")
-                    displayedCourses.clear()
-                    if (newText!!.isNotEmpty()) {
-                        Log.d(TAG, "newText!!.isNotEmpty()")
-                        val search = newText.toLowerCase()
-                        courses.forEach {
-                            Log.d(TAG, "courses.forEach")
-                            val professor = it.professors().toLowerCase()
-                            if (professor.contains(search)) {
-                                Log.d(TAG, "professor.contains(search)")
-                                displayedCourses.add(it)
-                            }
+            override fun onQueryTextChange(newText: String?): Boolean {
+                Log.d(TAG, "onQueryTextChange")
+                displayedCourses.clear()
+                if (newText!!.isNotEmpty()) {
+                    Log.d(TAG, "newText!!.isNotEmpty()")
+                    val search = newText.toLowerCase()
+                    courses.forEach {
+                        Log.d(TAG, "courses.forEach")
+                        val professor = it.professors().toLowerCase()
+                        if (professor.contains(search)) {
+                            Log.d(TAG, "professor.contains(search)")
+                            displayedCourses.add(it)
                         }
-                    } else {
-                        displayedCourses.addAll(courses.distinct())
                     }
-                    my_courses_recycler_view.adapter!!.notifyDataSetChanged()
-                    return true
+                } else {
+                    displayedCourses.addAll(courses.distinct())
                 }
+                my_courses_recycler_view.adapter!!.notifyDataSetChanged()
+                return true
+            }
 
-            })
-        }
+        })
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -117,11 +115,25 @@ class MyCoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 val intent = Intent(applicationContext, MyExamsActivity::class.java)
                 applicationContext.startActivity(intent)
             }
-
+            R.id.nav_log_out -> {
+                val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
+                val editPreferences = preferences.edit()
+                editPreferences.clear().apply()
+                val intent = Intent(applicationContext, LoginActivity::class.java)
+                applicationContext.startActivity(intent)
+            }
         }
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+
+    private fun addClassroomCampus() {
+        Log.d(TAG, "addClassroomCampus")
+        for (course: Course in courses) {
+            course.classroomCampus = course.timeSlots[0].classroomCampus
+        }
     }
 
     private fun loadData() {
@@ -148,6 +160,7 @@ class MyCoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                     courses.add(course.course)
                 }
                 courses.sort()
+                addClassroomCampus()
                 displayedCourses.addAll(courses.distinct())
                 my_courses_recycler_view.adapter!!.notifyDataSetChanged()
             }

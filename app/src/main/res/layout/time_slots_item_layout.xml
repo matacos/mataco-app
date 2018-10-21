@@ -22,7 +22,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintHorizontal_weight="9" />
+        app:layout_constraintHorizontal_weight="10" />
 
     <TextView
         android:id="@+id/description"
@@ -39,7 +39,7 @@
         app:layout_constraintEnd_toStartOf="@+id/day_of_week"
         app:layout_constraintStart_toEndOf="@+id/classroom_code"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_weight="55"/>
+        app:layout_constraintHorizontal_weight="54"/>
 
     <TextView
         android:id="@+id/day_of_week"

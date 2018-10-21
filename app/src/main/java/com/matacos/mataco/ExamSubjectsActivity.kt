@@ -17,6 +17,7 @@ import android.widget.LinearLayout
 import com.google.gson.Gson
 import com.matacos.mataco.apiController.APIController
 import com.matacos.mataco.apiController.ServiceVolley
+import com.matacos.mataco.clases.Exam
 import com.matacos.mataco.clases.Subject
 import com.matacos.mataco.clases.Subjects
 import kotlinx.android.synthetic.main.activity_subjects.*
@@ -132,6 +133,16 @@ class ExamSubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationIte
         return true
     }
 
+    private fun filterExamSubjects(examSubjects: ArrayList<Subject>): ArrayList<Subject> {
+        val filteredExamSubjects = ArrayList<Subject>()
+        for (examSubject: Subject in examSubjects) {
+            if (!examSubject.approved) {
+                filteredExamSubjects.add(examSubject)
+            }
+        }
+        return filteredExamSubjects
+    }
+
     private fun loadData() {
         Log.d(TAG, "loadData")
 
@@ -158,7 +169,7 @@ class ExamSubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationIte
                 }
                 examSubjects.sort()
 
-                displayedExamSubjects.addAll(examSubjects)
+                displayedExamSubjects.addAll(filterExamSubjects(examSubjects))
 
                 subjects_recycler_view.adapter!!.notifyDataSetChanged()
             }

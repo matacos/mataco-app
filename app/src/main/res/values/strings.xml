@@ -62,4 +62,6 @@
     <string name="nav_courses">Mis Inscripciones</string>
     <string name="nav_exam_subjects">Oferta Exámenes</string>
     <string name="nav_my_exams">Mis Inscripciones a Exámenes</string>
+    <string name="exams_channel">Notificaciones de exámenes</string>
+    <string name="exams_channel_desc">Notificaciones relacionadas con exámenes</string>
 </resources>

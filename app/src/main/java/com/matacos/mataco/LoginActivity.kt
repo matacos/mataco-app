@@ -129,8 +129,9 @@ class LoginActivity : AppCompatActivity() {
                     showProgress(false)
 
                     val firebaseToken: String = preferences.getString("firebase_token", "")
-                    sendRegistrationToServer(usernameStr, firebaseToken)
-
+                    if (firebaseToken != "") {
+                        sendRegistrationToServer(usernameStr, firebaseToken)
+                    }
                     Log.d(TAG, "startActivity: SubjectsActivity")
                     val intent = Intent(this, SubjectsActivity::class.java)
                     this.startActivity(intent)

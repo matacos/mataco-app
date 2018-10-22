@@ -1,16 +1,70 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Mataco</string>
 
     <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
-    <string name="action_sign_in">Sign in or register</string>
+    <string name="prompt_user">Padrón</string>
+    <string name="prompt_password">Contraseña</string>
+    <string name="action_sign_in">Ingresar</string>
     <string name="action_sign_in_short">Sign in</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
+    <string name="error_invalid_user">El padrón ingresado tiene una cantidad de dígitos incorrecta</string>
+    <string name="error_invalid_password">La contraseña es muy corta</string>
+    <string name="error_incorrect_password">Contraseña inválida</string>
+    <string name="error_username_required">Recuerde ingresar el padrón</string>
+    <string name="error_password_required">Recuerde ingresar la contraseña</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="title_activity_subjects">Oferta Academica</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="search">Search</string>
+    <string name="name">Name</string>
+    <string name="code">Code</string>
+    <string name="department">Department</string>
+    <string name="total_slots">Total Slots</string>
+    <string name="state">Estado</string>
+    <string name="professors">Professors</string>
+    <string name="title_activity_courses">Catedras</string>
+    <string name="number">Number</string>
+    <string name="classroom_campus">Classroom Campus</string>
+    <string name="classroom_code">400</string>
+    <string name="beginning">16:00</string>
+    <string name="ending">18:00</string>
+    <string name="day_of_week">lun</string>
+    <string name="description">Teorico-Práctica Obligatoria</string>
+    <string name="button_sign_up">Inscribirse</string>
+    <string name="button_drop_out">Desinscribirse</string>
+    <string name="classroom_code_header">Aula</string>
+    <string name="description_header">Tipo</string>
+    <string name="day_of_week_header">Dia</string>
+    <string name="beginning_header">Desde</string>
+    <string name="ending_header">Hasta</string>
+    <string name="state_header">Estado</string>
+    <string name="title_activity_my_courses">Mis Inscripciones</string>
+    <string name="already_one_of_your_subjects">Ya te inscribiste en esta materia</string>
+    <string name="course_content_title">Oferta Académica</string>
+    <string name="title_activity_exam_subjects">Exámenes</string>
+    <string name="title_activity_exams">Exámenes</string>
+    <string name="instance">Instancia</string>
+    <string name="date">Fecha</string>
+    <string name="id">Course ID</string>
+    <string name="spinner_header">Estado</string>
+    <string name="professor" tools:ignore="Typos">Profesor</string>
+    <string name="no_available_courses">No hay cursos disponibles</string>
+    <string name="no_available_exams">No hay exámenes disponibles</string>
+    <string name="screen_title">Oferta Académica Cuatrimestre 2 de 2018</string>
+    <string name="subtitle">Sistema de Gestión de Alumnos</string>
+    <string name="title">Mataco</string>
+    <string name="nav_subjects">Oferta Académica</string>
+    <string name="nav_courses">Mis Inscripciones</string>
+    <string name="nav_exam_subjects">Oferta Exámenes</string>
+    <string name="nav_my_exams">Mis Inscripciones a Exámenes</string>
+    <string name="exams_channel">Notificaciones de exámenes</string>
+    <string name="exams_channel_desc">Notificaciones relacionadas con exámenes</string>
+    <string name="exam_title">01/01/01 Juan Esteban Perez</string>
+    <string name="nav_log_out">Cerrar Sesión</string>
 </resources>

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "493155963313",
+    "firebase_url": "https://mataco-app.firebaseio.com",
+    "project_id": "mataco-app",
+    "storage_bucket": "mataco-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:493155963313:android:c3a32dadd8d41e1e",
+        "android_client_info": {
+          "package_name": "com.matacos.mataco"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "493155963313-gfbka2ge62biopf5ahomab3mmq5gf43d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.matacos.mataco",
+            "certificate_hash": "e08352893b478c53d37df5d0e240e7bf7f5ef3e9"
+          }
+        },
+        {
+          "client_id": "493155963313-k0kdnhmn9kdidjbmk59c7ga0nii279nh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4EPMpshOzXDvrdpSGdwTpDsv6G9Rys5U"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "493155963313-k0kdnhmn9kdidjbmk59c7ga0nii279nh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

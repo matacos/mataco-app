@@ -33,9 +33,7 @@ class MyExamsAdapter(val context: Context, val examsList: ArrayList<ExamInscript
         holder.buttonDropOut.setOnClickListener {
             Log.d(TAG, "onClick: clicked on button_drop_out")
 
-//            deleteData(examsList[position].number, position)
-            /*val intent = Intent(context, MyCoursesActivity::class.java)
-            context.startActivity(intent)*/
+            deleteData(examsList[position].id.toString(), position)
         }
     }
 
@@ -64,14 +62,14 @@ class MyExamsAdapter(val context: Context, val examsList: ArrayList<ExamInscript
         val examiner: TextView = itemView.findViewById(R.id.examiner)
     }
 
-    private fun deleteData(course: String, position: Int){
+    private fun deleteData(id: String, position: Int){
         Log.d(TAG, "deleteData")
 
         val service = ServiceVolley()
         val apiController = APIController(service)
         val token = preferences.getString("token", "")
         val username = preferences.getString("username", "")
-        val path = "api/cursadas/$course-$username"
+        val path = "api/inscripciones_final/$id-$username"
 
         apiController.delete(path, token){ response ->
             Log.d(TAG, response.toString())

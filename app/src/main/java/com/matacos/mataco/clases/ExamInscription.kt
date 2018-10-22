@@ -4,7 +4,8 @@ import com.google.gson.annotations.SerializedName
 import java.text.SimpleDateFormat
 import java.util.*
 
-data class ExamInscription(@SerializedName("classroom_code") val classroom_code: String,
+data class ExamInscription(@SerializedName("id") val id: Int,
+                           @SerializedName("classroom_code") val classroom_code: String,
                            @SerializedName("exam_date") val exam_date: String,
                            @SerializedName("beginning") val beginning: String,
                            @SerializedName("ending") val ending: String,

@@ -128,6 +128,9 @@ class LoginActivity : AppCompatActivity() {
 
                     showProgress(false)
 
+                    val firebaseToken: String = preferences.getString("firebase_token", "")
+                    sendRegistrationToServer(usernameStr, firebaseToken)
+
                     Log.d(TAG, "startActivity: SubjectsActivity")
                     val intent = Intent(this, SubjectsActivity::class.java)
                     this.startActivity(intent)
@@ -142,6 +145,20 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    private fun sendRegistrationToServer(username: String, refreshedToken: String) {
+
+        val service = ServiceVolley()
+        val apiController = APIController(service)
+
+        val path = "api/firebase"
+        val params = JSONObject()
+        params.put("username", username)
+        params.put("firebase_token", refreshedToken)
+
+        apiController.post(path, params) { response ->
+            Log.d(TAG, response.toString())
+        }
+    }
 
     private fun isUsernameValid(username: String): Boolean {
         Log.d(TAG, "isUsernameValid")
@@ -149,7 +166,7 @@ class LoginActivity : AppCompatActivity() {
 
         try {
             parseInt(username)
-            if (!(5<=username.length && username.length<=6)) {
+            if (!(5 <= username.length && username.length <= 6)) {
                 numeric = false
             }
         } catch (e: NumberFormatException) {

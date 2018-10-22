@@ -146,7 +146,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun sendRegistrationToServer(username: String, refreshedToken: String) {
-
+        Log.d(TAG, "sendRegistrationToServer")
         val service = ServiceVolley()
         val apiController = APIController(service)
 

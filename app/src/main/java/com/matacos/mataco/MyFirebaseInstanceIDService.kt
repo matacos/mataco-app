@@ -18,7 +18,7 @@ class MyFirebaseInstanceIDService : FirebaseInstanceIdService() {
     override fun onTokenRefresh() {
         // Get updated InstanceID token.
         val refreshedToken = FirebaseInstanceId.getInstance().token
-        Log.d(TAG, "Refreshed token: " + refreshedToken!!)
+        Log.d(TAG, "Refreshed firebase token: " + refreshedToken!!)
 
         // If you want to send messages to this application instance or
         // manage this apps subscriptions on the server side, send the
@@ -37,7 +37,7 @@ class MyFirebaseInstanceIDService : FirebaseInstanceIdService() {
     }
 
     private fun sendRegistrationToServer(username: String, firebaseToken: String) {
-
+        Log.d(TAG, "sendRegistrationToServer")
         val service = ServiceVolley()
         val apiController = APIController(service)
 
@@ -45,7 +45,7 @@ class MyFirebaseInstanceIDService : FirebaseInstanceIdService() {
         val params = JSONObject()
         params.put("username", username)
         params.put("firebase_token", firebaseToken)
-
+        Log.d(TAG, "Params: " + params.toString())
         apiController.post(path, params) { response ->
             Log.d(TAG, response.toString())
         }

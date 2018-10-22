@@ -12,7 +12,6 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
 
-
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     private val TAG: String = MyFirebaseMessagingService::class.java.simpleName
@@ -56,7 +55,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         }
     }
 
-    private fun showNotification(title: String, body: String, clickAction: String, channelId: String){
+    private fun showNotification(title: String, body: String, clickAction: String, channelId: String) {
         Log.d(TAG, "Channel id: $channelId")
         createNotificationChannel(channelId)
 

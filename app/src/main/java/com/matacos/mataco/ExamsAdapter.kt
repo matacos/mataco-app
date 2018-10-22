@@ -37,10 +37,6 @@ class ExamsAdapter(val context: Context, val examsList: ArrayList<Exam>, val pre
             Log.d(TAG, "onClick: clicked on button_sign_up")
 
             postData(examsList[position].id)
-            val topic = "exam_" + examsList[position].id.toString()
-            FirebaseMessaging.getInstance().subscribeToTopic(topic)
-            Log.d(TAG, "Subscribed to topic: $topic")
-
         }
     }
 

@@ -34,7 +34,6 @@ class MyExamsAdapter(val context: Context, val examsList: ArrayList<ExamInscript
             Log.d(TAG, "onClick: clicked on button_drop_out")
 
             deleteData(examsList[position].id.toString(), position)
-            //TODO: unsubscribe from firebase topic
         }
     }
 

@@ -46,6 +46,10 @@
             android:name=".MyExamsActivity"
             android:label="@string/title_activity_exams"
             android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="exam_inscriptions" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
 
 

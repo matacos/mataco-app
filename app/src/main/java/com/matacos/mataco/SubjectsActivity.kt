@@ -14,6 +14,7 @@ import android.view.MenuItem
 import android.support.v7.widget.SearchView
 import android.widget.EditText
 import android.widget.LinearLayout
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
 import com.matacos.mataco.apiController.APIController
 import com.matacos.mataco.apiController.ServiceVolley
@@ -34,6 +35,7 @@ class SubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         setContentView(R.layout.activity_subjects)
         setSupportActionBar(toolbar)
 
+//        FirebaseMessaging.getInstance().subscribeToTopic("exams")
 
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)

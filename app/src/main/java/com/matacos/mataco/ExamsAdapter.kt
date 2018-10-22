@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import com.google.firebase.messaging.FirebaseMessaging
 import com.matacos.mataco.apiController.APIController
 import com.matacos.mataco.apiController.ServiceVolley
 import com.matacos.mataco.clases.Exam
@@ -36,6 +37,10 @@ class ExamsAdapter(val context: Context, val examsList: ArrayList<Exam>, val pre
             Log.d(TAG, "onClick: clicked on button_sign_up")
 
             postData(examsList[position].id)
+            val topic = "exam_" + examsList[position].id.toString()
+            FirebaseMessaging.getInstance().subscribeToTopic(topic)
+            Log.d(TAG, "Subscribed to topic: $topic")
+
         }
     }
 

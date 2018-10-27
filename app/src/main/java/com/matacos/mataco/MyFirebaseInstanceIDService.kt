@@ -24,10 +24,11 @@ class MyFirebaseInstanceIDService : FirebaseInstanceIdService() {
         // manage this apps subscriptions on the server side, send the
         // Instance ID token to your app server.
 
-        val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
-        val editPreferences = preferences.edit()
-        editPreferences.putString("firebase_token", refreshedToken).apply()
+        val firebasePreferences = getSharedPreferences("my_firebase_preferences", Context.MODE_PRIVATE)
+        val editFirebasePreferences = firebasePreferences.edit()
+        editFirebasePreferences.putString("firebase_token", refreshedToken).apply()
 
+        val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
         val username: String = preferences.getString("username", "")
         if (username != "") {
             sendRegistrationToServer(username, refreshedToken)

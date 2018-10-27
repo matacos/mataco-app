@@ -128,7 +128,8 @@ class LoginActivity : AppCompatActivity() {
 
                     showProgress(false)
 
-                    val firebaseToken: String = preferences.getString("firebase_token", "")
+                    val firebasePreferences = getSharedPreferences("my_firebase_preferences", Context.MODE_PRIVATE)
+                    val firebaseToken: String = firebasePreferences.getString("firebase_token", "")
                     if (firebaseToken != "") {
                         sendRegistrationToServer(usernameStr, firebaseToken)
                     }

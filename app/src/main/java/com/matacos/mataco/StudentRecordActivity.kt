@@ -17,24 +17,23 @@ import android.widget.LinearLayout
 import com.google.gson.Gson
 import com.matacos.mataco.apiController.APIController
 import com.matacos.mataco.apiController.ServiceVolley
-import com.matacos.mataco.clases.Exam
-import com.matacos.mataco.clases.Subject
-import com.matacos.mataco.clases.Subjects
+import com.matacos.mataco.clases.*
 import kotlinx.android.synthetic.main.activity_subjects.*
 import kotlinx.android.synthetic.main.app_bar_subjects.*
-import kotlinx.android.synthetic.main.content_subjects.*
+import kotlinx.android.synthetic.main.content_my_exams.*
+import kotlinx.android.synthetic.main.content_student_record.*
 
-class ExamSubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class StudentRecordActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    private val TAG: String = ExamSubjectsActivity::class.java.simpleName
-    val examSubjects = ArrayList<Subject>()
-    val displayedExamSubjects = ArrayList<Subject>()
+    private val TAG: String = StudentRecordActivity::class.java.simpleName
+    val studentRecords = ArrayList<StudentRecord>()
+    val displayeduStudentRecords = ArrayList<StudentRecord>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d(TAG, "onCreate")
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_exam_subjects)
+        setContentView(R.layout.activity_student_record)
         setSupportActionBar(toolbar)
-
 
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
@@ -43,8 +42,8 @@ class ExamSubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationIte
 
         nav_view.setNavigationItemSelectedListener(this)
 
-        subjects_recycler_view.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
-        subjects_recycler_view.adapter = ExamSubjectsAdapter(this, displayedExamSubjects, getSharedPreferences("my_preferences", Context.MODE_PRIVATE))
+        student_record_recycler_view.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
+        student_record_recycler_view.adapter = StudentRecordAdapter(this, displayeduStudentRecords, getSharedPreferences("my_preferences", Context.MODE_PRIVATE))
 
         loadData()
 
@@ -76,22 +75,21 @@ class ExamSubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationIte
 
                 override fun onQueryTextChange(newText: String?): Boolean {
                     Log.d(TAG, "onQueryTextChange")
-                    displayedExamSubjects.clear()
+                    displayeduStudentRecords.clear()
                     if (newText!!.isNotEmpty()) {
                         Log.d(TAG, "newText!!.isNotEmpty()")
                         val search = newText.toLowerCase()
-                        examSubjects.forEach {
-                            Log.d(TAG, "subjects.forEach")
-                            val examSubject = it.department.toLowerCase() + "." + it.code
-                            if (examSubject.contains(search) || it.name.toLowerCase().contains(search)) {
-                                Log.d(TAG, "subject.contains(search)")
-                                displayedExamSubjects.add(it)
+                        displayeduStudentRecords.forEach {
+                            Log.d(TAG, "validExams.forEach")
+                            if (it.subject().contains(search) || it.name.toLowerCase().contains(search)) {
+                                Log.d(TAG, "exam.contains(search)")
+                                displayeduStudentRecords.add(it)
                             }
                         }
                     } else {
-                        displayedExamSubjects.addAll(examSubjects.distinct())
+                        displayeduStudentRecords.addAll(studentRecords.distinct())
                     }
-                    subjects_recycler_view.adapter!!.notifyDataSetChanged()
+                    student_record_recycler_view.adapter!!.notifyDataSetChanged()
                     return true
                 }
 
@@ -137,47 +135,33 @@ class ExamSubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationIte
         return true
     }
 
-    private fun filterExamSubjects(examSubjects: ArrayList<Subject>): ArrayList<Subject> {
-        val filteredExamSubjects = ArrayList<Subject>()
-        for (examSubject: Subject in examSubjects) {
-            if (!examSubject.approved) {
-                filteredExamSubjects.add(examSubject)
-            }
-        }
-        return filteredExamSubjects
-    }
-
     private fun loadData() {
         Log.d(TAG, "loadData")
 
-
         val service = ServiceVolley()
         val apiController = APIController(service)
-
-
         val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
         val token = preferences.getString("token", "")
-        val careerIds = preferences.getStringSet("career_ids", null)
+        val username = preferences.getString("username", "")
 
-        val path = "api/materias?carrera=" + careerIds?.joinToString()
+        val path = "api/historial_academico?estudiante=$username"
 
         apiController.get(path, token) { response ->
             Log.d(TAG, response.toString())
             if (response != null) {
 
                 val gson = Gson()
-                val gsonSubjects = gson.fromJson(response.toString(), Subjects::class.java)
+                val gsonStudentRecords = gson.fromJson(response.toString(), StudentRecords::class.java)
 
-                for (subject in gsonSubjects.subjects) {
-                    examSubjects.add(subject)
-                }
-                examSubjects.sort()
+                studentRecords.addAll(gsonStudentRecords.studentRecords)
 
-                displayedExamSubjects.addAll(filterExamSubjects(examSubjects))
-
-                subjects_recycler_view.adapter!!.notifyDataSetChanged()
+                studentRecords.sort()
+                displayeduStudentRecords.addAll(studentRecords)
+                my_exams_recycler_view.adapter!!.notifyDataSetChanged()
             }
+
 
         }
     }
+
 }

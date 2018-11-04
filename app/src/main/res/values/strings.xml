@@ -50,7 +50,7 @@
     <string name="title_activity_exam_subjects">Exámenes</string>
     <string name="title_activity_exams">Exámenes</string>
     <string name="instance">Instancia</string>
-    <string name="date">Fecha</string>
+    <string name="date">16/04/18</string>
     <string name="id">Course ID</string>
     <string name="spinner_header">Estado</string>
     <string name="professor" tools:ignore="Typos">Profesor</string>
@@ -67,4 +67,7 @@
     <string name="exams_channel_desc">Notificaciones relacionadas con exámenes</string>
     <string name="exam_title">01/01/01 Juan Esteban Perez</string>
     <string name="nav_log_out">Cerrar Sesión</string>
+    <string name="nav_student_record">Historial Académico</string>
+    <string name="result">Nota: 9</string>
+    <string name="date_header">Fecha</string>
 </resources>

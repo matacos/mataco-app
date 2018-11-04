@@ -121,6 +121,10 @@ class SubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                 val intent = Intent(applicationContext, MyExamsActivity::class.java)
                 applicationContext.startActivity(intent)
             }
+            R.id.nav_student_record -> {
+                val intent = Intent(applicationContext, StudentRecordActivity::class.java)
+                applicationContext.startActivity(intent)
+            }
             R.id.nav_log_out -> {
                 val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
                 val editPreferences = preferences.edit()

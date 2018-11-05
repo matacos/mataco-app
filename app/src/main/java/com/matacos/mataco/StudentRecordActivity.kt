@@ -81,9 +81,9 @@ class StudentRecordActivity : AppCompatActivity(), NavigationView.OnNavigationIt
                         Log.d(TAG, "newText!!.isNotEmpty()")
                         val search = newText.toLowerCase()
                         studentRecords.forEach {
-                            Log.d(TAG, "validExams.forEach")
+                            Log.d(TAG, "studentRecords.forEach")
                             if (it.subject().contains(search) || it.name.toLowerCase().contains(search)) {
-                                Log.d(TAG, "exam.contains(search)")
+                                Log.d(TAG, "studentRecords.contains(search)")
                                 displayedStudentRecords.add(it)
                             }
                         }
@@ -146,7 +146,15 @@ class StudentRecordActivity : AppCompatActivity(), NavigationView.OnNavigationIt
     private fun loadData() {
         Log.d(TAG, "loadData")
 
-        val service = ServiceVolley()
+        studentRecords.add(StudentRecord("2017-06-04", "9", "06", "75", "Algoritmos y Programación I"))
+        studentRecords.add(StudentRecord("2017-06-05", "8", "08", "61", "Álgebra II"))
+        studentRecords.add(StudentRecord("2017-06-06", "insuf", "05", "75", "Algoritmos y Programación II"))
+
+        studentRecords.sort()
+        displayedStudentRecords.addAll(studentRecords)
+        student_record_recycler_view.adapter!!.notifyDataSetChanged()
+
+/*        val service = ServiceVolley()
         val apiController = APIController(service)
         val preferences: SharedPreferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
         val token: String = preferences.getString("token", "")
@@ -168,7 +176,7 @@ class StudentRecordActivity : AppCompatActivity(), NavigationView.OnNavigationIt
             }
 
 
-        }
+        }*/
     }
 
 }

@@ -156,26 +156,15 @@ class MyExamsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         apiController.get(path, token) { response ->
             Log.d(TAG, response.toString())
             if (response != null) {
-/*                    val editPreferences = preferences.edit()
-                    editPreferences.putString("token", response.getString("token")).apply()*/
-                Log.d(TAG, "Parsing 1")
                 val gson = Gson()
-                Log.d(TAG, "Parsing 2")
                 val examInscriptions = gson.fromJson(response.toString(), ExamInscriptions::class.java)
-                Log.d(TAG, "Parsing 3")
                 for (exam in examInscriptions.examInscriptions) {
-                    Log.d(TAG, "Parsing 4")
                     exam.exam.status = exam.state
                     exams.add(exam.exam)
-                    Log.d(TAG, "Parsing 5")
                 }
-                Log.d(TAG, "Parsing 6")
                 exams.sort()
-                Log.d(TAG, "Parsing 7")
                 Log.d(TAG, exams.toString())
-                Log.d(TAG, "Parsing 8")
                 displayedExams.addAll(exams.distinct())
-                Log.d(TAG, "Parsing 9")
                 my_exams_recycler_view.adapter!!.notifyDataSetChanged()
             }
 

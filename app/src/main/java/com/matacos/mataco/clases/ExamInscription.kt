@@ -4,23 +4,32 @@ import com.google.gson.annotations.SerializedName
 import java.text.SimpleDateFormat
 import java.util.*
 
-data class ExamInscription(@SerializedName("id") val id: Int,
+data class ExamInscription(@SerializedName("examiner") val examiner: Professor,
+                           @SerializedName("id") val id: Int,
                            @SerializedName("classroom_code") val classroom_code: String,
-                           @SerializedName("exam_date") val exam_date: String,
+                           @SerializedName("classroom_campus") val classroom_campus: String,
                            @SerializedName("beginning") val beginning: String,
                            @SerializedName("ending") val ending: String,
-                           @SerializedName("classroom_campus") val classroom_campus: String,
+                           @SerializedName("exam_date") val exam_date: String,
                            @SerializedName("department_code") val department_code: String,
                            @SerializedName("subject_code") val subject_code: String,
                            @SerializedName("subject") val subject: Subject,
-                           @SerializedName("examiner") val examiner: Examiner,
                            var status: String): Comparable<ExamInscription> {
 
+    /*
+    data class Exam(@SerializedName("examiner") val examiner: Professor,
+                @SerializedName("id") val id: Int,
+                @SerializedName("classroom_code") val classroomCode: String,
+                @SerializedName("classroom_campus") val classroomCampus: String,
+                @SerializedName("beginning") val beginning: String,
+                @SerializedName("ending") val ending: String,
+                @SerializedName("exam_date") val date: String,
+                @SerializedName("enroled") val enroled: Boolean) : Comparable<Exam> {
+    * */
+
+
     override operator fun compareTo(other: ExamInscription): Int {
-        //TODO: Por ahi conviene ordenar por fecha
-        val thisSubject = this.department_code + this.subject_code
-        val otherSubjet =  other.department_code + other.subject_code
-        return thisSubject.compareTo(otherSubjet)
+        return this.exam_date.compareTo(other.exam_date)
     }
 
     private fun formatDate(date: String): String {

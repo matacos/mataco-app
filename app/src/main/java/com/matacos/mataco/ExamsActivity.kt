@@ -114,10 +114,11 @@ class ExamsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                 filteredExams.add(exam)
             }
         }
+        addEmptyListText(filteredExams)
         return filteredExams
     }
 
-    private fun addEmptyListText() {
+    private fun addEmptyListText(exams:ArrayList<Exam>) {
         Log.d(TAG, "verifyEnrollment")
         if (exams.isEmpty()) {
             no_available_exams.visibility = View.VISIBLE
@@ -145,7 +146,6 @@ class ExamsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                     exams.add(exam)
                 }
                 exams.sort()
-                addEmptyListText()
                 displayedExams.addAll(filterExams(exams))
                 exams_recycler_view.adapter!!.notifyDataSetChanged()
             }

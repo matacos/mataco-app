@@ -28,7 +28,7 @@ class StudentRecordActivity : AppCompatActivity(), NavigationView.OnNavigationIt
 
     private val TAG: String = StudentRecordActivity::class.java.simpleName
     val studentRecords = ArrayList<StudentRecord>()
-    val displayeduStudentRecords = ArrayList<StudentRecord>()
+    val displayedStudentRecords = ArrayList<StudentRecord>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d(TAG, "onCreate")
@@ -44,7 +44,7 @@ class StudentRecordActivity : AppCompatActivity(), NavigationView.OnNavigationIt
         nav_view.setNavigationItemSelectedListener(this)
 
         student_record_recycler_view.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-        student_record_recycler_view.adapter = StudentRecordAdapter(this, displayeduStudentRecords, getSharedPreferences("my_preferences", Context.MODE_PRIVATE))
+        student_record_recycler_view.adapter = StudentRecordAdapter(this, displayedStudentRecords, getSharedPreferences("my_preferences", Context.MODE_PRIVATE))
 
         loadData()
 
@@ -76,19 +76,19 @@ class StudentRecordActivity : AppCompatActivity(), NavigationView.OnNavigationIt
 
                 override fun onQueryTextChange(newText: String?): Boolean {
                     Log.d(TAG, "onQueryTextChange")
-                    displayeduStudentRecords.clear()
+                    displayedStudentRecords.clear()
                     if (newText!!.isNotEmpty()) {
                         Log.d(TAG, "newText!!.isNotEmpty()")
                         val search = newText.toLowerCase()
-                        displayeduStudentRecords.forEach {
+                        studentRecords.forEach {
                             Log.d(TAG, "validExams.forEach")
                             if (it.subject().contains(search) || it.name.toLowerCase().contains(search)) {
                                 Log.d(TAG, "exam.contains(search)")
-                                displayeduStudentRecords.add(it)
+                                displayedStudentRecords.add(it)
                             }
                         }
                     } else {
-                        displayeduStudentRecords.addAll(studentRecords.distinct())
+                        displayedStudentRecords.addAll(studentRecords.distinct())
                     }
                     student_record_recycler_view.adapter!!.notifyDataSetChanged()
                     return true
@@ -162,9 +162,8 @@ class StudentRecordActivity : AppCompatActivity(), NavigationView.OnNavigationIt
                 val gsonStudentRecords = gson.fromJson(response.toString(), StudentRecords::class.java)
 
                 studentRecords.addAll(gsonStudentRecords.studentRecords)
-
                 studentRecords.sort()
-                displayeduStudentRecords.addAll(studentRecords)
+                displayedStudentRecords.addAll(studentRecords)
                 my_exams_recycler_view.adapter!!.notifyDataSetChanged()
             }
 

@@ -3,12 +3,15 @@ package com.matacos.mataco
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import androidx.constraintlayout.widget.ConstraintLayout
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.matacos.mataco.clases.Career
 
 class SubjectsSelectCareerAdapter(val context: Context, val careers: ArrayList<Career>, val preferences: SharedPreferences) : androidx.recyclerview.widget.RecyclerView.Adapter<SubjectsSelectCareerAdapter.SubjectsSelectCareerViewHolder>() {
@@ -17,11 +20,14 @@ class SubjectsSelectCareerAdapter(val context: Context, val careers: ArrayList<C
 
     override fun onBindViewHolder(holder: SubjectsSelectCareerViewHolder, position: Int) {
         Log.d(TAG, "onBindViewHolder")
-        holder.code.text = careers[position].code
-        holder.name.text = careers[position].name()
+        holder.career.text = careers[position].career()
+
+        Glide.with(context)
+                .load(Uri.parse(careers[position].icon()))
+                .into(holder.icon)
 
         holder.parentLayout.setOnClickListener {
-            Log.d(TAG, "onClick: clicked on: " + careers[position].name())
+            Log.d(TAG, "onClick: clicked on: " + careers[position].career())
 
             val editPreferences: SharedPreferences.Editor = preferences.edit()
             editPreferences.putString("career", careers[position].code).apply()
@@ -45,8 +51,8 @@ class SubjectsSelectCareerAdapter(val context: Context, val careers: ArrayList<C
     }
 
     class SubjectsSelectCareerViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
-        val code: TextView = itemView.findViewById(R.id.code)!!
-        val name: TextView = itemView.findViewById(R.id.name)!!
+        val career: TextView = itemView.findViewById(R.id.career)!!
+        val icon: ImageView = itemView.findViewById(R.id.icon)!!
         val parentLayout: ConstraintLayout = itemView.findViewById(R.id.subject_select_career_parent_layout)!!
     }
 }

@@ -145,6 +145,16 @@ class SubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         return true
     }
 
+    private fun filterSubjects(examSubjects: List<Subject>): ArrayList<Subject> {
+        val filteredExamSubjects = ArrayList<Subject>()
+        for (examSubject: Subject in examSubjects) {
+            if (!examSubject.approved) {
+                filteredExamSubjects.add(examSubject)
+            }
+        }
+        return filteredExamSubjects
+    }
+
     private fun loadData() {
         Log.d(TAG, "loadData")
 
@@ -166,11 +176,8 @@ class SubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                 val gson = Gson()
                 val gsonSubjects = gson.fromJson(response.toString(), Subjects::class.java)
 
-                for (subject in gsonSubjects.subjects) {
-                    subjects.add(subject)
-                }
+                subjects.addAll(filterSubjects(gsonSubjects.subjects))
                 subjects.sort()
-
                 displayedSubjects.addAll(subjects)
 
                 subjects_recycler_view.adapter!!.notifyDataSetChanged()

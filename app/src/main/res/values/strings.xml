@@ -76,4 +76,5 @@
     <string name="title_activity_exam_subjects_select_career">Exámenes</string>
     <string name="icon">Icon</string>
     <string name="select_career">Seleccionar Carrera</string>
+    <string name="career">Ingeniería en Informática</string>
 </resources>

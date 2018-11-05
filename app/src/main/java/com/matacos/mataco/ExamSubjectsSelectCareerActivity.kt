@@ -99,12 +99,10 @@ class ExamSubjectsSelectCareerActivity : AppCompatActivity(), NavigationView.OnN
         val careerIds: MutableSet<String> = preferences.getStringSet("career_ids", null)
 
         for (careerId in careerIds) {
-            Log.d(TAG, "CareerId: " + careerId)
             val career = Career(careerId)
             careers.add(career)
         }
         careers.sort()
-        Log.d(TAG, "Career 0: " + careers[0].code + " " + careers[0].name())
         subjects_select_career_recycler_view.adapter!!.notifyDataSetChanged()
     }
 

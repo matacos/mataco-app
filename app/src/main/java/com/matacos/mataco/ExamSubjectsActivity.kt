@@ -144,7 +144,7 @@ class ExamSubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationIte
         return true
     }
 
-    private fun filterExamSubjects(examSubjects: ArrayList<Subject>): ArrayList<Subject> {
+    private fun filterExamSubjects(examSubjects: List<Subject>): ArrayList<Subject> {
         val filteredExamSubjects = ArrayList<Subject>()
         for (examSubject: Subject in examSubjects) {
             if (!examSubject.approved) {
@@ -175,12 +175,9 @@ class ExamSubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationIte
                 val gson = Gson()
                 val gsonSubjects = gson.fromJson(response.toString(), Subjects::class.java)
 
-                for (subject in gsonSubjects.subjects) {
-                    examSubjects.add(subject)
-                }
+                examSubjects.addAll(filterExamSubjects(gsonSubjects.subjects))
                 examSubjects.sort()
-
-                displayedExamSubjects.addAll(filterExamSubjects(examSubjects))
+                displayedExamSubjects.addAll(examSubjects)
 
                 subjects_recycler_view.adapter!!.notifyDataSetChanged()
             }

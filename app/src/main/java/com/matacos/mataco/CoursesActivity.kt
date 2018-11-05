@@ -198,9 +198,7 @@ class CoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             if (response != null) {
                 val gson = Gson()
                 val coursesSubjects = gson.fromJson(response.toString(), Courses::class.java)
-                for (course in coursesSubjects.courses) {
-                    courses.add(course)
-                }
+                courses.addAll(coursesSubjects.courses)
                 courses.sort()
                 verifyEnrollment()
                 addEmptyListText()

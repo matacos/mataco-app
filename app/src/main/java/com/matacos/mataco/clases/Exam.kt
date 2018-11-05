@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import java.text.SimpleDateFormat
 import java.util.*
 
-data class Exam(@SerializedName("examiner") val examiner: Examiner,
+data class Exam(@SerializedName("examiner") val examiner: Professor,
                 @SerializedName("id") val id: Int,
                 @SerializedName("classroom_code") val classroomCode: String,
                 @SerializedName("classroom_campus") val classroomCampus: String,
@@ -17,14 +17,6 @@ data class Exam(@SerializedName("examiner") val examiner: Examiner,
         return this.id.compareTo(other.id)
     }
 
-    fun classroomCampus(): String {
-        return "Sede: ${this.classroomCampus}"
-    }
-
-    fun id(): String {
-        return "Cátedra ${this.id}"
-    }
-
     private fun formatDate(date: String): String {
         val realDate: Date = SimpleDateFormat("yyyy-MM-dd", Locale.US).parse(date.substring(0, 10))
         val format = SimpleDateFormat("dd/MM/yyyy", Locale.US)
@@ -35,6 +27,14 @@ data class Exam(@SerializedName("examiner") val examiner: Examiner,
         val realDate: Date = SimpleDateFormat("HH:mm:ss", Locale.US).parse(date)
         val format = SimpleDateFormat("HH:mm", Locale.US)
         return format.format(realDate)
+    }
+
+    fun classroomCampus(): String {
+        return "Sede: ${this.classroomCampus}"
+    }
+
+    fun id(): String {
+        return "Cátedra ${this.id}"
     }
 
     fun beginning(): String {

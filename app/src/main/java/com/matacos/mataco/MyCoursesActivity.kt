@@ -168,7 +168,7 @@ class MyCoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             if (response != null) {
                 val gson = Gson()
                 val coursesSubjects: CourseInscriptions = gson.fromJson(response.toString(), CourseInscriptions::class.java)
-                for (course: Courses2 in coursesSubjects.courses) {
+                for (course: CoursesInscription in coursesSubjects.courses) {
                     courses.add(course.course)
                 }
                 courses.sort()

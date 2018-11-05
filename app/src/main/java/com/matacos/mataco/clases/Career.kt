@@ -6,9 +6,9 @@ class Career constructor(val code: String) : Comparable<Career> {
         return this.code.compareTo(this.code)
     }
 
-    fun name(): String {
+    fun career(): String {
         return when (this.code.toInt()) {
-            1 -> ("ngenieria Civil")
+            1 -> ("Ingenieria Civil")
             2 -> ("Ingenieria Industrial")
             3 -> ("Ingenieria Naval y Mecánica")
             4 -> ("Agrimensura")
@@ -21,6 +21,10 @@ class Career constructor(val code: String) : Comparable<Career> {
             11 -> ("Ingenieria en Alimentos")
             else -> ("")
         }
+    }
+
+    fun icon(): String {
+        return "file:///android_asset/i_${this.code}.jpg"
     }
 
 }

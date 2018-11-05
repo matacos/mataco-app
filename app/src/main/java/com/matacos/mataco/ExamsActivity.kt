@@ -4,15 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.support.design.widget.NavigationView
-import android.support.v4.view.GravityCompat
-import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
+import com.google.android.material.navigation.NavigationView
+import androidx.core.view.GravityCompat
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.widget.LinearLayout
 import com.google.gson.Gson
 import com.matacos.mataco.apiController.APIController
 import com.matacos.mataco.apiController.ServiceVolley
@@ -21,11 +19,10 @@ import com.matacos.mataco.clases.Exams
 import kotlinx.android.synthetic.main.activity_subjects.*
 import kotlinx.android.synthetic.main.app_bar_subjects.*
 import kotlinx.android.synthetic.main.content_exams.*
-import android.R.id.edit
-import android.text.method.TextKeyListener.clear
+import androidx.recyclerview.widget.RecyclerView
 
 
-
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class ExamsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private val TAG: String = ExamsActivity::class.java.simpleName
@@ -52,7 +49,7 @@ class ExamsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
         nav_view.setNavigationItemSelectedListener(this)
 
-        exams_recycler_view.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
+        exams_recycler_view.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         exams_recycler_view.adapter = ExamsAdapter(this, displayedExams, getSharedPreferences("my_preferences", Context.MODE_PRIVATE))
 
         loadData()
@@ -72,22 +69,27 @@ class ExamsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         when (item.itemId) {
             R.id.nav_subjects -> {
                 val intent = Intent(applicationContext, SubjectsSelectCareerActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 applicationContext.startActivity(intent)
             }
             R.id.nav_courses -> {
                 val intent = Intent(applicationContext, MyCoursesActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 applicationContext.startActivity(intent)
             }
             R.id.nav_exam_subjects -> {
                 val intent = Intent(applicationContext, ExamSubjectsSelectCareerActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 applicationContext.startActivity(intent)
             }
             R.id.nav_my_exams -> {
                 val intent = Intent(applicationContext, MyExamsActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 applicationContext.startActivity(intent)
             }
             R.id.nav_student_record -> {
                 val intent = Intent(applicationContext, StudentRecordActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 applicationContext.startActivity(intent)
             }
             R.id.nav_log_out -> {
@@ -95,13 +97,11 @@ class ExamsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                 val editPreferences = preferences.edit()
                 editPreferences.clear().apply()
                 val intent = Intent(applicationContext, LoginActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 applicationContext.startActivity(intent)
             }
 
         }
-
-
-
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
@@ -129,10 +129,10 @@ class ExamsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
         val service = ServiceVolley()
         val apiController = APIController(service)
-        val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
-        val token = preferences.getString("token", "")
-        val department = preferences.getString("subject_department", "")
-        val code = preferences.getString("subject_code", "")
+        val preferences: SharedPreferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
+        val token: String = preferences.getString("token", "")
+        val department: String = preferences.getString("subject_department", "")
+        val code: String = preferences.getString("subject_code", "")
         val path = "api/finales?cod_departamento=$department&cod_materia=$code"
 
         apiController.get(path, token) { response ->

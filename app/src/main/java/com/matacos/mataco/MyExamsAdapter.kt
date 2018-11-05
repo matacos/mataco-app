@@ -2,9 +2,6 @@ package com.matacos.mataco
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.support.constraint.ConstraintLayout
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +12,8 @@ import com.matacos.mataco.apiController.APIController
 import com.matacos.mataco.apiController.ServiceVolley
 import com.matacos.mataco.clases.ExamInscription
 
-class MyExamsAdapter(val context: Context, val examsList: ArrayList<ExamInscription>, val preferences: SharedPreferences): RecyclerView.Adapter<MyExamsAdapter.MyExamsViewHolder>() {
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+class MyExamsAdapter(val context: Context, val examsList: ArrayList<ExamInscription>, val preferences: SharedPreferences) : androidx.recyclerview.widget.RecyclerView.Adapter<MyExamsAdapter.MyExamsViewHolder>() {
 
     private val TAG: String = MyExamsAdapter::class.java.simpleName
 
@@ -48,30 +46,29 @@ class MyExamsAdapter(val context: Context, val examsList: ArrayList<ExamInscript
         return examsList.size
     }
 
-    class MyExamsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        val name = itemView.findViewById<TextView>(R.id.name)!!
-        val code = itemView.findViewById<TextView>(R.id.code)!!
-        val classroomCode:TextView = itemView.findViewById(R.id.classroom_code)!!
-        val date:TextView = itemView.findViewById(R.id.date)!!
-        val beginning:TextView = itemView.findViewById(R.id.beginning)!!
-        val ending:TextView = itemView.findViewById(R.id.ending)!!
-        val classroomCampus:TextView = itemView.findViewById(R.id.classroom_campus)!!
-        val buttonDropOut:Button = itemView.findViewById(R.id.button_drop_out)!!
-        val parentLayout: ConstraintLayout = itemView.findViewById(R.id.exams_parent_layout)!!
+    class MyExamsViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
+        val name: TextView = itemView.findViewById<TextView>(R.id.name)!!
+        val code: TextView = itemView.findViewById<TextView>(R.id.code)!!
+        val classroomCode: TextView = itemView.findViewById(R.id.classroom_code)!!
+        val date: TextView = itemView.findViewById(R.id.date)!!
+        val beginning: TextView = itemView.findViewById(R.id.beginning)!!
+        val ending: TextView = itemView.findViewById(R.id.ending)!!
+        val classroomCampus: TextView = itemView.findViewById(R.id.classroom_campus)!!
+        val buttonDropOut: Button = itemView.findViewById(R.id.button_drop_out)!!
         val state: TextView = itemView.findViewById(R.id.state)
         val examiner: TextView = itemView.findViewById(R.id.examiner)
     }
 
-    private fun deleteData(id: String, position: Int){
+    private fun deleteData(id: String, position: Int) {
         Log.d(TAG, "deleteData")
 
         val service = ServiceVolley()
         val apiController = APIController(service)
-        val token = preferences.getString("token", "")
-        val username = preferences.getString("username", "")
+        val token: String = preferences.getString("token", "")
+        val username: String = preferences.getString("username", "")
         val path = "api/inscripciones_final/$id-$username"
 
-        apiController.delete(path, token){ response ->
+        apiController.delete(path, token) { response ->
             Log.d(TAG, response.toString())
 
             examsList.removeAt(position)

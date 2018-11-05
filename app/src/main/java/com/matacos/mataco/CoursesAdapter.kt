@@ -4,8 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +16,8 @@ import com.matacos.mataco.apiController.ServiceVolley
 import com.matacos.mataco.clases.Course
 import org.json.JSONObject
 
-class CoursesAdapter(val context: Context, val coursesList: ArrayList<Course>, val preferences: SharedPreferences) : RecyclerView.Adapter<CoursesAdapter.CoursesViewHolder>() {
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+class CoursesAdapter(val context: Context, val coursesList: ArrayList<Course>, val preferences: SharedPreferences) : androidx.recyclerview.widget.RecyclerView.Adapter<CoursesAdapter.CoursesViewHolder>() {
 
     private val TAG: String = CoursesAdapter::class.java.simpleName
 
@@ -46,7 +46,7 @@ class CoursesAdapter(val context: Context, val coursesList: ArrayList<Course>, v
             }
         }
 
-        holder.timeSlotsRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
+        holder.timeSlotsRecyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         holder.timeSlotsRecyclerView.adapter = TimeSlotsAdapter(context, coursesList[position].timeSlots)
     }
 
@@ -62,12 +62,12 @@ class CoursesAdapter(val context: Context, val coursesList: ArrayList<Course>, v
         return coursesList.size
     }
 
-    class CoursesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class CoursesViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
         val number: TextView = itemView.findViewById(R.id.number)!!
         val totalSlots: TextView = itemView.findViewById(R.id.total_slots)!!
         val professors: TextView = itemView.findViewById(R.id.professors)!!
         val classroomCampus: TextView = itemView.findViewById(R.id.classroom_campus)!!
-        val timeSlotsRecyclerView: RecyclerView = itemView.findViewById(R.id.time_slots_recycler_view)!!
+        val timeSlotsRecyclerView: androidx.recyclerview.widget.RecyclerView = itemView.findViewById(R.id.time_slots_recycler_view)!!
         val buttonSignUp: Button = itemView.findViewById(R.id.button_sign_up)!!
 
     }
@@ -88,6 +88,7 @@ class CoursesAdapter(val context: Context, val coursesList: ArrayList<Course>, v
         apiController.post(path, token, params) { response ->
             Log.d(TAG, response.toString())
             val intent = Intent(context, SubjectsActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(intent)
         }
     }

@@ -2,29 +2,21 @@ package com.matacos.mataco
 
 import android.content.Context
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
+import android.content.SharedPreferences
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.support.design.widget.NavigationView
-import android.support.v4.view.GravityCompat
-import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.SearchView
+import com.google.android.material.navigation.NavigationView
+import androidx.core.view.GravityCompat
+import androidx.appcompat.app.ActionBarDrawerToggle
 import android.util.Log
-import android.view.Menu
 import android.view.MenuItem
-import android.widget.EditText
-import android.widget.LinearLayout
-import com.google.gson.Gson
-import com.matacos.mataco.apiController.APIController
-import com.matacos.mataco.apiController.ServiceVolley
+import androidx.recyclerview.widget.RecyclerView
 import com.matacos.mataco.clases.Career
-import com.matacos.mataco.clases.Subject
-import com.matacos.mataco.clases.Subjects
 import kotlinx.android.synthetic.main.activity_subjects.*
 import kotlinx.android.synthetic.main.app_bar_subjects.*
-import kotlinx.android.synthetic.main.content_subjects.*
 import kotlinx.android.synthetic.main.content_subjects_select_career.*
 
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class SubjectsSelectCareerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private val TAG: String = SubjectsSelectCareerActivity::class.java.simpleName
@@ -42,7 +34,7 @@ class SubjectsSelectCareerActivity : AppCompatActivity(), NavigationView.OnNavig
 
         nav_view.setNavigationItemSelectedListener(this)
 
-        subjects_select_career_recycler_view.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
+        subjects_select_career_recycler_view.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         subjects_select_career_recycler_view.adapter = SubjectsSelectCareerAdapter(this, careers, getSharedPreferences("my_preferences", Context.MODE_PRIVATE))
 
         loadData()
@@ -62,22 +54,27 @@ class SubjectsSelectCareerActivity : AppCompatActivity(), NavigationView.OnNavig
         when (item.itemId) {
             R.id.nav_subjects -> {
                 val intent = Intent(applicationContext, SubjectsSelectCareerActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 applicationContext.startActivity(intent)
             }
             R.id.nav_courses -> {
                 val intent = Intent(applicationContext, MyCoursesActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 applicationContext.startActivity(intent)
             }
             R.id.nav_exam_subjects -> {
                 val intent = Intent(applicationContext, ExamSubjectsSelectCareerActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 applicationContext.startActivity(intent)
             }
             R.id.nav_my_exams -> {
                 val intent = Intent(applicationContext, MyExamsActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 applicationContext.startActivity(intent)
             }
             R.id.nav_student_record -> {
                 val intent = Intent(applicationContext, StudentRecordActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 applicationContext.startActivity(intent)
             }
             R.id.nav_log_out -> {
@@ -85,8 +82,10 @@ class SubjectsSelectCareerActivity : AppCompatActivity(), NavigationView.OnNavig
                 val editPreferences = preferences.edit()
                 editPreferences.clear().apply()
                 val intent = Intent(applicationContext, LoginActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 applicationContext.startActivity(intent)
             }
+
         }
 
         drawer_layout.closeDrawer(GravityCompat.START)
@@ -96,8 +95,8 @@ class SubjectsSelectCareerActivity : AppCompatActivity(), NavigationView.OnNavig
     private fun loadData() {
         Log.d(TAG, "loadData")
 
-        val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
-        val careerIds = preferences.getStringSet("career_ids", null)
+        val preferences: SharedPreferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
+        val careerIds: MutableSet<String> = preferences.getStringSet("career_ids", null)
 
         for (careerId in careerIds) {
             Log.d(TAG, "CareerId: " + careerId)
@@ -105,7 +104,7 @@ class SubjectsSelectCareerActivity : AppCompatActivity(), NavigationView.OnNavig
             careers.add(career)
         }
         careers.sort()
-        Log.d(TAG, "Career 0: " + careers[0].code + " "+ careers[0].name())
+        Log.d(TAG, "Career 0: " + careers[0].code + " " + careers[0].name())
         subjects_select_career_recycler_view.adapter!!.notifyDataSetChanged()
     }
 

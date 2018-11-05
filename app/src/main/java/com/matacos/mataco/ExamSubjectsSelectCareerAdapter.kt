@@ -3,8 +3,7 @@ package com.matacos.mataco
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.support.constraint.ConstraintLayout
-import android.support.v7.widget.RecyclerView
+import androidx.constraintlayout.widget.ConstraintLayout
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +11,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.matacos.mataco.clases.Career
 
-class ExamSubjectsSelectCareerAdapter(val context: Context, val careers: ArrayList<Career>, val preferences: SharedPreferences) : RecyclerView.Adapter<ExamSubjectsSelectCareerAdapter.ExamSubjectsSelectCareerViewHolder>() {
+class ExamSubjectsSelectCareerAdapter(val context: Context, val careers: ArrayList<Career>, val preferences: SharedPreferences) : androidx.recyclerview.widget.RecyclerView.Adapter<ExamSubjectsSelectCareerAdapter.ExamSubjectsSelectCareerViewHolder>() {
 
     private val TAG: String = ExamSubjectsSelectCareerAdapter::class.java.simpleName
 
@@ -28,6 +27,7 @@ class ExamSubjectsSelectCareerAdapter(val context: Context, val careers: ArrayLi
             editPreferences.putString("career", careers[position].code).apply()
             Log.d(TAG, "startActivity: ExamSubjectsActivity")
             val intent = Intent(context, ExamSubjectsActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(intent)
         }
     }
@@ -44,7 +44,7 @@ class ExamSubjectsSelectCareerAdapter(val context: Context, val careers: ArrayLi
         return careers.size
     }
 
-    class ExamSubjectsSelectCareerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ExamSubjectsSelectCareerViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
         val code: TextView = itemView.findViewById(R.id.code)!!
         val name: TextView = itemView.findViewById(R.id.name)!!
         val parentLayout: ConstraintLayout = itemView.findViewById(R.id.subject_select_career_parent_layout)!!

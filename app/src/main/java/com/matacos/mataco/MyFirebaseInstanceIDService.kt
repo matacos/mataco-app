@@ -1,9 +1,8 @@
 package com.matacos.mataco
 
 import android.content.Context
-import android.content.Intent
+import android.content.SharedPreferences
 import android.util.Log
-import android.widget.Toast
 import com.google.firebase.iid.FirebaseInstanceIdService
 import com.google.firebase.iid.FirebaseInstanceId
 import com.matacos.mataco.apiController.APIController
@@ -11,6 +10,7 @@ import com.matacos.mataco.apiController.ServiceVolley
 import org.json.JSONObject
 
 
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class MyFirebaseInstanceIDService : FirebaseInstanceIdService() {
 
     private val TAG: String = MyFirebaseInstanceIDService::class.java.simpleName
@@ -28,7 +28,7 @@ class MyFirebaseInstanceIDService : FirebaseInstanceIdService() {
         val editFirebasePreferences = firebasePreferences.edit()
         editFirebasePreferences.putString("firebase_token", refreshedToken).apply()
 
-        val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
+        val preferences: SharedPreferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
         val username: String = preferences.getString("username", "")
         if (username != "") {
             sendRegistrationToServer(username, refreshedToken)

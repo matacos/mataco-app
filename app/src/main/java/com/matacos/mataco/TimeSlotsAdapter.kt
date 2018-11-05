@@ -1,7 +1,6 @@
 package com.matacos.mataco
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.*
 import com.matacos.mataco.clases.TimeSlot
 
-class TimeSlotsAdapter(val context: Context, val timeSlotsList: List<TimeSlot>) : RecyclerView.Adapter<TimeSlotsAdapter.TimeSlotsViewHolder>() {
+class TimeSlotsAdapter(val context: Context, val timeSlotsList: List<TimeSlot>) : androidx.recyclerview.widget.RecyclerView.Adapter<TimeSlotsAdapter.TimeSlotsViewHolder>() {
 
     private val TAG: String = TimeSlotsAdapter::class.java.simpleName
 
@@ -34,7 +33,7 @@ class TimeSlotsAdapter(val context: Context, val timeSlotsList: List<TimeSlot>) 
         return timeSlotsList.size
     }
 
-    class TimeSlotsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class TimeSlotsViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
         val classroom_code: TextView = itemView.findViewById(R.id.classroom_code)!!
         val description: TextView = itemView.findViewById(R.id.description)!!
         val day_of_week: TextView = itemView.findViewById(R.id.day_of_week)!!

@@ -3,7 +3,7 @@ package com.matacos.mataco
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.TargetApi
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
@@ -21,6 +21,7 @@ import org.json.JSONObject
 import java.lang.Integer.parseInt
 
 
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class LoginActivity : AppCompatActivity() {
 
     private val TAG: String = LoginActivity::class.java.simpleName
@@ -46,6 +47,7 @@ class LoginActivity : AppCompatActivity() {
         val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
         if (preferences.getBoolean("logged_in", false)) {
             val intent = Intent(this, SubjectsSelectCareerActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             this.startActivity(intent)
         }
     }
@@ -135,6 +137,7 @@ class LoginActivity : AppCompatActivity() {
                     }
                     Log.d(TAG, "startActivity: SubjectsSelectCareerActivity")
                     val intent = Intent(this, SubjectsSelectCareerActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     this.startActivity(intent)
 
                 } else {

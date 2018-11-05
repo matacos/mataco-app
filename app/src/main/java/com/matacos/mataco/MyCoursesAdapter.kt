@@ -2,8 +2,7 @@ package com.matacos.mataco
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +13,8 @@ import com.matacos.mataco.apiController.APIController
 import com.matacos.mataco.apiController.ServiceVolley
 import com.matacos.mataco.clases.Course
 
-class MyCoursesAdapter(val context: Context, val coursesList: ArrayList<Course>, val preferences: SharedPreferences) : RecyclerView.Adapter<MyCoursesAdapter.MyCoursesViewHolder>() {
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+class MyCoursesAdapter(val context: Context, val coursesList: ArrayList<Course>, val preferences: SharedPreferences) : androidx.recyclerview.widget.RecyclerView.Adapter<MyCoursesAdapter.MyCoursesViewHolder>() {
 
     private val TAG: String = MyCoursesAdapter::class.java.simpleName
 
@@ -31,7 +31,7 @@ class MyCoursesAdapter(val context: Context, val coursesList: ArrayList<Course>,
             deleteData(coursesList[position].number, position)
         }
 
-        holder.time_slots_recycler_view.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
+        holder.time_slots_recycler_view.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         holder.time_slots_recycler_view.adapter = TimeSlotsAdapter(context, coursesList[position].timeSlots)
     }
 
@@ -47,12 +47,12 @@ class MyCoursesAdapter(val context: Context, val coursesList: ArrayList<Course>,
         return coursesList.size
     }
 
-    class MyCoursesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class MyCoursesViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
         val name: TextView = itemView.findViewById(R.id.name)!!
         val code: TextView = itemView.findViewById(R.id.department_code)!!
         val professors: TextView = itemView.findViewById(R.id.professors)!!
         val classroomCampus: TextView = itemView.findViewById(R.id.classroom_campus)!!
-        val time_slots_recycler_view: RecyclerView = itemView.findViewById(R.id.time_slots_recycler_view)!!
+        val time_slots_recycler_view: androidx.recyclerview.widget.RecyclerView = itemView.findViewById(R.id.time_slots_recycler_view)!!
         val button_drop_out: Button = itemView.findViewById(R.id.button_drop_out)
         val status: TextView = itemView.findViewById(R.id.status)!!
     }
@@ -62,8 +62,8 @@ class MyCoursesAdapter(val context: Context, val coursesList: ArrayList<Course>,
 
         val service = ServiceVolley()
         val apiController = APIController(service)
-        val token = preferences.getString("token", "")
-        val username = preferences.getString("username", "")
+        val token: String = preferences.getString("token", "")
+        val username: String = preferences.getString("username", "")
         val path = "api/cursadas/$course-$username"
 
         apiController.delete(path, token) { response ->

@@ -2,19 +2,18 @@ package com.matacos.mataco
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
-import android.support.design.widget.NavigationView
-import android.support.v4.view.GravityCompat
-import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
+import com.google.android.material.navigation.NavigationView
+import androidx.core.view.GravityCompat
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.support.v7.widget.SearchView
+import androidx.appcompat.widget.SearchView
 import android.widget.EditText
-import android.widget.LinearLayout
-import com.google.firebase.messaging.FirebaseMessaging
+import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.matacos.mataco.apiController.APIController
 import com.matacos.mataco.apiController.ServiceVolley
@@ -24,6 +23,7 @@ import kotlinx.android.synthetic.main.activity_subjects.*
 import kotlinx.android.synthetic.main.app_bar_subjects.*
 import kotlinx.android.synthetic.main.content_subjects.*
 
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class SubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private val TAG: String = SubjectsActivity::class.java.simpleName
@@ -44,7 +44,7 @@ class SubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
         nav_view.setNavigationItemSelectedListener(this)
 
-        subjects_recycler_view.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
+        subjects_recycler_view.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         subjects_recycler_view.adapter = SubjectsAdapter(this, displayedSubjects, getSharedPreferences("my_preferences", Context.MODE_PRIVATE))
 
         loadData()
@@ -66,7 +66,7 @@ class SubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         if (searchItem != null) {
             Log.d(TAG, "searchItem != null")
             val searchView = searchItem.actionView as SearchView
-            val editext = searchView.findViewById<EditText>(android.support.v7.appcompat.R.id.search_src_text)
+            val editext = searchView.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
             editext.hint = "Buscar materia..."
 
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -107,22 +107,27 @@ class SubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         when (item.itemId) {
             R.id.nav_subjects -> {
                 val intent = Intent(applicationContext, SubjectsSelectCareerActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 applicationContext.startActivity(intent)
             }
             R.id.nav_courses -> {
                 val intent = Intent(applicationContext, MyCoursesActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 applicationContext.startActivity(intent)
             }
             R.id.nav_exam_subjects -> {
                 val intent = Intent(applicationContext, ExamSubjectsSelectCareerActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 applicationContext.startActivity(intent)
             }
             R.id.nav_my_exams -> {
                 val intent = Intent(applicationContext, MyExamsActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 applicationContext.startActivity(intent)
             }
             R.id.nav_student_record -> {
                 val intent = Intent(applicationContext, StudentRecordActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 applicationContext.startActivity(intent)
             }
             R.id.nav_log_out -> {
@@ -130,8 +135,10 @@ class SubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                 val editPreferences = preferences.edit()
                 editPreferences.clear().apply()
                 val intent = Intent(applicationContext, LoginActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 applicationContext.startActivity(intent)
             }
+
         }
 
         drawer_layout.closeDrawer(GravityCompat.START)
@@ -146,9 +153,9 @@ class SubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         val apiController = APIController(service)
 
 
-        val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
-        val token = preferences.getString("token", "")
-        val careerId = preferences.getString("career", null)
+        val preferences: SharedPreferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
+        val token: String = preferences.getString("token", "")
+        val careerId: String = preferences.getString("career", null)
 
         val path = "api/materias?carrera=" + careerId
 

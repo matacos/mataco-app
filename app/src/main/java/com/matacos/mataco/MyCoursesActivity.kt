@@ -2,18 +2,18 @@ package com.matacos.mataco
 
 import android.content.Context
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
+import android.content.SharedPreferences
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.support.design.widget.NavigationView
-import android.support.v4.view.GravityCompat
-import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.SearchView
+import com.google.android.material.navigation.NavigationView
+import androidx.core.view.GravityCompat
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.widget.SearchView
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
-import android.widget.LinearLayout
+import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.matacos.mataco.apiController.APIController
 import com.matacos.mataco.apiController.ServiceVolley
@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.activity_subjects.*
 import kotlinx.android.synthetic.main.app_bar_subjects.*
 import kotlinx.android.synthetic.main.content_my_courses.*
 
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class MyCoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private val TAG: String = MyCoursesActivity::class.java.simpleName
@@ -40,7 +41,7 @@ class MyCoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
         nav_view.setNavigationItemSelectedListener(this)
 
-        my_courses_recycler_view.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
+        my_courses_recycler_view.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         my_courses_recycler_view.adapter = MyCoursesAdapter(this, displayedCourses, getSharedPreferences("my_preferences", Context.MODE_PRIVATE))
 
         loadData()
@@ -61,7 +62,7 @@ class MyCoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         val searchItem: MenuItem = menu.findItem(R.id.search)
         Log.d(TAG, "searchItem != null")
         val searchView: SearchView = searchItem.actionView as SearchView
-        val editText: EditText = searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text)
+        val editText: EditText = searchView.findViewById(androidx.appcompat.R.id.search_src_text)
         editText.hint = "Buscar curso..."
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -101,22 +102,27 @@ class MyCoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         when (item.itemId) {
             R.id.nav_subjects -> {
                 val intent = Intent(applicationContext, SubjectsSelectCareerActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 applicationContext.startActivity(intent)
             }
             R.id.nav_courses -> {
                 val intent = Intent(applicationContext, MyCoursesActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 applicationContext.startActivity(intent)
             }
             R.id.nav_exam_subjects -> {
                 val intent = Intent(applicationContext, ExamSubjectsSelectCareerActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 applicationContext.startActivity(intent)
             }
             R.id.nav_my_exams -> {
                 val intent = Intent(applicationContext, MyExamsActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 applicationContext.startActivity(intent)
             }
             R.id.nav_student_record -> {
                 val intent = Intent(applicationContext, StudentRecordActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 applicationContext.startActivity(intent)
             }
             R.id.nav_log_out -> {
@@ -124,8 +130,10 @@ class MyCoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 val editPreferences = preferences.edit()
                 editPreferences.clear().apply()
                 val intent = Intent(applicationContext, LoginActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 applicationContext.startActivity(intent)
             }
+
         }
 
         drawer_layout.closeDrawer(GravityCompat.START)
@@ -150,9 +158,9 @@ class MyCoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
         val service = ServiceVolley()
         val apiController = APIController(service)
-        val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
-        val token = preferences.getString("token", "")
-        val username = preferences.getString("username", "")
+        val preferences: SharedPreferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
+        val token: String = preferences.getString("token", "")
+        val username: String = preferences.getString("username", "")
         val path = "api/cursadas?estudiante=$username"
 
         apiController.get(path, token) { response ->

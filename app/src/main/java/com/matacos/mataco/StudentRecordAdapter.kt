@@ -2,19 +2,14 @@ package com.matacos.mataco
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.support.constraint.ConstraintLayout
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
-import com.matacos.mataco.apiController.APIController
-import com.matacos.mataco.apiController.ServiceVolley
 import com.matacos.mataco.clases.StudentRecord
 
-class StudentRecordAdapter(val context: Context, val studentRecord: ArrayList<StudentRecord>, val preferences: SharedPreferences) : RecyclerView.Adapter<StudentRecordAdapter.StudentRecordViewHolder>() {
+class StudentRecordAdapter(val context: Context, val studentRecord: ArrayList<StudentRecord>, val preferences: SharedPreferences) : androidx.recyclerview.widget.RecyclerView.Adapter<StudentRecordAdapter.StudentRecordViewHolder>() {
 
     private val TAG: String = StudentRecordAdapter::class.java.simpleName
 
@@ -37,9 +32,9 @@ class StudentRecordAdapter(val context: Context, val studentRecord: ArrayList<St
         return studentRecord.size
     }
 
-    class StudentRecordViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val code = itemView.findViewById<TextView>(R.id.code)!!
-        val name = itemView.findViewById<TextView>(R.id.name)!!
+    class StudentRecordViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
+        val code: TextView = itemView.findViewById<TextView>(R.id.code)!!
+        val name: TextView = itemView.findViewById<TextView>(R.id.name)!!
         val date: TextView = itemView.findViewById(R.id.date)!!
         val result: TextView = itemView.findViewById(R.id.result)!!
     }

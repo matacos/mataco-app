@@ -3,15 +3,15 @@ package com.matacos.mataco
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.matacos.mataco.clases.Subject
 
-class ExamSubjectsAdapter(val context: Context, val examSubjectsList: ArrayList<Subject>, val preferences: SharedPreferences) : RecyclerView.Adapter<ExamSubjectsAdapter.ExamSubjectsViewHolder>() {
+class ExamSubjectsAdapter(val context: Context, val examSubjectsList: ArrayList<Subject>, val preferences: SharedPreferences) : androidx.recyclerview.widget.RecyclerView.Adapter<ExamSubjectsAdapter.ExamSubjectsViewHolder>() {
 
     private val TAG: String = ExamSubjectsAdapter::class.java.simpleName
 
@@ -29,6 +29,7 @@ class ExamSubjectsAdapter(val context: Context, val examSubjectsList: ArrayList<
             editPreferences.apply()
             Log.d(TAG, "startActivity: ExamsActivity")
             val intent = Intent(context, ExamsActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(intent)
         }
     }
@@ -45,9 +46,9 @@ class ExamSubjectsAdapter(val context: Context, val examSubjectsList: ArrayList<
         return examSubjectsList.size
     }
 
-    class ExamSubjectsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ExamSubjectsViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
         val name: TextView = itemView.findViewById(R.id.name)!!
         val department_code: TextView = itemView.findViewById(R.id.department_code)!!
-        val parentLayout: android.support.constraint.ConstraintLayout = itemView.findViewById(R.id.subject_parent_layout)!!
+        val parentLayout: ConstraintLayout = itemView.findViewById(R.id.subject_parent_layout)!!
     }
 }

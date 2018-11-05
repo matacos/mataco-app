@@ -3,19 +3,18 @@ package com.matacos.mataco
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import com.google.firebase.messaging.FirebaseMessaging
 import com.matacos.mataco.apiController.APIController
 import com.matacos.mataco.apiController.ServiceVolley
 import com.matacos.mataco.clases.Exam
 import org.json.JSONObject
 
-class ExamsAdapter(val context: Context, val examsList: ArrayList<Exam>, val preferences: SharedPreferences) : RecyclerView.Adapter<ExamsAdapter.ExamsViewHolder>(), AdapterView.OnItemSelectedListener {
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+class ExamsAdapter(val context: Context, val examsList: ArrayList<Exam>, val preferences: SharedPreferences) : androidx.recyclerview.widget.RecyclerView.Adapter<ExamsAdapter.ExamsViewHolder>(), AdapterView.OnItemSelectedListener {
 
     private val TAG: String = ExamsAdapter::class.java.simpleName
     var statusList: Array<String> = arrayOf("Regular", "Libre")
@@ -60,7 +59,7 @@ class ExamsAdapter(val context: Context, val examsList: ArrayList<Exam>, val pre
     }
 
 
-    class ExamsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ExamsViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
         val exam_title: TextView = itemView.findViewById(R.id.exam_title)!!
         val classroomCode: TextView = itemView.findViewById(R.id.classroom_code)!!
         val beginning: TextView = itemView.findViewById(R.id.beginning)!!
@@ -75,8 +74,8 @@ class ExamsAdapter(val context: Context, val examsList: ArrayList<Exam>, val pre
 
         val service = ServiceVolley()
         val apiController = APIController(service)
-        val token = preferences.getString("token", "")
-        val username = preferences.getString("username", "")
+        val token: String = preferences.getString("token", "")
+        val username: String = preferences.getString("username", "")
         val path = "api/inscripciones_final"
         val params = JSONObject()
         params.put("student", username)
@@ -87,6 +86,7 @@ class ExamsAdapter(val context: Context, val examsList: ArrayList<Exam>, val pre
         apiController.post(path, token, params) { response ->
             Log.d(TAG, response.toString())
             val intent = Intent(context, ExamSubjectsActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(intent)
         }
     }

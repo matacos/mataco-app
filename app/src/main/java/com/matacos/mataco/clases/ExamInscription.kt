@@ -16,18 +16,6 @@ data class ExamInscription(@SerializedName("examiner") val examiner: Professor,
                            @SerializedName("subject") val subject: Subject,
                            var status: String): Comparable<ExamInscription> {
 
-    /*
-    data class Exam(@SerializedName("examiner") val examiner: Professor,
-                @SerializedName("id") val id: Int,
-                @SerializedName("classroom_code") val classroomCode: String,
-                @SerializedName("classroom_campus") val classroomCampus: String,
-                @SerializedName("beginning") val beginning: String,
-                @SerializedName("ending") val ending: String,
-                @SerializedName("exam_date") val date: String,
-                @SerializedName("enroled") val enroled: Boolean) : Comparable<Exam> {
-    * */
-
-
     override operator fun compareTo(other: ExamInscription): Int {
         return this.exam_date.compareTo(other.exam_date)
     }

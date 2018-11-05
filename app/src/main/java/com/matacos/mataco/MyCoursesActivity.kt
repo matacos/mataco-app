@@ -100,7 +100,7 @@ class MyCoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.nav_subjects -> {
-                val intent = Intent(applicationContext, SubjectsActivity::class.java)
+                val intent = Intent(applicationContext, SubjectsSelectCareerActivity::class.java)
                 applicationContext.startActivity(intent)
             }
             R.id.nav_courses -> {
@@ -108,7 +108,7 @@ class MyCoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 applicationContext.startActivity(intent)
             }
             R.id.nav_exam_subjects -> {
-                val intent = Intent(applicationContext, ExamSubjectsActivity::class.java)
+                val intent = Intent(applicationContext, ExamSubjectsSelectCareerActivity::class.java)
                 applicationContext.startActivity(intent)
             }
             R.id.nav_my_exams -> {

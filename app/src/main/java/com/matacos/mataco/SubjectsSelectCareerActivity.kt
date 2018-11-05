@@ -2,48 +2,38 @@ package com.matacos.mataco
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
+import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.SearchView
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
-import android.view.View
+import android.widget.EditText
 import android.widget.LinearLayout
 import com.google.gson.Gson
 import com.matacos.mataco.apiController.APIController
 import com.matacos.mataco.apiController.ServiceVolley
-import com.matacos.mataco.clases.Exam
-import com.matacos.mataco.clases.Exams
+import com.matacos.mataco.clases.Career
+import com.matacos.mataco.clases.Subject
+import com.matacos.mataco.clases.Subjects
 import kotlinx.android.synthetic.main.activity_subjects.*
 import kotlinx.android.synthetic.main.app_bar_subjects.*
-import kotlinx.android.synthetic.main.content_exams.*
-import android.R.id.edit
-import android.text.method.TextKeyListener.clear
+import kotlinx.android.synthetic.main.content_subjects.*
+import kotlinx.android.synthetic.main.content_subjects_select_career.*
 
+class SubjectsSelectCareerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-
-class ExamsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-
-    private val TAG: String = ExamsActivity::class.java.simpleName
-    private var exams = ArrayList<Exam>()
-    private var displayedExams = ArrayList<Exam>()
+    private val TAG: String = SubjectsSelectCareerActivity::class.java.simpleName
+    val careers = ArrayList<Career>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_exams)
+        setContentView(R.layout.activity_subjects_select_career)
         setSupportActionBar(toolbar)
-
-        val preferences: SharedPreferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
-
-        val department: String = preferences.getString("subject_department", "")
-        val code: String = preferences.getString("subject_code", "")
-        val name: String = preferences.getString("subject_name", "")
-
-        supportActionBar?.title = "$department.$code $name"
 
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
@@ -52,8 +42,8 @@ class ExamsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
         nav_view.setNavigationItemSelectedListener(this)
 
-        exams_recycler_view.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
-        exams_recycler_view.adapter = ExamsAdapter(this, displayedExams, getSharedPreferences("my_preferences", Context.MODE_PRIVATE))
+        subjects_select_career_recycler_view.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
+        subjects_select_career_recycler_view.adapter = SubjectsSelectCareerAdapter(this, careers, getSharedPreferences("my_preferences", Context.MODE_PRIVATE))
 
         loadData()
 
@@ -97,61 +87,28 @@ class ExamsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                 val intent = Intent(applicationContext, LoginActivity::class.java)
                 applicationContext.startActivity(intent)
             }
-
         }
-
-
-
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
 
-    private fun filterExams(exams: ArrayList<Exam>): ArrayList<Exam> {
-        val filteredExams = ArrayList<Exam>()
-        for (exam: Exam in exams) {
-            if (!exam.enroled) {
-                filteredExams.add(exam)
-            }
-        }
-        return filteredExams
-    }
-
-    private fun addEmptyListText() {
-        Log.d(TAG, "verifyEnrollment")
-        if (exams.isEmpty()) {
-            no_available_exams.visibility = View.VISIBLE
-        }
-    }
-
     private fun loadData() {
         Log.d(TAG, "loadData")
 
-        val service = ServiceVolley()
-        val apiController = APIController(service)
         val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
-        val token = preferences.getString("token", "")
-        val department = preferences.getString("subject_department", "")
-        val code = preferences.getString("subject_code", "")
-        val path = "api/finales?cod_departamento=$department&cod_materia=$code"
+        val careerIds = preferences.getStringSet("career_ids", null)
 
-        apiController.get(path, token) { response ->
-            Log.d(TAG, response.toString())
-            if (response != null) {
-
-                val gson = Gson()
-                val examsGson = gson.fromJson(response.toString(), Exams::class.java)
-                for (exam in examsGson.exams) {
-                    exams.add(exam)
-                }
-                exams.sort()
-                addEmptyListText()
-                displayedExams.addAll(filterExams(exams))
-                exams_recycler_view.adapter!!.notifyDataSetChanged()
-            }
-
-
+        for (careerId in careerIds) {
+            Log.d(TAG, "CareerId: " + careerId)
+            val career = Career(careerId)
+            careers.add(career)
         }
+        careers.sort()
+        Log.d(TAG, "Career 0: " + careers[0].code + " "+ careers[0].name())
+        subjects_select_career_recycler_view.adapter!!.notifyDataSetChanged()
     }
 
+
 }
+

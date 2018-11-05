@@ -44,7 +44,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MyExamsActivity"
-            android:label="@string/title_activity_exams"
+            android:label="@string/title_activity_my_exams"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="exam_inscriptions" />
@@ -64,7 +64,18 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".StudentRecordActivity"></activity>
+        <activity
+            android:name=".StudentRecordActivity"
+            android:label="@string/title_activity_student_record"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SubjectsSelectCareerActivity"
+            android:label="@string/title_activity_subjects_select_career"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ExamSubjectsSelectCareerActivity"
+            android:label="@string/title_activity_exam_subjects_select_career"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

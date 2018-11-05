@@ -45,7 +45,7 @@ class LoginActivity : AppCompatActivity() {
         Log.d(TAG, "onStart")
         val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
         if (preferences.getBoolean("logged_in", false)) {
-            val intent = Intent(this, SubjectsActivity::class.java)
+            val intent = Intent(this, SubjectsSelectCareerActivity::class.java)
             this.startActivity(intent)
         }
     }
@@ -133,8 +133,8 @@ class LoginActivity : AppCompatActivity() {
                     if (firebaseToken != "") {
                         sendRegistrationToServer(usernameStr, firebaseToken)
                     }
-                    Log.d(TAG, "startActivity: SubjectsActivity")
-                    val intent = Intent(this, SubjectsActivity::class.java)
+                    Log.d(TAG, "startActivity: SubjectsSelectCareerActivity")
+                    val intent = Intent(this, SubjectsSelectCareerActivity::class.java)
                     this.startActivity(intent)
 
                 } else {

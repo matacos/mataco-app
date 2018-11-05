@@ -14,7 +14,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="title_activity_subjects">Oferta Academica</string>
+    <string name="title_activity_subjects">Oferta Académica</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -28,7 +28,7 @@
     <string name="total_slots">Total Slots</string>
     <string name="state">Estado</string>
     <string name="professors">Professors</string>
-    <string name="title_activity_courses">Catedras</string>
+    <string name="title_activity_courses">Cátedras</string>
     <string name="number">Number</string>
     <string name="classroom_campus">Classroom Campus</string>
     <string name="classroom_code">400</string>
@@ -70,4 +70,8 @@
     <string name="nav_student_record">Historial Académico</string>
     <string name="result">Nota: 9</string>
     <string name="date_header">Fecha</string>
+    <string name="title_activity_my_exams">Mis Inscripciones a Examen</string>
+    <string name="title_activity_student_record">Historial Académico</string>
+    <string name="title_activity_subjects_select_career">Oferta Académica</string>
+    <string name="title_activity_exam_subjects_select_career">Exámenes</string>
 </resources>

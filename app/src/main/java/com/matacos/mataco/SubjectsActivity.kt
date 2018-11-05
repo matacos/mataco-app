@@ -106,7 +106,7 @@ class SubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.nav_subjects -> {
-                val intent = Intent(applicationContext, SubjectsActivity::class.java)
+                val intent = Intent(applicationContext, SubjectsSelectCareerActivity::class.java)
                 applicationContext.startActivity(intent)
             }
             R.id.nav_courses -> {
@@ -114,7 +114,7 @@ class SubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                 applicationContext.startActivity(intent)
             }
             R.id.nav_exam_subjects -> {
-                val intent = Intent(applicationContext, ExamSubjectsActivity::class.java)
+                val intent = Intent(applicationContext, ExamSubjectsSelectCareerActivity::class.java)
                 applicationContext.startActivity(intent)
             }
             R.id.nav_my_exams -> {
@@ -148,9 +148,9 @@ class SubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
         val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
         val token = preferences.getString("token", "")
-        val careerIds = preferences.getStringSet("career_ids", null)
+        val careerId = preferences.getString("career", null)
 
-        val path = "api/materias?carrera=" + careerIds?.joinToString()
+        val path = "api/materias?carrera=" + careerId
 
         apiController.get(path, token) { response ->
             Log.d(TAG, response.toString())
@@ -168,7 +168,6 @@ class SubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
                 subjects_recycler_view.adapter!!.notifyDataSetChanged()
             }
-
         }
     }
 }

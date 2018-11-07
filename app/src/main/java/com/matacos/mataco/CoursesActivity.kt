@@ -172,7 +172,9 @@ class CoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     private fun addClassroomCampus() {
         Log.d(TAG, "addClassroomCampus")
         for (course: Course in courses) {
-            course.classroomCampus = course.timeSlots[0].classroomCampus
+            if (!course.timeSlots.isEmpty()) {
+                course.classroomCampus = course.timeSlots[0].classroomCampus
+            }
         }
     }
 

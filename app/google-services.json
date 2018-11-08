@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "493155963313-tnsbqd429i9uc1bpb7pe1tepgo18c7j0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.matacos.mataco",
+            "certificate_hash": "85422cd143598daca69e5564a8c1c02347a1895b"
+          }
+        },
+        {
           "client_id": "493155963313-k0kdnhmn9kdidjbmk59c7ga0nii279nh.apps.googleusercontent.com",
           "client_type": 3
         }

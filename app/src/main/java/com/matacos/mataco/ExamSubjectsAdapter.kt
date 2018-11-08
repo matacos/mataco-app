@@ -26,6 +26,7 @@ class ExamSubjectsAdapter(val context: Context, val examSubjectsList: ArrayList<
             editPreferences.putString("subject_department", examSubjectsList[position].department)
             editPreferences.putString("subject_code", examSubjectsList[position].code)
             editPreferences.putString("subject_name", examSubjectsList[position].name)
+            editPreferences.putBoolean("subject_approved_course", examSubjectsList[position].approvedCourse)
             editPreferences.apply()
             Log.d(TAG, "startActivity: ExamsActivity")
             val intent = Intent(context, ExamsActivity::class.java)

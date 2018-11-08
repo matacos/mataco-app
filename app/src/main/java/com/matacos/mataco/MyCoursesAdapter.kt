@@ -1,6 +1,7 @@
 package com.matacos.mataco
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
@@ -71,6 +72,11 @@ class MyCoursesAdapter(val context: Context, val coursesList: ArrayList<Course>,
 
             coursesList.removeAt(position)
             notifyDataSetChanged()
+            if(coursesList.isEmpty()){
+                val intent = Intent(context, MyCoursesActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                context.startActivity(intent)
+            }
         }
     }
 }

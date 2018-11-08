@@ -51,7 +51,7 @@
                 android:text="@string/classroom_code_header"
                 android:textSize="13sp"
                 app:layout_constraintEnd_toStartOf="@+id/beginning_header"
-                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintHorizontal_weight="10"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/exam_title" />
@@ -138,18 +138,20 @@
                 android:layout_marginEnd="8dp"
                 android:text="@string/ending"
                 android:textSize="13sp"
-                app:layout_constraintEnd_toStartOf="@+id/spinner"
+                app:layout_constraintEnd_toStartOf="@+id/condition"
                 app:layout_constraintHorizontal_weight="15"
                 app:layout_constraintStart_toEndOf="@+id/beginning"
                 app:layout_constraintTop_toBottomOf="@+id/classroom_code_header" />
 
-            <Spinner
-                android:id="@+id/spinner"
+            <TextView
+                android:id="@+id/condition"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
+                android:text="@string/condition"
+                android:textSize="13sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_weight="35"
                 app:layout_constraintStart_toEndOf="@+id/ending"
@@ -169,7 +171,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spinner"
+                app:layout_constraintTop_toBottomOf="@+id/condition"
                 app:layout_constraintVertical_bias="1.0"
                 tools:targetApi="m" />
 
@@ -186,7 +188,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spinner"
+                app:layout_constraintTop_toBottomOf="@+id/condition"
                 app:layout_constraintVertical_bias="1.0" />
 
 

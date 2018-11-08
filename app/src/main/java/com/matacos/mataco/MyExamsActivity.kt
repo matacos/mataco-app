@@ -12,7 +12,9 @@ import androidx.appcompat.widget.SearchView
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.EditText
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.matacos.mataco.apiController.APIController
@@ -44,6 +46,10 @@ class MyExamsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         my_exams_recycler_view.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         my_exams_recycler_view.adapter = MyExamsAdapter(this, displayedExams, getSharedPreferences("my_preferences", Context.MODE_PRIVATE))
+
+        swipe_refresh_content_my_exams.setOnRefreshListener {
+            loadData()
+        }
 
         loadData()
 
@@ -143,8 +149,24 @@ class MyExamsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         return true
     }
 
+    private fun addEmptyListText(exams: ArrayList<ExamInscription>) {
+        Log.d(TAG, "addEmptyListText")
+        if (exams.isEmpty()) {
+            no_available_exams.visibility = View.VISIBLE
+        }
+    }
+
     private fun loadData() {
         Log.d(TAG, "loadData")
+
+
+/*        val professor = Professor("Juan", "Perez")
+        val subject = Subject("Algoritmos I", "06", "75", true, false, true)
+        exams.add(ExamInscription(professor, 3, "301", "Paseo Colon", "16:30:00", "18:30:00", "2018-05-10", "75", "06", subject, "Regular"))
+        addEmptyListText(exams)
+        displayedExams.addAll(exams.distinct())
+        my_exams_recycler_view.adapter!!.notifyDataSetChanged()*/
+
 
         val service = ServiceVolley()
         val apiController = APIController(service)
@@ -156,6 +178,9 @@ class MyExamsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         apiController.get(path, token) { response ->
             Log.d(TAG, response.toString())
             if (response != null) {
+                exams.clear()
+                displayedExams.clear()
+
                 val gson = Gson()
                 val examInscriptions = gson.fromJson(response.toString(), ExamInscriptions::class.java)
                 for (exam in examInscriptions.examInscriptions) {
@@ -163,11 +188,13 @@ class MyExamsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                     exams.add(exam.exam)
                 }
                 exams.sort()
-                Log.d(TAG, exams.toString())
+                addEmptyListText(exams)
                 displayedExams.addAll(exams.distinct())
                 my_exams_recycler_view.adapter!!.notifyDataSetChanged()
+            } else {
+                Toast.makeText(this, "Error de conexión", Toast.LENGTH_SHORT).show()
             }
-
+            swipe_refresh_content_my_exams.isRefreshing = false
 
         }
     }

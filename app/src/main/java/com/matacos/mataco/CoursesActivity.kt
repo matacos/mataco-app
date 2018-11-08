@@ -15,6 +15,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.matacos.mataco.apiController.APIController
@@ -55,6 +56,9 @@ class CoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         courses_recycler_view.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         courses_recycler_view.adapter = CoursesAdapter(this, displayedCourses, getSharedPreferences("my_preferences", Context.MODE_PRIVATE))
 
+        swipe_refresh_content_courses.setOnRefreshListener {
+            loadData()
+        }
         loadData()
 
     }
@@ -195,11 +199,29 @@ class CoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         val code: String = preferences.getString("subject_code", "")
         val path = "api/cursos?cod_departamento=$department&cod_materia=$code"
 
+        apiController.get("api/ciclo_lectivo_actual", token) { r1 ->
+            Log.d(TAG, "R1: "+r1.toString())
+            if (r1 != null) {
+
+            }
+        }
+
+        apiController.get("api/ciclos_lectivos", token) { r2 ->
+            Log.d(TAG, "R2: "+r2.toString())
+            if (r2 != null) {
+
+            }
+        }
+
         apiController.get(path, token) { response ->
             Log.d(TAG, response.toString())
             if (response != null) {
+                courses.clear()
+                displayedCourses.clear()
+
                 val gson = Gson()
                 val coursesSubjects = gson.fromJson(response.toString(), Courses::class.java)
+
                 courses.addAll(coursesSubjects.courses)
                 courses.sort()
                 verifyEnrollment()
@@ -207,8 +229,10 @@ class CoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 addClassroomCampus()
                 displayedCourses.addAll(courses.distinct())
                 courses_recycler_view.adapter!!.notifyDataSetChanged()
+            } else {
+                Toast.makeText(this, "Error de conexión", Toast.LENGTH_SHORT).show()
             }
-
+            swipe_refresh_content_courses.isRefreshing = false
 
         }
     }

@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import com.google.gson.Gson
 import com.matacos.mataco.apiController.APIController
 import com.matacos.mataco.apiController.ServiceVolley
@@ -52,6 +53,9 @@ class ExamsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         exams_recycler_view.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         exams_recycler_view.adapter = ExamsAdapter(this, displayedExams, getSharedPreferences("my_preferences", Context.MODE_PRIVATE))
 
+        swipe_refresh_content_exams.setOnRefreshListener {
+            loadData()
+        }
         loadData()
 
     }
@@ -108,6 +112,7 @@ class ExamsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     }
 
     private fun filterExams(exams: ArrayList<Exam>): ArrayList<Exam> {
+        Log.d(TAG, "filterExams")
         val filteredExams = ArrayList<Exam>()
         for (exam: Exam in exams) {
             if (!exam.enroled) {
@@ -119,7 +124,7 @@ class ExamsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     }
 
     private fun addEmptyListText(exams:ArrayList<Exam>) {
-        Log.d(TAG, "verifyEnrollment")
+        Log.d(TAG, "addEmptyListText")
         if (exams.isEmpty()) {
             no_available_exams.visibility = View.VISIBLE
         }
@@ -139,6 +144,8 @@ class ExamsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         apiController.get(path, token) { response ->
             Log.d(TAG, response.toString())
             if (response != null) {
+                exams.clear()
+                displayedExams.clear()
 
                 val gson = Gson()
                 val examsGson = gson.fromJson(response.toString(), Exams::class.java)
@@ -148,7 +155,10 @@ class ExamsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                 exams.sort()
                 displayedExams.addAll(filterExams(exams))
                 exams_recycler_view.adapter!!.notifyDataSetChanged()
+            } else {
+                Toast.makeText(this, "Error de conexión", Toast.LENGTH_SHORT).show()
             }
+            swipe_refresh_content_exams.isRefreshing = false
 
 
         }

@@ -12,8 +12,11 @@ import androidx.appcompat.widget.SearchView
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.EditText
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.gson.Gson
 import com.matacos.mataco.apiController.APIController
 import com.matacos.mataco.apiController.ServiceVolley
@@ -21,6 +24,7 @@ import com.matacos.mataco.clases.*
 import kotlinx.android.synthetic.main.activity_subjects.*
 import kotlinx.android.synthetic.main.app_bar_subjects.*
 import kotlinx.android.synthetic.main.content_my_courses.*
+import kotlinx.android.synthetic.main.content_my_exams.*
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class MyCoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -43,6 +47,10 @@ class MyCoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
         my_courses_recycler_view.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         my_courses_recycler_view.adapter = MyCoursesAdapter(this, displayedCourses, getSharedPreferences("my_preferences", Context.MODE_PRIVATE))
+
+        swipe_refresh_content_my_courses.setOnRefreshListener {
+            loadData()
+        }
 
         loadData()
 
@@ -148,6 +156,13 @@ class MyCoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         }
     }
 
+    private fun addEmptyListText(courses: ArrayList<Course>) {
+        Log.d(TAG, "addEmptyListText")
+        if (courses.isEmpty()) {
+            no_available_courses.visibility = View.VISIBLE
+        }
+    }
+
     private fun loadData() {
         Log.d(TAG, "loadData")
 
@@ -166,6 +181,9 @@ class MyCoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         apiController.get(path, token) { response ->
             Log.d(TAG, response.toString())
             if (response != null) {
+                courses.clear()
+                displayedCourses.clear()
+
                 val gson = Gson()
                 val coursesSubjects: CourseInscriptions = gson.fromJson(response.toString(), CourseInscriptions::class.java)
                 for (course: CoursesInscription in coursesSubjects.courses) {
@@ -173,9 +191,13 @@ class MyCoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 }
                 courses.sort()
                 addClassroomCampus()
+                addEmptyListText(courses)
                 displayedCourses.addAll(courses.distinct())
                 my_courses_recycler_view.adapter!!.notifyDataSetChanged()
+            } else {
+                Toast.makeText(this, "Error de conexión", Toast.LENGTH_SHORT).show()
             }
+            swipe_refresh_content_my_courses.isRefreshing = false
 
 
         }

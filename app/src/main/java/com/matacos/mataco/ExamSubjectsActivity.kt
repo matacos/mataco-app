@@ -13,6 +13,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.matacos.mataco.apiController.APIController
@@ -21,6 +22,8 @@ import com.matacos.mataco.clases.Subject
 import com.matacos.mataco.clases.Subjects
 import kotlinx.android.synthetic.main.activity_subjects.*
 import kotlinx.android.synthetic.main.app_bar_subjects.*
+import kotlinx.android.synthetic.main.content_exam_subjects.*
+import kotlinx.android.synthetic.main.content_exams.*
 import kotlinx.android.synthetic.main.content_subjects.*
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
@@ -43,8 +46,12 @@ class ExamSubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationIte
 
         nav_view.setNavigationItemSelectedListener(this)
 
-        subjects_recycler_view.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-        subjects_recycler_view.adapter = ExamSubjectsAdapter(this, displayedExamSubjects, getSharedPreferences("my_preferences", Context.MODE_PRIVATE))
+        exam_subjects_recycler_view.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        exam_subjects_recycler_view.adapter = ExamSubjectsAdapter(this, displayedExamSubjects, getSharedPreferences("my_preferences", Context.MODE_PRIVATE))
+
+        swipe_refresh_content_exam_subjects.setOnRefreshListener {
+            loadData()
+        }
 
         loadData()
 
@@ -91,7 +98,7 @@ class ExamSubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationIte
                     } else {
                         displayedExamSubjects.addAll(examSubjects.distinct())
                     }
-                    subjects_recycler_view.adapter!!.notifyDataSetChanged()
+                    exam_subjects_recycler_view.adapter!!.notifyDataSetChanged()
                     return true
                 }
 
@@ -171,6 +178,8 @@ class ExamSubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationIte
         apiController.get(path, token) { response ->
             Log.d(TAG, response.toString())
             if (response != null) {
+                examSubjects.clear()
+                displayedExamSubjects.clear()
 
                 val gson = Gson()
                 val gsonSubjects = gson.fromJson(response.toString(), Subjects::class.java)
@@ -179,8 +188,11 @@ class ExamSubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationIte
                 examSubjects.sort()
                 displayedExamSubjects.addAll(examSubjects)
 
-                subjects_recycler_view.adapter!!.notifyDataSetChanged()
+                exam_subjects_recycler_view.adapter!!.notifyDataSetChanged()
+            } else {
+                Toast.makeText(this, "Error de conexión", Toast.LENGTH_SHORT).show()
             }
+            swipe_refresh_content_exam_subjects.isRefreshing = false
 
         }
     }

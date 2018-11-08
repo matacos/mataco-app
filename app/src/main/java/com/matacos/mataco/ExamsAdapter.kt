@@ -28,10 +28,12 @@ class ExamsAdapter(val context: Context, val examsList: ArrayList<Exam>, val pre
         holder.ending.text = examsList[position].ending()
         holder.classroomCampus.text = examsList[position].classroomCampus()
 
-        val adapter: ArrayAdapter<CharSequence> = ArrayAdapter(context, android.R.layout.simple_spinner_item, statusList)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        holder.spinner.adapter = adapter
-        holder.spinner.onItemSelectedListener = this
+        val approvedCourse: Boolean = preferences.getBoolean("subject_approved_course", false)
+        if (approvedCourse) {
+            holder.condition.text = "Regular"
+        } else {
+            holder.condition.text = "Libre"
+        }
         holder.buttonSignUp.setOnClickListener {
             Log.d(TAG, "onClick: clicked on button_sign_up")
 
@@ -66,7 +68,7 @@ class ExamsAdapter(val context: Context, val examsList: ArrayList<Exam>, val pre
         val ending: TextView = itemView.findViewById(R.id.ending)!!
         val classroomCampus: TextView = itemView.findViewById(R.id.classroom_campus)!!
         val buttonSignUp: Button = itemView.findViewById(R.id.button_sign_up)!!
-        val spinner: Spinner = itemView.findViewById(R.id.spinner)!!
+        val condition: Button = itemView.findViewById(R.id.condition)!!
     }
 
     private fun postData(id: Int) {

@@ -1,6 +1,7 @@
 package com.matacos.mataco
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.util.Log
 import android.view.LayoutInflater
@@ -59,6 +60,8 @@ class MyExamsAdapter(val context: Context, val examsList: ArrayList<ExamInscript
         val examiner: TextView = itemView.findViewById(R.id.examiner)
     }
 
+
+
     private fun deleteData(id: String, position: Int) {
         Log.d(TAG, "deleteData")
 
@@ -73,6 +76,11 @@ class MyExamsAdapter(val context: Context, val examsList: ArrayList<ExamInscript
 
             examsList.removeAt(position)
             notifyDataSetChanged()
+            if(examsList.isEmpty()){
+                val intent = Intent(context, MyExamsActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                context.startActivity(intent)
+            }
         }
     }
 }

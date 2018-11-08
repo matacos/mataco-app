@@ -11,6 +11,7 @@ import android.view.View
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.util.Log
 import android.widget.Toast
 import com.matacos.mataco.apiController.APIController
@@ -130,11 +131,8 @@ class LoginActivity : AppCompatActivity() {
 
                     showProgress(false)
 
-                    val firebasePreferences = getSharedPreferences("my_firebase_preferences", Context.MODE_PRIVATE)
-                    val firebaseToken: String = firebasePreferences.getString("firebase_token", "")
-                    if (firebaseToken != "") {
-                        sendRegistrationToServer(usernameStr, firebaseToken)
-                    }
+                    sendFirebaseTokenToServer()
+
                     Log.d(TAG, "startActivity: SubjectsSelectCareerActivity")
                     val intent = Intent(this, SubjectsSelectCareerActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -150,18 +148,22 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun sendRegistrationToServer(username: String, refreshedToken: String) {
+    private fun sendFirebaseTokenToServer() {
         Log.d(TAG, "sendRegistrationToServer")
-        val service = ServiceVolley()
-        val apiController = APIController(service)
+        val firebasePreferences:SharedPreferences = getSharedPreferences("my_firebase_preferences", Context.MODE_PRIVATE)
+        val firebaseToken: String = firebasePreferences.getString("firebase_token", "")
+        if (firebaseToken != "") {
+            val service = ServiceVolley()
+            val apiController = APIController(service)
 
-        val path = "api/firebase"
-        val params = JSONObject()
-        params.put("username", username)
-        params.put("firebase_token", refreshedToken)
+            val path = "api/firebase"
+            val params = JSONObject()
+            params.put("username", username)
+            params.put("firebase_token", firebaseToken)
 
-        apiController.post(path, params) { response ->
-            Log.d(TAG, response.toString())
+            apiController.post(path, params) { response ->
+                Log.d(TAG, response.toString())
+            }
         }
     }
 

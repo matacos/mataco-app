@@ -14,11 +14,9 @@ import com.matacos.mataco.clases.Exam
 import org.json.JSONObject
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-class ExamsAdapter(val context: Context, val examsList: ArrayList<Exam>, val preferences: SharedPreferences) : androidx.recyclerview.widget.RecyclerView.Adapter<ExamsAdapter.ExamsViewHolder>(), AdapterView.OnItemSelectedListener {
+class ExamsAdapter(val context: Context, val examsList: ArrayList<Exam>, val preferences: SharedPreferences) : androidx.recyclerview.widget.RecyclerView.Adapter<ExamsAdapter.ExamsViewHolder>() {
 
     private val TAG: String = ExamsAdapter::class.java.simpleName
-    var statusList: Array<String> = arrayOf("Regular", "Libre")
-    var status: String = "Regular"
 
     override fun onBindViewHolder(holder: ExamsViewHolder, position: Int) {
         Log.d(TAG, "onBindViewHolder")
@@ -27,25 +25,28 @@ class ExamsAdapter(val context: Context, val examsList: ArrayList<Exam>, val pre
         holder.beginning.text = examsList[position].beginning()
         holder.ending.text = examsList[position].ending()
         holder.classroomCampus.text = examsList[position].classroomCampus()
+        val signUpExams: Boolean = preferences.getBoolean("sign_up_exams", false)
 
         val approvedCourse: Boolean = preferences.getBoolean("subject_approved_course", false)
+        var status = ""
         if (approvedCourse) {
-            holder.condition.text = "Regular"
+            status = "Regular"
+            holder.condition.text = status
         } else {
-            holder.condition.text = "Libre"
+            status = "Libre"
+            holder.condition.text = status
         }
         holder.buttonSignUp.setOnClickListener {
             Log.d(TAG, "onClick: clicked on button_sign_up")
 
-            postData(examsList[position].id)
+            postData(examsList[position].id, status)
         }
-    }
 
-    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
-        status = statusList[position]
-    }
-
-    override fun onNothingSelected(p0: AdapterView<*>?) {
+        if (!signUpExams) {
+            holder.buttonSignUp.isEnabled = false
+        } else {
+            holder.buttonSignUp.isEnabled = true
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExamsViewHolder {
@@ -67,11 +68,11 @@ class ExamsAdapter(val context: Context, val examsList: ArrayList<Exam>, val pre
         val beginning: TextView = itemView.findViewById(R.id.beginning)!!
         val ending: TextView = itemView.findViewById(R.id.ending)!!
         val classroomCampus: TextView = itemView.findViewById(R.id.classroom_campus)!!
+        val condition: TextView = itemView.findViewById(R.id.condition)!!
         val buttonSignUp: Button = itemView.findViewById(R.id.button_sign_up)!!
-        val condition: Button = itemView.findViewById(R.id.condition)!!
     }
 
-    private fun postData(id: Int) {
+    private fun postData(id: Int, status: String) {
         Log.d(TAG, "postData")
 
         val service = ServiceVolley()

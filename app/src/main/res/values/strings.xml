@@ -81,4 +81,8 @@
     <string name="career">Ingeniería en Informática</string>
     <string name="condition">Regular</string>
     <string name="no_available_subjects">No hay materias disponibles</string>
+    <string name="cant_sing_up_courses">No es el período para inscribirse a cursos</string>
+    <string name="cant_drop_out_courses">No es el período para desinscribirse a cursos</string>
+    <string name="cant_sing_up_exams">No es el período para inscribirse a exámenes</string>
+    <string name="cant_drop_out_exams">No es el período para desinscribirse a exámenes</string>
 </resources>

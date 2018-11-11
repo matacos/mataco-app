@@ -21,6 +21,8 @@ import kotlinx.android.synthetic.main.activity_subjects.*
 import kotlinx.android.synthetic.main.app_bar_subjects.*
 import kotlinx.android.synthetic.main.content_exams.*
 import androidx.recyclerview.widget.RecyclerView
+import com.matacos.mataco.clases.Semester
+import com.matacos.mataco.clases.Semesters
 
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
@@ -123,45 +125,82 @@ class ExamsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         return filteredExams
     }
 
-    private fun addEmptyListText(exams:ArrayList<Exam>) {
+    private fun addEmptyListText(exams: ArrayList<Exam>) {
         Log.d(TAG, "addEmptyListText")
         if (exams.isEmpty()) {
             no_available_exams.visibility = View.VISIBLE
+        } else {
+            no_available_exams.visibility = View.GONE
+        }
+    }
+
+    private fun addCantSignUpText(canSignUpExams: Boolean) {
+        Log.d(TAG, "addCantSignUpText")
+        val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
+        val editPreferences = preferences.edit()
+        editPreferences.putBoolean("sign_up_exams", canSignUpExams).apply()
+        if (!canSignUpExams && !displayedExams.isEmpty()) {
+            cant_sing_up_exams.visibility = View.VISIBLE
+        } else {
+            cant_sing_up_exams.visibility = View.GONE
         }
     }
 
     private fun loadData() {
         Log.d(TAG, "loadData")
 
+        exams.clear()
+        displayedExams.clear()
+
+        exams_recycler_view.adapter!!.notifyDataSetChanged()
+
         val service = ServiceVolley()
         val apiController = APIController(service)
+
         val preferences: SharedPreferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
         val token: String = preferences.getString("token", "")
-        val department: String = preferences.getString("subject_department", "")
-        val code: String = preferences.getString("subject_code", "")
-        val path = "api/finales?cod_departamento=$department&cod_materia=$code"
 
-        apiController.get(path, token) { response ->
-            Log.d(TAG, response.toString())
-            if (response != null) {
-                exams.clear()
-                displayedExams.clear()
+        var path = "api/ciclo_lectivo_actual"
 
+        apiController.get(path, token) { periodRsponse ->
+            Log.d(TAG, "periodRsponse: " + periodRsponse.toString())
+
+            if (periodRsponse != null) {
                 val gson = Gson()
-                val examsGson = gson.fromJson(response.toString(), Exams::class.java)
-                for (exam in examsGson.exams) {
-                    exams.add(exam)
+                val semesters: Semesters = gson.fromJson(periodRsponse.toString(), Semesters::class.java)
+
+                if (!semesters.semesters.isEmpty()) {
+                    val semester: Semester = semesters.semesters.get(0)
+                    val department: String = preferences.getString("subject_department", "")
+                    val code: String = preferences.getString("subject_code", "")
+
+                    path = "api/finales?cod_departamento=$department&cod_materia=$code"
+
+                    apiController.get(path, token) { response ->
+                        Log.d(TAG, response.toString())
+
+                        if (response != null) {
+                            val examsGson = gson.fromJson(response.toString(), Exams::class.java)
+                            exams.addAll(examsGson.exams)
+                            exams.sort()
+                            displayedExams.addAll(filterExams(exams))
+
+                            addCantSignUpText(semester.canViewExams)
+
+                            exams_recycler_view.adapter!!.notifyDataSetChanged()
+
+                        } else {
+                            Toast.makeText(this, "Error de conexión", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                } else {
+                    addEmptyListText(displayedExams)
                 }
-                exams.sort()
-                displayedExams.addAll(filterExams(exams))
-                exams_recycler_view.adapter!!.notifyDataSetChanged()
             } else {
                 Toast.makeText(this, "Error de conexión", Toast.LENGTH_SHORT).show()
             }
-            swipe_refresh_content_exams.isRefreshing = false
-
-
         }
+        swipe_refresh_content_exams.isRefreshing = false
     }
 
 }

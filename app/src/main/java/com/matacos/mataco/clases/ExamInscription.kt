@@ -44,11 +44,11 @@ data class ExamInscription(@SerializedName("examiner") val examiner: Professor,
         return formatDate(this.exam_date)
     }
 
-    fun subject_name(): String{
-        return subject.name
-    }
-
     fun status():String{
         return status.capitalize()
+    }
+
+    fun subject(): String {
+        return "${this.department_code}.${this.subject_code}"
     }
 }

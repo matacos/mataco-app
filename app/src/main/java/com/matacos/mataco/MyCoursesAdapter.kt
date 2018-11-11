@@ -26,14 +26,22 @@ class MyCoursesAdapter(val context: Context, val coursesList: ArrayList<Course>,
         holder.professors.text = coursesList[position].professors()
         holder.classroomCampus.text = coursesList[position].classroomCampus()
         holder.status.text = coursesList[position].state()
-        holder.button_drop_out.setOnClickListener {
+        val dropOutCourses: Boolean = preferences.getBoolean("drop_out_courses", false)
+
+        holder.buttonDropOut.setOnClickListener {
             Log.d(TAG, "onClick: clicked on button_drop_out")
 
             deleteData(coursesList[position].number, position)
         }
 
-        holder.time_slots_recycler_view.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        holder.time_slots_recycler_view.adapter = TimeSlotsAdapter(context, coursesList[position].timeSlots)
+        if (!dropOutCourses) {
+            holder.buttonDropOut.isEnabled = false
+        } else {
+            holder.buttonDropOut.isEnabled = true
+        }
+
+        holder.timeSlotsRecyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        holder.timeSlotsRecyclerView.adapter = TimeSlotsAdapter(context, coursesList[position].timeSlots)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyCoursesViewHolder {
@@ -53,8 +61,8 @@ class MyCoursesAdapter(val context: Context, val coursesList: ArrayList<Course>,
         val code: TextView = itemView.findViewById(R.id.department_code)!!
         val professors: TextView = itemView.findViewById(R.id.professors)!!
         val classroomCampus: TextView = itemView.findViewById(R.id.classroom_campus)!!
-        val time_slots_recycler_view: androidx.recyclerview.widget.RecyclerView = itemView.findViewById(R.id.time_slots_recycler_view)!!
-        val button_drop_out: Button = itemView.findViewById(R.id.button_drop_out)
+        val timeSlotsRecyclerView: androidx.recyclerview.widget.RecyclerView = itemView.findViewById(R.id.time_slots_recycler_view)!!
+        val buttonDropOut: Button = itemView.findViewById(R.id.button_drop_out)
         val status: TextView = itemView.findViewById(R.id.status)!!
     }
 
@@ -72,7 +80,7 @@ class MyCoursesAdapter(val context: Context, val coursesList: ArrayList<Course>,
 
             coursesList.removeAt(position)
             notifyDataSetChanged()
-            if(coursesList.isEmpty()){
+            if (coursesList.isEmpty()) {
                 val intent = Intent(context, MyCoursesActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 context.startActivity(intent)

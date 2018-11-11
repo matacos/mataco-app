@@ -16,7 +16,7 @@ class StudentRecordAdapter(val context: Context, val studentRecord: ArrayList<St
     override fun onBindViewHolder(holder: StudentRecordViewHolder, position: Int) {
         Log.d(TAG, "onBindViewHolder")
         holder.code.text = studentRecord[position].subject()
-        holder.name.text = studentRecord[position].name
+        holder.name.text = studentRecord[position].exam.subject.name
         holder.date.text = studentRecord[position].date()
         holder.result.text = studentRecord[position].result()
     }

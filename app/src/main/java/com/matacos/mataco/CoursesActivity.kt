@@ -14,7 +14,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
@@ -22,6 +21,8 @@ import com.matacos.mataco.apiController.APIController
 import com.matacos.mataco.apiController.ServiceVolley
 import com.matacos.mataco.clases.Course
 import com.matacos.mataco.clases.Courses
+import com.matacos.mataco.clases.Semester
+import com.matacos.mataco.clases.Semesters
 import kotlinx.android.synthetic.main.activity_subjects.*
 import kotlinx.android.synthetic.main.app_bar_subjects.*
 import kotlinx.android.synthetic.main.content_courses.*
@@ -163,6 +164,8 @@ class CoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         val enroled: Boolean = preferences.getBoolean("subject_enroled", false)
         if (enroled) {
             already_one_of_your_subjects.visibility = View.VISIBLE
+        } else {
+            already_one_of_your_subjects.visibility = View.GONE
         }
     }
 
@@ -170,6 +173,8 @@ class CoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         Log.d(TAG, "verifyEnrollment")
         if (courses.isEmpty()) {
             no_available_courses.visibility = View.VISIBLE
+        } else {
+            no_available_courses.visibility = View.GONE
         }
     }
 
@@ -182,59 +187,82 @@ class CoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         }
     }
 
-    private fun loadData() {
-        Log.d(TAG, "loadData")
-
-        //TODO: Add request for the semester
-        //val semester = jSONCourses.getJSONObject(0).getString("semester")
-        val screenTitle = findViewById<TextView>(R.id.screen_title)
-        //screenTitle.text = "Oferta Académica Cuatrimestre ${semester.substring(0,1)} de ${semester.substring(2)}"
-        screenTitle.text = "Oferta Académica Cuatrimestre 2 de 2018"
-
-        val service = ServiceVolley()
-        val apiController = APIController(service)
+    private fun addCantSignUpText(canSignUpCourses: Boolean) {
+        Log.d(TAG, "addCantSignUpText")
         val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
-        val token: String = preferences.getString("token", "")
-        val department: String = preferences.getString("subject_department", "")
-        val code: String = preferences.getString("subject_code", "")
-        val path = "api/cursos?cod_departamento=$department&cod_materia=$code"
-
-        apiController.get("api/ciclo_lectivo_actual", token) { r1 ->
-            Log.d(TAG, "R1: "+r1.toString())
-            if (r1 != null) {
-
-            }
-        }
-
-        apiController.get("api/ciclos_lectivos", token) { r2 ->
-            Log.d(TAG, "R2: "+r2.toString())
-            if (r2 != null) {
-
-            }
-        }
-
-        apiController.get(path, token) { response ->
-            Log.d(TAG, response.toString())
-            if (response != null) {
-                courses.clear()
-                displayedCourses.clear()
-
-                val gson = Gson()
-                val coursesSubjects = gson.fromJson(response.toString(), Courses::class.java)
-
-                courses.addAll(coursesSubjects.courses)
-                courses.sort()
-                verifyEnrollment()
-                addEmptyListText()
-                addClassroomCampus()
-                displayedCourses.addAll(courses.distinct())
-                courses_recycler_view.adapter!!.notifyDataSetChanged()
-            } else {
-                Toast.makeText(this, "Error de conexión", Toast.LENGTH_SHORT).show()
-            }
-            swipe_refresh_content_courses.isRefreshing = false
-
+        val editPreferences = preferences.edit()
+        editPreferences.putBoolean("sign_up_courses", canSignUpCourses).apply()
+        if (!canSignUpCourses && !courses.isEmpty()) {
+            cant_sing_up_courses.visibility = View.VISIBLE
+        } else {
+            cant_sing_up_courses.visibility = View.GONE
         }
     }
 
+    private fun loadData() {
+        Log.d(TAG, "loadData")
+
+        courses.clear()
+        displayedCourses.clear()
+
+        courses_recycler_view.adapter!!.notifyDataSetChanged()
+
+        val service = ServiceVolley()
+        val apiController = APIController(service)
+
+        val preferences: SharedPreferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
+        val token: String = preferences.getString("token", "")
+
+        var path = "api/ciclo_lectivo_actual"
+
+        apiController.get("api/ciclo_lectivo_actual", token) { periodRsponse ->
+            Log.d(TAG, "periodRsponse: " + periodRsponse.toString())
+
+            if (periodRsponse != null) {
+                val gson = Gson()
+                val semesters: Semesters = gson.fromJson(periodRsponse.toString(), Semesters::class.java)
+
+                if (!semesters.semesters.isEmpty()) {
+                    val semester: Semester = semesters.semesters.get(0)
+                    screen_title.text = semester.courses()
+
+                    if (semester.canCheckAvailableCourses) {
+                        val department: String = preferences.getString("subject_department", "")
+                        val code: String = preferences.getString("subject_code", "")
+
+                        path = "api/cursos?cod_departamento=$department&cod_materia=$code"
+
+                        apiController.get(path, token) { response ->
+                            Log.d(TAG, response.toString())
+
+                            if (response != null) {
+                                val coursesSubjects: Courses = gson.fromJson(response.toString(), Courses::class.java)
+                                courses.addAll(coursesSubjects.courses)
+                                courses.sort()
+                                displayedCourses.addAll(courses)
+
+                                addClassroomCampus()
+                                verifyEnrollment()
+                                addEmptyListText()
+                                addCantSignUpText(semester.canSignUpCourses)
+
+                                courses_recycler_view.adapter!!.notifyDataSetChanged()
+
+                            } else {
+                                Toast.makeText(this, "Error de conexión", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    } else {
+                        addEmptyListText()
+                    }
+                } else {
+                    screen_title.text = ""
+                    addEmptyListText()
+                }
+            } else {
+                Toast.makeText(this, "Error de conexión", Toast.LENGTH_SHORT).show()
+            }
+        }
+        swipe_refresh_content_courses.isRefreshing = false
+    }
 }

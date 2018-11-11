@@ -16,7 +16,6 @@ import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.gson.Gson
 import com.matacos.mataco.apiController.APIController
 import com.matacos.mataco.apiController.ServiceVolley
@@ -24,7 +23,6 @@ import com.matacos.mataco.clases.*
 import kotlinx.android.synthetic.main.activity_subjects.*
 import kotlinx.android.synthetic.main.app_bar_subjects.*
 import kotlinx.android.synthetic.main.content_my_courses.*
-import kotlinx.android.synthetic.main.content_my_exams.*
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class MyCoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -152,7 +150,9 @@ class MyCoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     private fun addClassroomCampus() {
         Log.d(TAG, "addClassroomCampus")
         for (course: Course in courses) {
-            course.classroomCampus = course.timeSlots[0].classroomCampus
+            if (!course.timeSlots.isEmpty()) {
+                course.classroomCampus = course.timeSlots[0].classroomCampus
+            }
         }
     }
 
@@ -160,47 +160,89 @@ class MyCoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         Log.d(TAG, "addEmptyListText")
         if (courses.isEmpty()) {
             no_available_courses.visibility = View.VISIBLE
+        } else {
+            no_available_courses.visibility = View.GONE
+        }
+    }
+
+    private fun addCantDropOutText(canDropOutCourses: Boolean) {
+        Log.d(TAG, "addCantSignUpText")
+        val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
+        val editPreferences = preferences.edit()
+        editPreferences.putBoolean("drop_out_courses", canDropOutCourses).apply()
+        if (!canDropOutCourses && !courses.isEmpty()) {
+            cant_drop_out_courses.visibility = View.VISIBLE
+        } else {
+            cant_drop_out_courses.visibility = View.GONE
         }
     }
 
     private fun loadData() {
         Log.d(TAG, "loadData")
 
-        //TODO: Add request for the semester
-        //val semester = jSONCourses.getJSONObject(0).getString("semester")
-        //screenTitle.text = "Oferta Académica Cuatrimestre ${semester.substring(0,1)} de ${semester.substring(2)}"
-        screen_title.text = "Cuatrimestre 2 de 2018"
+        courses.clear()
+        displayedCourses.clear()
+
+        my_courses_recycler_view.adapter!!.notifyDataSetChanged()
 
         val service = ServiceVolley()
         val apiController = APIController(service)
+
         val preferences: SharedPreferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
         val token: String = preferences.getString("token", "")
-        val username: String = preferences.getString("username", "")
-        val path = "api/cursadas?estudiante=$username"
 
-        apiController.get(path, token) { response ->
-            Log.d(TAG, response.toString())
-            if (response != null) {
-                courses.clear()
-                displayedCourses.clear()
+        var path = "api/ciclo_lectivo_actual"
 
+        apiController.get(path, token) { periodRsponse ->
+            Log.d(TAG, "periodRsponse: " + periodRsponse.toString())
+
+            if (periodRsponse != null) {
                 val gson = Gson()
-                val coursesSubjects: CourseInscriptions = gson.fromJson(response.toString(), CourseInscriptions::class.java)
-                for (course: CoursesInscription in coursesSubjects.courses) {
-                    courses.add(course.course)
+                val semesters: Semesters = gson.fromJson(periodRsponse.toString(), Semesters::class.java)
+
+
+                if (!semesters.semesters.isEmpty()) {
+                    val semester: Semester = semesters.semesters.get(0)
+                    screen_title.text = semester.toString()
+
+
+                    if (semester.canCheckAvailableCourses) {
+                        val username: String = preferences.getString("username", "")
+
+                        path = "api/cursadas?estudiante=$username"
+
+                        apiController.get(path, token) { response ->
+                            Log.d(TAG, response.toString())
+                            if (response != null) {
+                                courses.clear()
+                                displayedCourses.clear()
+
+                                val coursesSubjects: CourseInscriptions = gson.fromJson(response.toString(), CourseInscriptions::class.java)
+                                for (course: CoursesInscription in coursesSubjects.courses) {
+                                    courses.add(course.course)
+                                }
+                                courses.sort()
+                                addClassroomCampus()
+                                addEmptyListText(courses)
+                                addCantDropOutText(semester.canDropOutCourses)
+                                displayedCourses.addAll(courses.distinct())
+                                my_courses_recycler_view.adapter!!.notifyDataSetChanged()
+                            } else {
+                                Toast.makeText(this, "Error de conexión", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }else {
+                        addEmptyListText(courses)
+                    }
+                } else {
+                    screen_title.text = ""
+                    addEmptyListText(courses)
                 }
-                courses.sort()
-                addClassroomCampus()
-                addEmptyListText(courses)
-                displayedCourses.addAll(courses.distinct())
-                my_courses_recycler_view.adapter!!.notifyDataSetChanged()
             } else {
                 Toast.makeText(this, "Error de conexión", Toast.LENGTH_SHORT).show()
             }
-            swipe_refresh_content_my_courses.isRefreshing = false
-
-
         }
+        swipe_refresh_content_my_courses.isRefreshing = false
     }
 
 }

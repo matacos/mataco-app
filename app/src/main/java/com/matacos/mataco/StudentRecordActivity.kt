@@ -88,7 +88,7 @@ class StudentRecordActivity : AppCompatActivity(), NavigationView.OnNavigationIt
                         val search = newText.toLowerCase()
                         studentRecords.forEach {
                             Log.d(TAG, "studentRecords.forEach")
-                            if (it.subject().contains(search) || it.name.toLowerCase().contains(search)) {
+                            if (it.subject().contains(search) || it.exam.subject.name.toLowerCase().contains(search)) {
                                 Log.d(TAG, "studentRecords.contains(search)")
                                 displayedStudentRecords.add(it)
                             }
@@ -167,6 +167,11 @@ class StudentRecordActivity : AppCompatActivity(), NavigationView.OnNavigationIt
         displayedStudentRecords.addAll(studentRecords)
         student_record_recycler_view.adapter!!.notifyDataSetChanged()*/
 
+        studentRecords.clear()
+        displayedStudentRecords.clear()
+
+        student_record_recycler_view.adapter!!.notifyDataSetChanged()
+
         val service = ServiceVolley()
         val apiController = APIController(service)
         val preferences: SharedPreferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
@@ -177,6 +182,7 @@ class StudentRecordActivity : AppCompatActivity(), NavigationView.OnNavigationIt
 
         apiController.get(path, token) { response ->
             Log.d(TAG, response.toString())
+
             if (response != null) {
                 studentRecords.clear()
                 displayedStudentRecords.clear()
@@ -185,15 +191,19 @@ class StudentRecordActivity : AppCompatActivity(), NavigationView.OnNavigationIt
                 val gsonStudentRecords = gson.fromJson(response.toString(), StudentRecords::class.java)
 
                 studentRecords.addAll(gsonStudentRecords.studentRecords)
+                Log.d(TAG, "Date: " + studentRecords)
+                for (studentRecord in studentRecords){
+                    Log.d(TAG, "Date: " + studentRecord)
+                }
                 studentRecords.sort()
-                addEmptyListText(studentRecords)
                 displayedStudentRecords.addAll(studentRecords)
+                addEmptyListText(studentRecords)
+
                 student_record_recycler_view.adapter!!.notifyDataSetChanged()
             } else {
                 Toast.makeText(this, "Error de conexión", Toast.LENGTH_SHORT).show()
             }
             swipe_refresh_content_student_record.isRefreshing = false
-
         }
     }
 

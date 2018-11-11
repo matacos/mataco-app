@@ -29,6 +29,7 @@ class CoursesAdapter(val context: Context, val coursesList: ArrayList<Course>, v
         holder.professors.text = coursesList[position].professors()
         holder.classroomCampus.text = coursesList[position].classroomCampus()
         val enroled: Boolean = preferences.getBoolean("subject_enroled", false)
+        val signUpCourses: Boolean = preferences.getBoolean("sign_up_courses", false)
 
         holder.buttonSignUp.setOnClickListener {
             Log.d(TAG, "onClick: clicked on button_sign_up")
@@ -36,9 +37,10 @@ class CoursesAdapter(val context: Context, val coursesList: ArrayList<Course>, v
             postData(coursesList[position].number)
         }
 
-        if (enroled) {
+        if (enroled || !signUpCourses) {
             holder.buttonSignUp.isEnabled = false
         } else {
+            holder.buttonSignUp.isEnabled = true
             if (coursesList[position].totalSlots.toInt() <= 0) {
                 holder.buttonSignUp.text = "Inscribirse como condicional"
             } else {
@@ -87,6 +89,7 @@ class CoursesAdapter(val context: Context, val coursesList: ArrayList<Course>, v
 
         apiController.post(path, token, params) { response ->
             Log.d(TAG, response.toString())
+
             val intent = Intent(context, SubjectsActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(intent)

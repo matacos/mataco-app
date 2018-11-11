@@ -174,6 +174,10 @@ class SubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
     private fun loadData() {
         Log.d(TAG, "loadData")
 
+        subjects.clear()
+        displayedSubjects.clear()
+
+        subjects_recycler_view.adapter!!.notifyDataSetChanged()
 
         val service = ServiceVolley()
         val apiController = APIController(service)
@@ -187,19 +191,20 @@ class SubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
         apiController.get(path, token) { response ->
             Log.d(TAG, response.toString())
+
             if (response != null) {
-                subjects.clear()
-                displayedSubjects.clear()
 
                 val gson = Gson()
                 val gsonSubjects = gson.fromJson(response.toString(), Subjects::class.java)
 
                 subjects.addAll(filterSubjects(gsonSubjects.subjects))
                 subjects.sort()
-                addEmptyListText(subjects)
                 displayedSubjects.addAll(subjects)
 
+                addEmptyListText(subjects)
+
                 subjects_recycler_view.adapter!!.notifyDataSetChanged()
+
             } else {
                 Toast.makeText(this, "Error de conexión", Toast.LENGTH_SHORT).show()
             }

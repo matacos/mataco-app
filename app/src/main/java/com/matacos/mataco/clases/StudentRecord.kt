@@ -4,26 +4,27 @@ import com.google.gson.annotations.SerializedName
 import java.text.SimpleDateFormat
 import java.util.*
 
-data class StudentRecord(@SerializedName("exam_date") val examDate: String,
-                         @SerializedName("result") val result: String,
-                         @SerializedName("subject_code") val subjectCode: String,
-                         @SerializedName("department_code") val departmentCode: String,
-                         @SerializedName("name") val name: String) : Comparable<StudentRecord> {
+data class StudentRecord(@SerializedName("exam") val exam: StudentRecordExam,
+                         @SerializedName("grade") val result: Int) : Comparable<StudentRecord> {
 
     override operator fun compareTo(other: StudentRecord): Int {
-        return this.examDate.compareTo(other.examDate)
+        return this.exam.examDate.compareTo(other.exam.examDate)
     }
 
     fun subject(): String {
-        return "${this.departmentCode}.${this.subjectCode}"
+        return "${this.exam.departmentCode}.${this.exam.subjectCode}"
     }
 
-    fun date(): String{
-        return formatDate(this.examDate)
+    fun date(): String {
+        return formatDate(this.exam.examDate)
     }
 
-    fun result(): String{
-        return "Nota: ${this.result}"
+    fun result(): String {
+        if (result >= 4) {
+            return "Nota: ${this.result}"
+        } else {
+            return "Nota: 2 (insuf)"
+        }
     }
 
     private fun formatDate(date: String): String {

@@ -52,7 +52,7 @@
                 android:textSize="13sp"
                 app:layout_constraintEnd_toStartOf="@+id/beginning_header"
                 app:layout_constraintHorizontal_chainStyle="spread"
-                app:layout_constraintHorizontal_weight="10"
+                app:layout_constraintHorizontal_weight="25"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/exam_title" />
 
@@ -67,7 +67,7 @@
                 android:text="@string/beginning_header"
                 android:textSize="13sp"
                 app:layout_constraintEnd_toStartOf="@+id/ending_header"
-                app:layout_constraintHorizontal_weight="15"
+                app:layout_constraintHorizontal_weight="25"
                 app:layout_constraintStart_toEndOf="@+id/classroom_code_header"
                 app:layout_constraintTop_toBottomOf="@+id/exam_title" />
 
@@ -81,7 +81,7 @@
                 android:text="@string/ending_header"
                 android:textSize="13sp"
                 app:layout_constraintEnd_toStartOf="@+id/spinner_header"
-                app:layout_constraintHorizontal_weight="15"
+                app:layout_constraintHorizontal_weight="25"
                 app:layout_constraintStart_toEndOf="@+id/beginning_header"
                 app:layout_constraintTop_toBottomOf="@+id/exam_title" />
 
@@ -95,7 +95,7 @@
                 android:text="@string/spinner_header"
                 android:textSize="13sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_weight="35"
+                app:layout_constraintHorizontal_weight="25"
                 app:layout_constraintStart_toEndOf="@+id/ending_header"
                 app:layout_constraintTop_toBottomOf="@+id/exam_title" />
 
@@ -110,7 +110,7 @@
                 android:text="@string/classroom_code_header"
                 android:textSize="13sp"
                 app:layout_constraintEnd_toStartOf="@+id/beginning"
-                app:layout_constraintHorizontal_weight="10"
+                app:layout_constraintHorizontal_weight="25"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/classroom_code_header" />
 
@@ -125,7 +125,7 @@
                 android:text="@string/beginning"
                 android:textSize="13sp"
                 app:layout_constraintEnd_toStartOf="@+id/ending"
-                app:layout_constraintHorizontal_weight="15"
+                app:layout_constraintHorizontal_weight="25"
                 app:layout_constraintStart_toEndOf="@+id/classroom_code"
                 app:layout_constraintTop_toBottomOf="@+id/classroom_code_header" />
 
@@ -139,7 +139,7 @@
                 android:text="@string/ending"
                 android:textSize="13sp"
                 app:layout_constraintEnd_toStartOf="@+id/condition"
-                app:layout_constraintHorizontal_weight="15"
+                app:layout_constraintHorizontal_weight="25"
                 app:layout_constraintStart_toEndOf="@+id/beginning"
                 app:layout_constraintTop_toBottomOf="@+id/classroom_code_header" />
 
@@ -153,7 +153,7 @@
                 android:text="@string/condition"
                 android:textSize="13sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_weight="35"
+                app:layout_constraintHorizontal_weight="25"
                 app:layout_constraintStart_toEndOf="@+id/ending"
                 app:layout_constraintTop_toBottomOf="@+id/classroom_code_header" />
 

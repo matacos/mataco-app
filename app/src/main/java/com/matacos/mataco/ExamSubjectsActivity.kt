@@ -23,8 +23,6 @@ import com.matacos.mataco.clases.Subjects
 import kotlinx.android.synthetic.main.activity_subjects.*
 import kotlinx.android.synthetic.main.app_bar_subjects.*
 import kotlinx.android.synthetic.main.content_exam_subjects.*
-import kotlinx.android.synthetic.main.content_exams.*
-import kotlinx.android.synthetic.main.content_subjects.*
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class ExamSubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -164,10 +162,13 @@ class ExamSubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationIte
     private fun loadData() {
         Log.d(TAG, "loadData")
 
+        examSubjects.clear()
+        displayedExamSubjects.clear()
+
+        exam_subjects_recycler_view.adapter!!.notifyDataSetChanged()
 
         val service = ServiceVolley()
         val apiController = APIController(service)
-
 
         val preferences: SharedPreferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
         val token: String = preferences.getString("token", "")
@@ -178,8 +179,6 @@ class ExamSubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationIte
         apiController.get(path, token) { response ->
             Log.d(TAG, response.toString())
             if (response != null) {
-                examSubjects.clear()
-                displayedExamSubjects.clear()
 
                 val gson = Gson()
                 val gsonSubjects = gson.fromJson(response.toString(), Subjects::class.java)
@@ -189,11 +188,11 @@ class ExamSubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationIte
                 displayedExamSubjects.addAll(examSubjects)
 
                 exam_subjects_recycler_view.adapter!!.notifyDataSetChanged()
+
             } else {
                 Toast.makeText(this, "Error de conexión", Toast.LENGTH_SHORT).show()
             }
             swipe_refresh_content_exam_subjects.isRefreshing = false
-
         }
     }
 }

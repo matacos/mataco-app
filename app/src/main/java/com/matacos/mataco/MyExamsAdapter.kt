@@ -20,8 +20,8 @@ class MyExamsAdapter(val context: Context, val examsList: ArrayList<ExamInscript
 
     override fun onBindViewHolder(holder: MyExamsViewHolder, position: Int) {
         Log.d(TAG, "onBindViewHolder")
-        holder.code.text = examsList[position].subject.subject()
-        holder.name.text = examsList[position].subject_name()
+        holder.code.text = examsList[position].subject()
+        holder.name.text = examsList[position].subject.name
         holder.classroomCode.text = examsList[position].classroom_code
         holder.date.text = examsList[position].date()
         holder.beginning.text = examsList[position].beginning()
@@ -29,11 +29,20 @@ class MyExamsAdapter(val context: Context, val examsList: ArrayList<ExamInscript
         holder.examiner.text = examsList[position].examiner.toString()
         holder.classroomCampus.text = examsList[position].classroom_campus
         holder.state.text = examsList[position].status()
+        val dropOutExams: Boolean = preferences.getBoolean("drop_out_exams", false)
+
         holder.buttonDropOut.setOnClickListener {
             Log.d(TAG, "onClick: clicked on button_drop_out")
 
             deleteData(examsList[position].id.toString(), position)
         }
+
+        if (!dropOutExams) {
+            holder.buttonDropOut.isEnabled = false
+        } else {
+            holder.buttonDropOut.isEnabled = true
+        }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyExamsViewHolder {
@@ -61,7 +70,6 @@ class MyExamsAdapter(val context: Context, val examsList: ArrayList<ExamInscript
     }
 
 
-
     private fun deleteData(id: String, position: Int) {
         Log.d(TAG, "deleteData")
 
@@ -76,7 +84,7 @@ class MyExamsAdapter(val context: Context, val examsList: ArrayList<ExamInscript
 
             examsList.removeAt(position)
             notifyDataSetChanged()
-            if(examsList.isEmpty()){
+            if (examsList.isEmpty()) {
                 val intent = Intent(context, MyExamsActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 context.startActivity(intent)

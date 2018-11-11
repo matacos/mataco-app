@@ -153,50 +153,83 @@ class MyExamsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         Log.d(TAG, "addEmptyListText")
         if (exams.isEmpty()) {
             no_available_exams.visibility = View.VISIBLE
+        } else {
+            no_available_exams.visibility = View.GONE
+        }
+    }
+
+    private fun addCantDropOutText(canDropOutExams: Boolean) {
+        Log.d(TAG, "addCantSignUpText")
+        val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
+        val editPreferences = preferences.edit()
+        editPreferences.putBoolean("drop_out_exams", canDropOutExams).apply()
+        if (!canDropOutExams && !exams.isEmpty()) {
+            cant_drop_out_exams.visibility = View.VISIBLE
+        } else {
+            cant_drop_out_exams.visibility = View.GONE
         }
     }
 
     private fun loadData() {
         Log.d(TAG, "loadData")
 
+        exams.clear()
+        displayedExams.clear()
 
-/*        val professor = Professor("Juan", "Perez")
-        val subject = Subject("Algoritmos I", "06", "75", true, false, true)
-        exams.add(ExamInscription(professor, 3, "301", "Paseo Colon", "16:30:00", "18:30:00", "2018-05-10", "75", "06", subject, "Regular"))
-        addEmptyListText(exams)
-        displayedExams.addAll(exams.distinct())
-        my_exams_recycler_view.adapter!!.notifyDataSetChanged()*/
-
+        my_exams_recycler_view.adapter!!.notifyDataSetChanged()
 
         val service = ServiceVolley()
         val apiController = APIController(service)
+
         val preferences: SharedPreferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
         val token: String = preferences.getString("token", "")
-        val username: String = preferences.getString("username", "")
-        val path = "api/inscripciones_final?estudiante=$username"
 
-        apiController.get(path, token) { response ->
-            Log.d(TAG, response.toString())
-            if (response != null) {
-                exams.clear()
-                displayedExams.clear()
+        var path = "api/ciclo_lectivo_actual"
+
+        apiController.get(path, token) { periodRsponse ->
+            Log.d(TAG, "periodRsponse: " + periodRsponse.toString())
+
+            if (periodRsponse != null) {
 
                 val gson = Gson()
-                val examInscriptions = gson.fromJson(response.toString(), ExamInscriptions::class.java)
-                for (exam in examInscriptions.examInscriptions) {
-                    exam.exam.status = exam.state
-                    exams.add(exam.exam)
+                val semesters: Semesters = gson.fromJson(periodRsponse.toString(), Semesters::class.java)
+
+                if (!semesters.semesters.isEmpty()) {
+                    val semester: Semester = semesters.semesters.get(0)
+
+                    val username: String = preferences.getString("username", "")
+
+                    path = "api/inscripciones_final?estudiante=$username"
+
+                    apiController.get(path, token) { response ->
+                        Log.d(TAG, response.toString())
+                        if (response != null) {
+
+                            val examInscriptions = gson.fromJson(response.toString(), ExamInscriptions::class.java)
+                            for (exam in examInscriptions.examInscriptions) {
+                                exam.exam.status = exam.state
+                                exams.add(exam.exam)
+                            }
+                            exams.sort()
+                            displayedExams.addAll(exams.distinct())
+
+                            addEmptyListText(exams)
+                            addCantDropOutText(semester.canViewExams)
+
+                            my_exams_recycler_view.adapter!!.notifyDataSetChanged()
+
+                        } else {
+                            Toast.makeText(this, "Error de conexión", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                } else {
+                    addEmptyListText(exams)
                 }
-                exams.sort()
-                addEmptyListText(exams)
-                displayedExams.addAll(exams.distinct())
-                my_exams_recycler_view.adapter!!.notifyDataSetChanged()
             } else {
                 Toast.makeText(this, "Error de conexión", Toast.LENGTH_SHORT).show()
             }
-            swipe_refresh_content_my_exams.isRefreshing = false
-
         }
+        swipe_refresh_content_my_exams.isRefreshing = false
     }
 
 }

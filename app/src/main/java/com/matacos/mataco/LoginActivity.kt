@@ -131,7 +131,7 @@ class LoginActivity : AppCompatActivity() {
 
                     showProgress(false)
 
-                    sendFirebaseTokenToServer()
+                    sendFirebaseTokenToServer(usernameStr)
 
                     Log.d(TAG, "startActivity: SubjectsSelectCareerActivity")
                     val intent = Intent(this, SubjectsSelectCareerActivity::class.java)
@@ -148,7 +148,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun sendFirebaseTokenToServer() {
+    private fun sendFirebaseTokenToServer(username: String) {
         Log.d(TAG, "sendFirebaseTokenToServer")
         val firebasePreferences:SharedPreferences = getSharedPreferences("my_firebase_preferences", Context.MODE_PRIVATE)
         val firebaseToken: String = firebasePreferences.getString("firebase_token", "")

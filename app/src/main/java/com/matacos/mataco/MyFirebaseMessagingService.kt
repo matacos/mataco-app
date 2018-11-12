@@ -54,6 +54,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
+        Log.d(TAG, "onMessageReceived")
         Log.d(TAG, "From: " + remoteMessage.from!!)
         Log.d(TAG, "Message: " + remoteMessage.toString())
 
@@ -71,6 +72,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     private fun createNotificationChannel(channelId: String) {
+        Log.d(TAG, "createNotificationChannel")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             var name = ""
             var descriptionText = ""
@@ -94,6 +96,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     private fun showNotification(title: String, body: String, clickAction: String, channelId: String) {
+        Log.d(TAG, "showNotification")
         Log.d(TAG, "Channel id: $channelId")
         createNotificationChannel(channelId)
 

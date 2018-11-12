@@ -149,9 +149,10 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun sendFirebaseTokenToServer() {
-        Log.d(TAG, "sendRegistrationToServer")
+        Log.d(TAG, "sendFirebaseTokenToServer")
         val firebasePreferences:SharedPreferences = getSharedPreferences("my_firebase_preferences", Context.MODE_PRIVATE)
         val firebaseToken: String = firebasePreferences.getString("firebase_token", "")
+        Log.d(TAG, "firebaseToken: $firebaseToken")
         if (firebaseToken != "") {
             val service = ServiceVolley()
             val apiController = APIController(service)

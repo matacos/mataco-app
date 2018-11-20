@@ -27,4 +27,7 @@ class Career constructor(val code: String) : Comparable<Career> {
         return "file:///android_asset/i_${this.code}.jpg"
     }
 
+    override fun toString(): String {
+        return "[$code] ${this.career()}"
+    }
 }

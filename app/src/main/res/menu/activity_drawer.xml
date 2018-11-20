@@ -25,6 +25,14 @@
             android:icon="@drawable/ic_student_record"
             android:title="@string/nav_student_record" />
         <item
+            android:id="@+id/nav_surveys"
+            android:icon="@drawable/ic_surveys"
+            android:title="@string/nav_surveys" />
+        <item
+            android:id="@+id/nav_certificate"
+            android:icon="@drawable/ic_certificate"
+            android:title="@string/nav_certificate" />
+        <item
             android:id="@+id/nav_log_out"
             android:icon="@drawable/ic_log_out"
             android:title="@string/nav_log_out" />

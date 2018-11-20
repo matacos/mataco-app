@@ -104,46 +104,9 @@ class MyCoursesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        // Handle navigation view item clicks here.
-        when (item.itemId) {
-            R.id.nav_subjects -> {
-                val intent = Intent(applicationContext, SubjectsSelectCareerActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                applicationContext.startActivity(intent)
-            }
-            R.id.nav_courses -> {
-                val intent = Intent(applicationContext, MyCoursesActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                applicationContext.startActivity(intent)
-            }
-            R.id.nav_exam_subjects -> {
-                val intent = Intent(applicationContext, ExamSubjectsSelectCareerActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                applicationContext.startActivity(intent)
-            }
-            R.id.nav_my_exams -> {
-                val intent = Intent(applicationContext, MyExamsActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                applicationContext.startActivity(intent)
-            }
-            R.id.nav_student_record -> {
-                val intent = Intent(applicationContext, StudentRecordActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                applicationContext.startActivity(intent)
-            }
-            R.id.nav_log_out -> {
-                val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
-                val editPreferences = preferences.edit()
-                editPreferences.clear().apply()
-                val intent = Intent(applicationContext, LoginActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                applicationContext.startActivity(intent)
-            }
-
-        }
-
-        drawer_layout.closeDrawer(GravityCompat.START)
-        return true
+        val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
+        val navigationItemManager = NavigationItemManager()
+        return navigationItemManager.navegate(this, item, preferences, drawer_layout)
     }
 
 

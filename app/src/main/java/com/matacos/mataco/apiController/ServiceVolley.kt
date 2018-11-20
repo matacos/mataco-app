@@ -23,8 +23,8 @@ class ServiceVolley : ServiceInterface {
                 Response.ErrorListener { error ->
                     VolleyLog.e(TAG, "/get request fail! Error: $error")
                     if (error.networkResponse != null && error.networkResponse.data != null) {
-                        Log.e(TAG, "Response statusCode: " + error.networkResponse.statusCode);
-                        Log.e(TAG, "Response data: " + Arrays.toString(error.networkResponse.data));
+                        Log.e(TAG, "Response statusCode: " + error.networkResponse.statusCode)
+                        Log.e(TAG, "Response data: " + Arrays.toString(error.networkResponse.data))
                     }
                     completionHandler(null)
                 }) {
@@ -50,8 +50,8 @@ class ServiceVolley : ServiceInterface {
                 Response.ErrorListener { error ->
                     VolleyLog.e(TAG, "/get request fail! Error: $error")
                     if (error.networkResponse != null && error.networkResponse.data != null) {
-                        Log.e(TAG, "Response statusCode: " + error.networkResponse.statusCode);
-                        Log.e(TAG, "Response data: " + Arrays.toString(error.networkResponse.data));
+                        Log.e(TAG, "Response statusCode: " + error.networkResponse.statusCode)
+                        Log.e(TAG, "Response data: " + Arrays.toString(error.networkResponse.data))
                     }
                     completionHandler(null)
                 }) {
@@ -77,9 +77,11 @@ class ServiceVolley : ServiceInterface {
                 },
                 Response.ErrorListener { error ->
                     Log.d(TAG, "/post request fail! Error: $error")
-                    if (error.networkResponse != null && error.networkResponse.data != null) {
-                        Log.e(TAG, "Response statusCode: " + error.networkResponse.statusCode);
-                        Log.e(TAG, "Response data: " + Arrays.toString(error.networkResponse.data));
+                    if (error.networkResponse != null) {
+                        Log.e(TAG, "Response statusCode: " + error.networkResponse.statusCode)
+                        if (error.networkResponse.data != null) {
+                            Log.e(TAG, "Response data: " + Arrays.toString(error.networkResponse.data))
+                        }
                     }
                     completionHandler(null)
                 }) {
@@ -104,9 +106,11 @@ class ServiceVolley : ServiceInterface {
                 },
                 Response.ErrorListener { error ->
                     Log.d(TAG, "/post request fail! Error: $error")
-                    if (error.networkResponse != null && error.networkResponse.data != null) {
-                        Log.e(TAG, "Response statusCode: " + error.networkResponse.statusCode);
-                        Log.e(TAG, "Response data: " + Arrays.toString(error.networkResponse.data));
+                    if (error.networkResponse != null) {
+                        Log.e(TAG, "Response statusCode: " + error.networkResponse.statusCode)
+                        if(error.networkResponse.data != null) {
+                            Log.e(TAG, "Response data: " + Arrays.toString(error.networkResponse.data))
+                        }
                     }
                     completionHandler(null)
                 }) {

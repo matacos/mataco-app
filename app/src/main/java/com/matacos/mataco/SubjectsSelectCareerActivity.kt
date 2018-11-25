@@ -1,7 +1,6 @@
 package com.matacos.mataco
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -53,7 +52,7 @@ class SubjectsSelectCareerActivity : AppCompatActivity(), NavigationView.OnNavig
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
         val navigationItemManager = NavigationItemManager()
-        return navigationItemManager.navegate(this, item, preferences, drawer_layout)
+        return navigationItemManager.navigate(this, item, preferences, drawer_layout)
     }
 
     private fun loadData() {

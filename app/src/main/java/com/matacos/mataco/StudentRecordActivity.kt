@@ -1,7 +1,6 @@
 package com.matacos.mataco
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -23,7 +22,6 @@ import com.matacos.mataco.clases.*
 import kotlinx.android.synthetic.main.activity_subjects.*
 import kotlinx.android.synthetic.main.app_bar_subjects.*
 import kotlinx.android.synthetic.main.content_student_record.*
-import kotlinx.android.synthetic.main.content_subjects.*
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class StudentRecordActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -109,7 +107,7 @@ class StudentRecordActivity : AppCompatActivity(), NavigationView.OnNavigationIt
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
         val navigationItemManager = NavigationItemManager()
-        return navigationItemManager.navegate(this, item, preferences, drawer_layout)
+        return navigationItemManager.navigate(this, item, preferences, drawer_layout)
     }
 
     private fun addEmptyListText(studentRecord:ArrayList<StudentRecord>) {

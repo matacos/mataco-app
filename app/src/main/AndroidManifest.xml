@@ -99,6 +99,10 @@
             android:label="@string/title_activity_certificate"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".ConfigurationActivity"
+            android:label="@string/title_activity_configuration"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".SurveyActivity"
             android:label="@string/title_activity_survey">
         </activity>

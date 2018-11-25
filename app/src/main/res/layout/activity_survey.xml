@@ -46,12 +46,12 @@
             app:layout_constraintTop_toBottomOf="@+id/survey_title" />
 
         <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/general_opinion"
+            android:id="@+id/general_opinion_l1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="0dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="0dp"
+            android:layout_marginEnd="16dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -64,90 +64,76 @@
                 android:id="@+id/general_opinion_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_1" />
 
             <RadioButton
                 android:id="@+id/general_opinion_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_2" />
 
             <RadioButton
                 android:id="@+id/general_opinion_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_3" />
 
             <RadioButton
                 android:id="@+id/general_opinion_4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_4" />
 
             <RadioButton
                 android:id="@+id/general_opinion_5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_5" />
+        </RadioGroup>
+
+        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/general_opinion_l2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/general_opinion_l1"
+            android:clickable="true"
+            android:focusableInTouchMode="true"
+            android:focusable="true">
 
             <RadioButton
                 android:id="@+id/general_opinion_6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_6" />
 
             <RadioButton
                 android:id="@+id/general_opinion_7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_7" />
 
             <RadioButton
                 android:id="@+id/general_opinion_8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_8" />
 
             <RadioButton
                 android:id="@+id/general_opinion_9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_9" />
 
             <RadioButton
                 android:id="@+id/general_opinion_10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_10" />
         </RadioGroup>
 
@@ -166,15 +152,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/general_opinion" />
+            app:layout_constraintTop_toBottomOf="@+id/general_opinion_l2" />
 
         <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/theorical_class_level"
+            android:id="@+id/theorical_class_level_l1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="0dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="0dp"
+            android:layout_marginEnd="16dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -184,90 +170,77 @@
                 android:id="@+id/theorical_class_level_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_1" />
 
             <RadioButton
                 android:id="@+id/theorical_class_level_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_2" />
 
             <RadioButton
                 android:id="@+id/theorical_class_level_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_3" />
 
             <RadioButton
                 android:id="@+id/theorical_class_level_4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_4" />
 
             <RadioButton
                 android:id="@+id/theorical_class_level_5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_5" />
+
+        </RadioGroup>
+
+        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/theorical_class_level_l2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/theorical_class_level_l1"
+            android:clickable="true"
+            android:focusableInTouchMode="true"
+            android:focusable="true">
 
             <RadioButton
                 android:id="@+id/theorical_class_level_6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_6" />
 
             <RadioButton
                 android:id="@+id/theorical_class_level_7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_7" />
 
             <RadioButton
                 android:id="@+id/theorical_class_level_8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_8" />
 
             <RadioButton
                 android:id="@+id/theorical_class_level_9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_9" />
 
             <RadioButton
                 android:id="@+id/theorical_class_level_10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_10" />
         </RadioGroup>
 
@@ -286,15 +259,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/theorical_class_level" />
+            app:layout_constraintTop_toBottomOf="@+id/theorical_class_level_l2" />
 
         <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/practical_class_level"
+            android:id="@+id/practical_class_level_l1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="0dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="0dp"
+            android:layout_marginEnd="16dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -304,90 +277,77 @@
                 android:id="@+id/practical_class_level_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_1" />
 
             <RadioButton
                 android:id="@+id/practical_class_level_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_2" />
 
             <RadioButton
                 android:id="@+id/practical_class_level_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_3" />
 
             <RadioButton
                 android:id="@+id/practical_class_level_4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_4" />
 
             <RadioButton
                 android:id="@+id/practical_class_level_5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_5" />
+
+        </RadioGroup>
+
+        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/practical_class_level_l2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/practical_class_level_l1"
+            android:clickable="true"
+            android:focusableInTouchMode="true"
+            android:focusable="true">
 
             <RadioButton
                 android:id="@+id/practical_class_level_6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_6" />
 
             <RadioButton
                 android:id="@+id/practical_class_level_7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_7" />
 
             <RadioButton
                 android:id="@+id/practical_class_level_8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_8" />
 
             <RadioButton
                 android:id="@+id/practical_class_level_9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_9" />
 
             <RadioButton
                 android:id="@+id/practical_class_level_10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_10" />
         </RadioGroup>
 
@@ -406,15 +366,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/practical_class_level" />
+            app:layout_constraintTop_toBottomOf="@+id/practical_class_level_l2" />
 
         <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/course_dificulty"
+            android:id="@+id/course_dificulty_l1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="0dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="0dp"
+            android:layout_marginEnd="16dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -424,90 +384,77 @@
                 android:id="@+id/course_dificulty_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_1" />
 
             <RadioButton
                 android:id="@+id/course_dificulty_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_2" />
 
             <RadioButton
                 android:id="@+id/course_dificulty_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_3" />
 
             <RadioButton
                 android:id="@+id/course_dificulty_4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_4" />
 
             <RadioButton
                 android:id="@+id/course_dificulty_5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_5" />
+
+        </RadioGroup>
+
+        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/course_dificulty_l2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/course_dificulty_l1"
+            android:clickable="true"
+            android:focusableInTouchMode="true"
+            android:focusable="true">
 
             <RadioButton
                 android:id="@+id/course_dificulty_6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_6" />
 
             <RadioButton
                 android:id="@+id/course_dificulty_7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_7" />
 
             <RadioButton
                 android:id="@+id/course_dificulty_8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_8" />
 
             <RadioButton
                 android:id="@+id/course_dificulty_9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_9" />
 
             <RadioButton
                 android:id="@+id/course_dificulty_10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_10" />
         </RadioGroup>
 
@@ -526,15 +473,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/course_dificulty" />
+            app:layout_constraintTop_toBottomOf="@+id/course_dificulty_l2" />
 
         <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/tp_dificulty"
+            android:id="@+id/tp_dificulty_l1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="0dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="0dp"
+            android:layout_marginEnd="16dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -544,90 +491,77 @@
                 android:id="@+id/tp_dificulty_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_1" />
 
             <RadioButton
                 android:id="@+id/tp_dificulty_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_2" />
 
             <RadioButton
                 android:id="@+id/tp_dificulty_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_3" />
 
             <RadioButton
                 android:id="@+id/tp_dificulty_4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_4" />
 
             <RadioButton
                 android:id="@+id/tp_dificulty_5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_5" />
+
+        </RadioGroup>
+
+        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/tp_dificulty_l2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tp_dificulty_l1"
+            android:clickable="true"
+            android:focusableInTouchMode="true"
+            android:focusable="true">
 
             <RadioButton
                 android:id="@+id/tp_dificulty_6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_6" />
 
             <RadioButton
                 android:id="@+id/tp_dificulty_7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_7" />
 
             <RadioButton
                 android:id="@+id/tp_dificulty_8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_8" />
 
             <RadioButton
                 android:id="@+id/tp_dificulty_9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_9" />
 
             <RadioButton
                 android:id="@+id/tp_dificulty_10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_10" />
         </RadioGroup>
 
@@ -646,15 +580,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tp_dificulty" />
+            app:layout_constraintTop_toBottomOf="@+id/tp_dificulty_l2" />
 
         <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/interesting_toppics"
+            android:id="@+id/interesting_toppics_l1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="0dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="0dp"
+            android:layout_marginEnd="16dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -664,90 +598,77 @@
                 android:id="@+id/interesting_toppics_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_1" />
 
             <RadioButton
                 android:id="@+id/interesting_toppics_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_2" />
 
             <RadioButton
                 android:id="@+id/interesting_toppics_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_3" />
 
             <RadioButton
                 android:id="@+id/interesting_toppics_4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_4" />
 
             <RadioButton
                 android:id="@+id/interesting_toppics_5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_5" />
+
+        </RadioGroup>
+
+        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/interesting_toppics_l2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/interesting_toppics_l1"
+            android:clickable="true"
+            android:focusableInTouchMode="true"
+            android:focusable="true">
 
             <RadioButton
                 android:id="@+id/interesting_toppics_6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_6" />
 
             <RadioButton
                 android:id="@+id/interesting_toppics_7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_7" />
 
             <RadioButton
                 android:id="@+id/interesting_toppics_8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_8" />
 
             <RadioButton
                 android:id="@+id/interesting_toppics_9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_9" />
 
             <RadioButton
                 android:id="@+id/interesting_toppics_10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_10" />
         </RadioGroup>
 
@@ -766,15 +687,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/interesting_toppics" />
+            app:layout_constraintTop_toBottomOf="@+id/interesting_toppics_l2" />
 
         <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/updated_toppics"
+            android:id="@+id/updated_toppics_l1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="0dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="0dp"
+            android:layout_marginEnd="16dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -784,139 +705,78 @@
                 android:id="@+id/updated_toppics_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_1" />
 
             <RadioButton
                 android:id="@+id/updated_toppics_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_2" />
 
             <RadioButton
                 android:id="@+id/updated_toppics_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_3" />
 
             <RadioButton
                 android:id="@+id/updated_toppics_4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_4" />
 
             <RadioButton
                 android:id="@+id/updated_toppics_5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_5" />
+
+        </RadioGroup>
+
+        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/updated_toppics_l2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/updated_toppics_l1"
+            android:clickable="true"
+            android:focusableInTouchMode="true"
+            android:focusable="true">
 
             <RadioButton
                 android:id="@+id/updated_toppics_6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_6" />
 
             <RadioButton
                 android:id="@+id/updated_toppics_7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_7" />
 
             <RadioButton
                 android:id="@+id/updated_toppics_8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_8" />
 
             <RadioButton
                 android:id="@+id/updated_toppics_9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_9" />
 
             <RadioButton
                 android:id="@+id/updated_toppics_10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
                 android:text="@string/_10" />
-        </RadioGroup>
-
-        <TextView
-            android:id="@+id/aproved_course_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:text="@string/aproved_course"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/updated_toppics" />
-
-        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/aproved_course"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="0dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/aproved_course_title">
-
-            <RadioButton
-                android:id="@+id/aproved_course_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
-                android:text="@string/yes" />
-
-            <RadioButton
-                android:id="@+id/aproved_course_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:textSize="10sp"
-                android:text="@string/no" />
         </RadioGroup>
 
         <TextView
@@ -932,7 +792,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/aproved_course"
+            app:layout_constraintTop_toBottomOf="@+id/updated_toppics_l2"
             android:clickable="true"
             android:focusableInTouchMode="true"
             android:focusable="true"/>

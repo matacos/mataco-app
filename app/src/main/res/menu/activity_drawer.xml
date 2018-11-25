@@ -33,6 +33,10 @@
             android:icon="@drawable/ic_certificate"
             android:title="@string/nav_certificate" />
         <item
+            android:id="@+id/nav_configuration"
+            android:icon="@drawable/ic_configuration"
+            android:title="@string/nav_configuration" />
+        <item
             android:id="@+id/nav_log_out"
             android:icon="@drawable/ic_log_out"
             android:title="@string/nav_log_out" />

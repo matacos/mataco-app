@@ -131,6 +131,8 @@ class LoginActivity : AppCompatActivity() {
 
                     showProgress(false)
 
+                    getUserInformation(response.getString("token"))
+
                     sendFirebaseTokenToServer(usernameStr)
 
                     Log.d(TAG, "startActivity: SubjectsSelectCareerActivity")
@@ -145,6 +147,29 @@ class LoginActivity : AppCompatActivity() {
 
             }
 
+        }
+    }
+
+    private fun getUserInformation(token: String) {
+        Log.d(TAG, "getUserInformation")
+
+        val service = ServiceVolley()
+        val apiController = APIController(service)
+
+        val path = "api/me?"
+
+        apiController.get(path, token) { response ->
+            Log.d(TAG, response.toString())
+
+            if (response != null) {
+                val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
+                val editPreferences = preferences.edit()
+
+                editPreferences.putString("name", response.getJSONObject("me").getString("name")).apply()
+                editPreferences.putString("surname", response.getJSONObject("me").getString("surname")).apply()
+                editPreferences.putString("email", response.getJSONObject("me").getString("email")).apply()
+                editPreferences.putBoolean("regular", response.getJSONObject("me").getBoolean("regular")).apply()
+            }
         }
     }
 
@@ -163,7 +188,9 @@ class LoginActivity : AppCompatActivity() {
             params.put("firebase_token", firebaseToken)
 
             apiController.post(path, params) { response ->
-                Log.d(TAG, response.toString())
+                if(response != null) {
+                    Log.d(TAG, response.toString())
+                }
             }
         }
     }

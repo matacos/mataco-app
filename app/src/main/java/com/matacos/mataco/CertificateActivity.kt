@@ -15,11 +15,10 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.GravityCompat
 import com.google.android.material.navigation.NavigationView
-import com.itextpdf.text.BadElementException
 import com.itextpdf.text.Image
 import com.matacos.mataco.clases.Career
 import com.matacos.mataco.clases.NavigationItemManager
@@ -27,7 +26,6 @@ import kotlinx.android.synthetic.main.activity_certificate.*
 import kotlinx.android.synthetic.main.app_bar_certificate.*
 import kotlinx.android.synthetic.main.content_certificate.*
 import java.io.ByteArrayOutputStream
-import java.io.IOException
 import java.util.*
 
 
@@ -59,7 +57,7 @@ class CertificateActivity : AppCompatActivity(), NavigationView.OnNavigationItem
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
         val navigationItemManager = NavigationItemManager()
-        return navigationItemManager.navegate(this, item, preferences, drawer_layout)
+        return navigationItemManager.navigate(this, item, preferences, drawer_layout)
     }
 
     private fun attemptSendingSurvey() {
@@ -73,11 +71,17 @@ class CertificateActivity : AppCompatActivity(), NavigationView.OnNavigationItem
         var cancel = false
         var focusView: View? = null
 
+        val preferences: SharedPreferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
+        val regular: Boolean = preferences.getBoolean("regular", false)
+
         // Check for a valid user address.
         if (TextUtils.isEmpty(authorityStr)) {
             authority.error = getString(R.string.error_authority_required)
             focusView = authority
             cancel = true
+        } else if (!regular) {
+        Toast.makeText(this, "No se pudo generar el certificado. No eres alumno regular", Toast.LENGTH_SHORT).show()
+        cancel = true
         }
         if (cancel) {
             // There was an error; don't attempt login and focus the first
@@ -138,7 +142,8 @@ class CertificateActivity : AppCompatActivity(), NavigationView.OnNavigationItem
 
 
         val templatePDF = TemplatePDFK()
-        templatePDF.openDocument()
+        val todayClean = getDateClean()
+        templatePDF.openDocument(todayClean)
         templatePDF.addMetaData("Certificado", "Alumno regular", "FIUBA")
         val today = getDate()
         templatePDF.addImage(addImagePDF())
@@ -169,6 +174,16 @@ class CertificateActivity : AppCompatActivity(), NavigationView.OnNavigationItem
         val day = currentTime.get(Calendar.DAY_OF_MONTH)
 
         return "$day/$month/$year"
+    }
+
+    fun getDateClean(): String {
+        Log.d(TAG, "getDate")
+        val currentTime = Calendar.getInstance()
+        val year = currentTime.get(Calendar.YEAR)
+        val month = currentTime.get(Calendar.MONTH) + 1
+        val day = currentTime.get(Calendar.DAY_OF_MONTH)
+
+        return "$day$month$year"
     }
 
 }

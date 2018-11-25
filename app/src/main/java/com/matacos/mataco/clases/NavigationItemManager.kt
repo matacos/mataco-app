@@ -8,9 +8,9 @@ import androidx.core.view.GravityCompat
 import com.matacos.mataco.*
 import androidx.drawerlayout.widget.DrawerLayout
 
-public class NavigationItemManager() {
+class NavigationItemManager {
 
-    public fun navegate(context: Context, item: MenuItem, preferences: SharedPreferences, drawer_layout: DrawerLayout): Boolean {
+    fun navigate(context: Context, item: MenuItem, preferences: SharedPreferences, drawer_layout: DrawerLayout): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.nav_subjects -> {
@@ -39,12 +39,17 @@ public class NavigationItemManager() {
                 context.startActivity(intent)
             }
             R.id.nav_surveys -> {
-                val intent = Intent(context, SurveyActivity::class.java)
+                val intent = Intent(context, SurveySubjectsActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 context.startActivity(intent)
             }
             R.id.nav_certificate -> {
                 val intent = Intent(context, CertificateActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                context.startActivity(intent)
+            }
+            R.id.nav_configuration -> {
+                val intent = Intent(context, ConfigurationActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 context.startActivity(intent)
             }

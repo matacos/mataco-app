@@ -21,7 +21,7 @@ class ServiceVolley : ServiceInterface {
                     completionHandler(response)
                 },
                 Response.ErrorListener { error ->
-                    VolleyLog.e(TAG, "/get request fail! Error: $error")
+                    VolleyLog.e(TAG, "/get request fail! Error: ${error.message}")
                     if (error.networkResponse != null && error.networkResponse.data != null) {
                         Log.e(TAG, "Response statusCode: " + error.networkResponse.statusCode)
                         Log.e(TAG, "Response data: " + Arrays.toString(error.networkResponse.data))
@@ -40,7 +40,7 @@ class ServiceVolley : ServiceInterface {
     }
 
     override fun get(path: String, token: String, completionHandler: (response: JSONObject?) -> Unit) {
-        Log.d(TAG, "get(with token): "+token)
+        Log.d(TAG, "get")
         val definitePath = basePath + path
         val jsonObjReq = object : JsonObjectRequest(Method.GET, definitePath, null,
                 Response.Listener<JSONObject> { response ->
@@ -48,7 +48,7 @@ class ServiceVolley : ServiceInterface {
                     completionHandler(response)
                 },
                 Response.ErrorListener { error ->
-                    VolleyLog.e(TAG, "/get request fail! Error: $error")
+                    VolleyLog.e(TAG, "/get request fail! Error: ${error.message}")
                     if (error.networkResponse != null && error.networkResponse.data != null) {
                         Log.e(TAG, "Response statusCode: " + error.networkResponse.statusCode)
                         Log.e(TAG, "Response data: " + Arrays.toString(error.networkResponse.data))
@@ -63,7 +63,7 @@ class ServiceVolley : ServiceInterface {
                 return headers
             }
         }
-        Log.d(TAG, "Sending to: $definitePath, with Headers: ${jsonObjReq.headers}")
+        Log.d(TAG, "Sending to: $definitePath, with Headers: ${jsonObjReq.headers}, with Token: $token")
         BackendVolley.instance?.addToRequestQueue(jsonObjReq, TAG)
     }
 
@@ -76,7 +76,7 @@ class ServiceVolley : ServiceInterface {
                     completionHandler(response)
                 },
                 Response.ErrorListener { error ->
-                    Log.d(TAG, "/post request fail! Error: $error")
+                    Log.d(TAG, "/post request fail! Error: ${error.message}")
                     if (error.networkResponse != null) {
                         Log.e(TAG, "Response statusCode: " + error.networkResponse.statusCode)
                         if (error.networkResponse.data != null) {
@@ -92,7 +92,7 @@ class ServiceVolley : ServiceInterface {
                 return headers
             }
         }
-        Log.d(TAG, "Sending to: $definitePath, with Headers: ${jsonObjReq.headers}")
+        Log.d(TAG, "Sending to: $definitePath, with Headers: ${jsonObjReq.headers}, with Params: $params")
         BackendVolley.instance?.addToRequestQueue(jsonObjReq, TAG)
     }
 
@@ -105,7 +105,7 @@ class ServiceVolley : ServiceInterface {
                     completionHandler(response)
                 },
                 Response.ErrorListener { error ->
-                    Log.d(TAG, "/post request fail! Error: $error")
+                    Log.d(TAG, "/post request fail! Error: ${error.message}")
                     if (error.networkResponse != null) {
                         Log.e(TAG, "Response statusCode: " + error.networkResponse.statusCode)
                         if(error.networkResponse.data != null) {
@@ -122,7 +122,7 @@ class ServiceVolley : ServiceInterface {
                 return headers
             }
         }
-        Log.d(TAG, "Sending to: $definitePath, with Headers: ${jsonObjReq.headers}")
+        Log.d(TAG, "Sending to: $definitePath, with Headers: ${jsonObjReq.headers}, with Params: $params, with Token: $token")
         BackendVolley.instance?.addToRequestQueue(jsonObjReq, TAG)
     }
 
@@ -146,7 +146,38 @@ class ServiceVolley : ServiceInterface {
                 return headers
             }
         }
-        Log.d(TAG, "Sending to: $definitePath, with Headers: ${jsonObjReq.headers}")
+        Log.d(TAG, "Sending to: $definitePath, with Headers: ${jsonObjReq.headers}, with Token: $token")
         BackendVolley.instance?.addToRequestQueue(jsonObjReq, TAG)
     }
+
+    override fun put(path: String, token: String, params: JSONObject, completionHandler: (response: JSONObject?) -> Unit) {
+        Log.d(TAG, "put")
+        val definitePath = basePath + path
+        val jsonObjReq = object : JsonObjectRequest(Method.PUT, definitePath, params,
+                Response.Listener<JSONObject> { response ->
+                    Log.d(TAG, "/put request OK! Response: $response")
+                    completionHandler(response)
+                },
+                Response.ErrorListener { error ->
+                    Log.d(TAG, "/put request fail! Error: ${error.message}")
+                    if (error.networkResponse != null) {
+                        Log.e(TAG, "Response statusCode: " + error.networkResponse.statusCode)
+                        if(error.networkResponse.data != null) {
+                            Log.e(TAG, "Response data: " + Arrays.toString(error.networkResponse.data))
+                        }
+                    }
+                    completionHandler(null)
+                }) {
+            @Throws(AuthFailureError::class)
+            override fun getHeaders(): Map<String, String> {
+                val headers = HashMap<String, String>()
+                headers.put("Content-Type", "application/json")
+                headers.put("Authorization", "Bearer $token")
+                return headers
+            }
+        }
+        Log.d(TAG, "Sending to: $definitePath, with Headers: ${jsonObjReq.headers}, with Params: $params, with Token: $token")
+        BackendVolley.instance?.addToRequestQueue(jsonObjReq, TAG)
+    }
+
 }

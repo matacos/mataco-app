@@ -26,8 +26,8 @@ class TemplatePDFK : FileProvider() {
     private val fText = Font(Font.FontFamily.TIMES_ROMAN, 12f, Font.BOLD)
     private val fHighText = Font(Font.FontFamily.TIMES_ROMAN, 15f, Font.BOLD)
 
-    fun openDocument() {
-        createFile()
+    fun openDocument(day: String) {
+        createFile(day)
         try {
 
             document = Document(PageSize.A4)
@@ -40,12 +40,12 @@ class TemplatePDFK : FileProvider() {
 
     }
 
-    private fun createFile() {
+    private fun createFile(day: String) {
         val folder = File(Environment.getExternalStorageDirectory().toString(), "Download")
         if (!folder.exists()) {
             folder.mkdirs()
         }
-        pdfFile = File(folder, "certificado_de_alumno_regular.pdf")
+        pdfFile = File(folder, "regular_$day.pdf")
     }
 
     fun addMetaData(title: String, subject: String, author: String) {

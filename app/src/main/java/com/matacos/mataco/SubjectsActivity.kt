@@ -1,7 +1,6 @@
 package com.matacos.mataco
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import com.google.android.material.navigation.NavigationView
@@ -19,13 +18,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.matacos.mataco.apiController.APIController
 import com.matacos.mataco.apiController.ServiceVolley
-import com.matacos.mataco.clases.Exam
 import com.matacos.mataco.clases.NavigationItemManager
 import com.matacos.mataco.clases.Subject
 import com.matacos.mataco.clases.Subjects
 import kotlinx.android.synthetic.main.activity_subjects.*
 import kotlinx.android.synthetic.main.app_bar_subjects.*
-import kotlinx.android.synthetic.main.content_exams.*
 import kotlinx.android.synthetic.main.content_subjects.*
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
@@ -114,7 +111,7 @@ class SubjectsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
         val navigationItemManager = NavigationItemManager()
-        return navigationItemManager.navegate(this, item, preferences, drawer_layout)
+        return navigationItemManager.navigate(this, item, preferences, drawer_layout)
     }
 
     private fun filterSubjects(examSubjects: List<Subject>): ArrayList<Subject> {

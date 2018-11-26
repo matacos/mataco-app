@@ -65,8 +65,10 @@
     <string name="nav_my_exams">Mis Inscripciones a Exámenes</string>
     <string name="exams_channel">Notificaciones de exámenes</string>
     <string name="exams_channel_desc">Notificaciones relacionadas con exámenes</string>
-    <string name="courses_channel">Notificaciones de exámenes</string>
-    <string name="courses_channel_desc">Notificaciones relacionadas con exámenes</string>
+    <string name="courses_channel">Notificaciones de cursos</string>
+    <string name="courses_channel_desc">Notificaciones relacionadas con cursos</string>
+    <string name="general_channel">Notificaciones FIUBA</string>
+    <string name="general_channel_desc">Notificaciones generales de FIUBA</string>
     <string name="exam_title">01/01/01 Juan Esteban Perez</string>
     <string name="nav_log_out">Cerrar Sesión</string>
     <string name="nav_student_record">Historial Académico</string>

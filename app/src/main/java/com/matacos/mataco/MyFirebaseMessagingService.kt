@@ -82,6 +82,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             } else if (channelId == "courses") {
                 name = getString(R.string.courses_channel)
                 descriptionText = getString(R.string.courses_channel_desc)
+            } else if (channelId == "general") {
+                name = getString(R.string.general_channel)
+                descriptionText = getString(R.string.general_channel_desc)
             }
             val importance = NotificationManager.IMPORTANCE_DEFAULT
             val channel = NotificationChannel(channelId, name, importance).apply {
